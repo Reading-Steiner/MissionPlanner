@@ -119,6 +119,7 @@ namespace MissionPlanner.GCSViews
         private WPOverlay overlay;
         private bool polygongridmode;
         private MissionPlanner.Controls.Icon.Polygon polyicon = new MissionPlanner.Controls.Icon.Polygon();
+        private MissionPlanner.Controls.Icon.WP WPicon = new MissionPlanner.Controls.Icon.WP();
         private MissionPlanner.Controls.Icon.Zoom zoomicon = new MissionPlanner.Controls.Icon.Zoom();
         private ComponentResourceManager rm = new ComponentResourceManager(typeof(FlightPlanner));
         private int selectedrow;
@@ -1223,17 +1224,17 @@ namespace MissionPlanner.GCSViews
 
         public void updateDisplayView()
         {
-            rallyPointsToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayRallyPointsMenu;
-            geoFenceToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayGeoFenceMenu;
-            createSplineCircleToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displaySplineCircleAutoWp;
-            textToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTextAutoWp;
-            createCircleSurveyToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayCircleSurveyAutoWp;
-            pOIToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayPoiMenu;
-            trackerHomeToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTrackerHomeMenu;
+            //rallyPointsToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayRallyPointsMenu;
+            //geoFenceToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayGeoFenceMenu;
+            //createSplineCircleToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displaySplineCircleAutoWp;
+            //textToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTextAutoWp;
+            //createCircleSurveyToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayCircleSurveyAutoWp;
+            //pOIToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayPoiMenu;
+            //trackerHomeToolStripMenuItem.Visible = MainV2.DisplayConfiguration.displayTrackerHomeMenu;
             CHK_verifyheight.Visible = MainV2.DisplayConfiguration.displayCheckHeightBox;
 
             //hide dynamically generated toolstrip items in the auto WP dropdown (these do not have name objects populated)
-            foreach (ToolStripItem item in autoWPToolStripMenuItem.DropDownItems)
+            foreach (ToolStripItem item in planningWPToolStripMenuItem.DropDownItems)
             {
                 if (item.Name.Equals(""))
                 {
@@ -2466,36 +2467,36 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        public void contextMenuStripMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             //  if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
             //     isMouseClickOffMenu = true;
         }
 
-        public void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        public void contextMenuStripMain_Opening(object sender, CancelEventArgs e)
         {
-            if (CurentRectMarker == null && CurrentRallyPt == null && groupmarkers.Count == 0)
-            {
-                deleteWPToolStripMenuItem.Enabled = false;
-            }
-            else
-            {
-                deleteWPToolStripMenuItem.Enabled = true;
-            }
+            //if (CurentRectMarker == null && CurrentRallyPt == null && groupmarkers.Count == 0)
+            //{
+            //    deleteWPToolStripMenuItem.Enabled = false;
+            //}
+            //else
+            //{
+            //    deleteWPToolStripMenuItem.Enabled = true;
+            //}
 
-            if (MainV2.comPort != null && MainV2.comPort.MAV != null)
-            {
-                if ((MainV2.comPort.MAV.cs.capabilities & (int)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FENCE) > 0)
-                {
-                    geoFenceToolStripMenuItem.Visible = false;
-                    rallyPointsToolStripMenuItem.Visible = false;
-                }
-                else
-                {
-                    geoFenceToolStripMenuItem.Visible = true;
-                    rallyPointsToolStripMenuItem.Visible = true;
-                }
-            }
+            //if (MainV2.comPort != null && MainV2.comPort.MAV != null)
+            //{
+            //    if ((MainV2.comPort.MAV.cs.capabilities & (int)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FENCE) > 0)
+            //    {
+            //        geoFenceToolStripMenuItem.Visible = false;
+            //        rallyPointsToolStripMenuItem.Visible = false;
+            //    }
+            //    else
+            //    {
+            //        geoFenceToolStripMenuItem.Visible = true;
+            //        rallyPointsToolStripMenuItem.Visible = true;
+            //    }
+            //}
 
             isMouseClickOffMenu = false; // Just incase
         }
@@ -2503,21 +2504,21 @@ namespace MissionPlanner.GCSViews
         public void ContextMenuStripPoly_Opening(object sender, CancelEventArgs e)
         {
             // update the displayed items
-            if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
-            {
-                fenceInclusionToolStripMenuItem.Visible = false;
-                fenceExclusionToolStripMenuItem.Visible = false;
-            }
-            else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
-            {
-                fenceInclusionToolStripMenuItem.Visible = true;
-                fenceExclusionToolStripMenuItem.Visible = true;
-            }
-            else
-            {
-                fenceInclusionToolStripMenuItem.Visible = false;
-                fenceExclusionToolStripMenuItem.Visible = false;
-            }
+            //if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.RALLY)
+            //{
+            //    fenceInclusionToolStripMenuItem.Visible = false;
+            //    fenceExclusionToolStripMenuItem.Visible = false;
+            //}
+            //else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue == MAVLink.MAV_MISSION_TYPE.FENCE)
+            //{
+            //    fenceInclusionToolStripMenuItem.Visible = true;
+            //    fenceExclusionToolStripMenuItem.Visible = true;
+            //}
+            //else
+            //{
+            //    fenceInclusionToolStripMenuItem.Visible = false;
+            //    fenceExclusionToolStripMenuItem.Visible = false;
+            //}
         }
 
         private void convertFromGeographic(double lat, double lng)
@@ -4117,7 +4118,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void loadPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        public void fromPolygonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
@@ -4470,7 +4471,11 @@ namespace MissionPlanner.GCSViews
 
             e.Graphics.ResetTransform();
 
-            zoomicon.Location = new Point(10, polyicon.Location.Y + polyicon.Height + 5);
+            WPicon.Location = new Point(10, polyicon.Location.Y + polyicon.Height + 5);
+            WPicon.Paint(e.Graphics);
+
+            e.Graphics.ResetTransform();
+            zoomicon.Location = new Point(10, WPicon.Location.Y + WPicon.Height + 5);
             zoomicon.Paint(e.Graphics);
 
             e.Graphics.ResetTransform();
@@ -6558,17 +6563,32 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             // check if the mouse up happend over our button
             if (polyicon.Rectangle.Contains(e.Location))
             {
-                if (e.Button == MouseButtons.Right)
-                {
-                    polyicon.IsSelected = false;
+                if (e.Button == MouseButtons.Right){
+                    contextMenuStripMain.Visible = false;
                     clearPolygonToolStripMenuItem_Click(this, null);
 
-                    contextMenuStrip1.Visible = false;
+                }else if(e.Button == MouseButtons.Left){
+                    polyicon.IsSelected = !polyicon.IsSelected;
 
-                    return;
                 }
+                polygongridmode = polyicon.IsSelected ? true : false;
 
-                contextMenuStripPoly.Show(MainMap, e.Location);
+                //contextMenuStripPoly.Show(MainMap, e.Location);
+                return;
+            }
+            if (WPicon.Rectangle.Contains(e.Location))
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    contextMenuStripMain.Visible = false;
+                    clearMissionToolStripMenuItem_Click(this, null);
+
+                }
+                else if (e.Button == MouseButtons.Left)
+                {
+                    surveyGridToolStripMenuItem_Click(this, null);
+
+                }
                 return;
             }
 
