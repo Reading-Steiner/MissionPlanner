@@ -62,20 +62,33 @@ namespace MissionPlanner
             // 
             // MainMenu
             // 
+            #region 删除
+            //resources.ApplyResources(this.MainMenu, "MainMenu");
+            //this.MainMenu.ContextMenuStrip = this.CTX_mainmenu;
+            //this.MainMenu.GripMargin = new System.Windows.Forms.Padding(0);
+            //this.MainMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
+            //this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            //this.MenuFlightData,
+            //this.MenuFlightPlanner,
+            //this.MenuInitConfig,
+            //this.MenuConfigTune,
+            //this.MenuSimulation,
+            //this.MenuHelp,
+            //this.MenuConnect,
+            //this.toolStripConnectionControl,
+            //this.MenuArduPilot
+            //});
+            #endregion
             resources.ApplyResources(this.MainMenu, "MainMenu");
             this.MainMenu.ContextMenuStrip = this.CTX_mainmenu;
             this.MainMenu.GripMargin = new System.Windows.Forms.Padding(0);
-            this.MainMenu.ImageScalingSize = new System.Drawing.Size(45, 39);
+            this.MainMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuFlightData,
             this.MenuFlightPlanner,
-            this.MenuInitConfig,
-            this.MenuConfigTune,
-            this.MenuSimulation,
-            this.MenuHelp,
-            this.MenuConnect,
             this.toolStripConnectionControl,
-            this.MenuArduPilot});
+            this.MenuArduPilot
+            });
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.ShowItemToolTips = true;
             this.MainMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MainMenu_ItemClicked);
