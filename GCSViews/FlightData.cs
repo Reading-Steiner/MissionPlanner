@@ -38,6 +38,7 @@ namespace MissionPlanner.GCSViews
     public partial class FlightData : MyUserControl, IActivate, IDeactivate
     {
         public static FlightData instance;
+        public static GMapOverlay layerpolygons;
         public static GMapOverlay kmlpolygons;
         public static HUD myhud;
         public static myGMAP mymap;
@@ -275,6 +276,9 @@ namespace MissionPlanner.GCSViews
 
             tfrpolygons = new GMapOverlay("tfrpolygons");
             gMapControl1.Overlays.Add(tfrpolygons);
+
+            layerpolygons = new GMapOverlay("layerpolygons");
+            gMapControl1.Overlays.Add(layerpolygons);
 
             kmlpolygons = new GMapOverlay("kmlpolygons");
             gMapControl1.Overlays.Add(kmlpolygons);

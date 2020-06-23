@@ -24,6 +24,7 @@ namespace MissionPlanner.GCSViews
             if (currentMarker != null) currentMarker.Dispose();
             if (drawnpolygon != null) drawnpolygon.Dispose();
             if (kmlpolygonsoverlay != null) kmlpolygonsoverlay.Dispose();
+            if (layerpolygonsoverlay != null) layerpolygonsoverlay.Dispose();
             if (wppolygon != null) wppolygon.Dispose();
             if (top != null) top.Dispose();
             if (geofencepolygon != null) geofencepolygon.Dispose();
@@ -115,6 +116,9 @@ namespace MissionPlanner.GCSViews
             this.loadPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromSHPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
+            this.tiffReadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.planningWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.surveyGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -633,12 +637,20 @@ namespace MissionPlanner.GCSViews
             this.setHomeHereToolStripMenuItem,
             this.toolStripSeparator1,
             this.polygonToolStripMenuItem,
-            this.planningWPToolStripMenuItem});
+            this.planningWPToolStripMenuItem,
+            this.tiffReadToolStripMenuItem});
             this.contextMenuStripMain.Name = "contextMenuStripMain";
             this.contextMenuStripMain.ShowImageMargin = false;
             this.toolTip1.SetToolTip(this.contextMenuStripMain, resources.GetString("contextMenuStripMain.ToolTip"));
             this.contextMenuStripMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStripMain_Closed);
             this.contextMenuStripMain.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripMain_Opening);
+
+            // 
+            // setHomeHereToolStripMenuItem
+            // 
+            resources.ApplyResources(this.tiffReadToolStripMenuItem, "tiffReadToolStripMenuItem");
+            this.tiffReadToolStripMenuItem.Name = "tiffReadToolStripMenuItem";
+            this.tiffReadToolStripMenuItem.Click += new System.EventHandler(this.TiffOverlayToolStripMenuItem_Click);
             // 
             // setHomeHereToolStripMenuItem
             // 
@@ -1115,6 +1127,7 @@ namespace MissionPlanner.GCSViews
         private ToolStripMenuItem loadPolygonToolStripMenuItem;
         public ToolStripMenuItem fromPolygonToolStripMenuItem;
         public ToolStripMenuItem fromSHPToolStripMenuItem;
+        public ToolStripMenuItem tiffReadToolStripMenuItem;
 
         public ContextMenuStrip contextMenuStripPoly;
 
