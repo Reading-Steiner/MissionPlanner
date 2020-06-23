@@ -625,14 +625,14 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
-            if (tabControlactions.TabPages.Contains(tabPayload) == true && gimbalPresent == false)
-            {
-                tabControlactions.TabPages.Remove(tabPayload);
-            }
-            else if (tabControlactions.TabPages.Contains(tabPayload) == false && gimbalPresent == true)
-            {
-                tabControlactions.TabPages.Add(tabPayload);
-            }
+            //if (tabControlactions.TabPages.Contains(tabPayload) == true && gimbalPresent == false)
+            //{
+            //    tabControlactions.TabPages.Remove(tabPayload);
+            //}
+            //else if (tabControlactions.TabPages.Contains(tabPayload) == false && gimbalPresent == true)
+            //{
+            //    tabControlactions.TabPages.Add(tabPayload);
+            //}
         }
 
         internal void BUT_run_script_Click(object sender, EventArgs e)
@@ -4259,15 +4259,16 @@ namespace MissionPlanner.GCSViews
         {
             Messagetabtimer.Stop();
 
-            if (tabControlactions.SelectedTab == tabStatus)
-            {
-                tabControlactions.Visible = false;
-                tabStatus.Visible = false;
-                tabStatus_Resize(sender, e);
-                tabStatus.Visible = true;
-                tabControlactions.Visible = true;
-            }
-            else if (tabControlactions.SelectedTab == tabPagemessages)
+            //if (tabControlactions.SelectedTab == tabStatus)
+            //{
+            //    tabControlactions.Visible = false;
+            //    tabStatus.Visible = false;
+            //    tabStatus_Resize(sender, e);
+            //    tabStatus.Visible = true;
+            //    tabControlactions.Visible = true;
+            //}
+            //else 
+            if (tabControlactions.SelectedTab == tabPagemessages)
             {
                 Messagetabtimer.Start();
             }
@@ -4557,13 +4558,14 @@ namespace MissionPlanner.GCSViews
                         bindingSourceHud.UpdateDataSource(MainV2.comPort.MAV.cs));
                     //Console.WriteLine("DONE ");
 
-                    if (tabControlactions.SelectedTab == tabStatus)
-                    {
-                        MainV2.comPort.MAV.cs.UpdateCurrentSettings(
-                            bindingSourceStatusTab.UpdateDataSource(MainV2.comPort.MAV.cs));
-                        this.tabStatus.Invalidate();
-                    }
-                    else if (tabControlactions.SelectedTab == tabQuick)
+                    //if (tabControlactions.SelectedTab == tabStatus)
+                    //{
+                    //    MainV2.comPort.MAV.cs.UpdateCurrentSettings(
+                    //        bindingSourceStatusTab.UpdateDataSource(MainV2.comPort.MAV.cs));
+                    //    this.tabStatus.Invalidate();
+                    //}
+                    //else 
+                    if (tabControlactions.SelectedTab == tabQuick)
                     {
                         MainV2.comPort.MAV.cs.UpdateCurrentSettings(
                             bindingSourceQuickTab.UpdateDataSource(MainV2.comPort.MAV.cs));
@@ -4573,16 +4575,16 @@ namespace MissionPlanner.GCSViews
                         MainV2.comPort.MAV.cs.UpdateCurrentSettings(
                             bindingSourceGaugesTab.UpdateDataSource(MainV2.comPort.MAV.cs));
                     }
-                    else if (tabControlactions.SelectedTab == tabPagePreFlight)
-                    {
-                        MainV2.comPort.MAV.cs.UpdateCurrentSettings(
-                            bindingSourceGaugesTab.UpdateDataSource(MainV2.comPort.MAV.cs));
-                    }
-                    else if (tabControlactions.SelectedTab == tabPayload)
-                    {
-                        MainV2.comPort.MAV.cs.UpdateCurrentSettings(
-                            bindingSourcePayloadTab.UpdateDataSource(MainV2.comPort.MAV.cs));
-                    }
+                    //else if (tabControlactions.SelectedTab == tabPagePreFlight)
+                    //{
+                    //    MainV2.comPort.MAV.cs.UpdateCurrentSettings(
+                    //        bindingSourceGaugesTab.UpdateDataSource(MainV2.comPort.MAV.cs));
+                    //}
+                    //else if (tabControlactions.SelectedTab == tabPayload)
+                    //{
+                    //    MainV2.comPort.MAV.cs.UpdateCurrentSettings(
+                    //        bindingSourcePayloadTab.UpdateDataSource(MainV2.comPort.MAV.cs));
+                    //}
                 }
                 else
                 {
@@ -5028,46 +5030,46 @@ namespace MissionPlanner.GCSViews
 
         private void tabStatus_Paint(object sender, PaintEventArgs e)
         {
-            var bmp = new Bitmap(tabStatus.DisplayRectangle.Width, tabStatus.DisplayRectangle.Height);
-            var g = Graphics.FromImage(bmp);
-            g.Clear(Color.Transparent);
+            //var bmp = new Bitmap(tabStatus.DisplayRectangle.Width, tabStatus.DisplayRectangle.Height);
+            //var g = Graphics.FromImage(bmp);
+            //g.Clear(Color.Transparent);
 
-            int x = 10;
-            int y = 10;
+            //int x = 10;
+            //int y = 10;
 
-            var list = MainV2.comPort.MAV.cs.GetItemList(true);
-            var cs = bindingSourceStatusTab.Current as CurrentState;
-            var br = new SolidBrush(tabStatus.ForeColor);
+            //var list = MainV2.comPort.MAV.cs.GetItemList(true);
+            //var cs = bindingSourceStatusTab.Current as CurrentState;
+            //var br = new SolidBrush(tabStatus.ForeColor);
 
-            foreach (var field in list)
-            {
-                g.DrawString(field, this.Font, br, new RectangleF(x, y, 95, 15));
+            //foreach (var field in list)
+            //{
+            //    g.DrawString(field, this.Font, br, new RectangleF(x, y, 95, 15));
 
-                if (cs != null)
-                    g.DrawString(typeof(CurrentState).GetProperty(field).GetValue(cs)?.ToString(), this.Font,
-                        br, new RectangleF(x + 95, y, 50, 15));
+            //    if (cs != null)
+            //        g.DrawString(typeof(CurrentState).GetProperty(field).GetValue(cs)?.ToString(), this.Font,
+            //            br, new RectangleF(x + 95, y, 50, 15));
 
-                x += 0;
-                y += 15;
+            //    x += 0;
+            //    y += 15;
 
-                if (y > tabStatus.Height - 30)
-                {
-                    x += 165;
-                    y = 10;
-                }
-            }
+            //    if (y > tabStatus.Height - 30)
+            //    {
+            //        x += 165;
+            //        y = 10;
+            //    }
+            //}
 
-            if (tabStatus.AutoScrollMinSize.Width < x)
-            {
-                typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-                                                             | BindingFlags.Instance | BindingFlags.NonPublic, null,
-                    tabStatus, new object[] { true });
+            //if (tabStatus.AutoScrollMinSize.Width < x)
+            //{
+            //    typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
+            //                                                 | BindingFlags.Instance | BindingFlags.NonPublic, null,
+            //        tabStatus, new object[] { true });
 
-                tabStatus.AutoScrollMinSize = new Size(x + 164, 0);
-            }
-            e.Graphics.TranslateTransform(tabStatus.AutoScrollPosition.X,
-                tabStatus.AutoScrollPosition.Y);
-            e.Graphics.DrawImageUnscaled(bmp, 0, 0);
+            //    tabStatus.AutoScrollMinSize = new Size(x + 164, 0);
+            //}
+            //e.Graphics.TranslateTransform(tabStatus.AutoScrollPosition.X,
+            //    tabStatus.AutoScrollPosition.Y);
+            //e.Graphics.DrawImageUnscaled(bmp, 0, 0);
         }
     }
 }

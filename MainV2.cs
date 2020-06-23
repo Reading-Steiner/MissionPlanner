@@ -558,30 +558,30 @@ namespace MissionPlanner
                 {
                     t.TabPages.Remove(FlightData.tabQuick);
                 }
-                if (DisplayConfiguration.displayPreFlightTab && !t.TabPages.Contains(FlightData.tabPagePreFlight))
-                {
-                    t.TabPages.Add(FlightData.tabPagePreFlight);
-                }
-                else if (!DisplayConfiguration.displayPreFlightTab && t.TabPages.Contains(FlightData.tabPagePreFlight))
-                {
-                    t.TabPages.Remove(FlightData.tabPagePreFlight);
-                }
-                if (DisplayConfiguration.displayAdvActionsTab && !t.TabPages.Contains(FlightData.tabActions))
-                {
-                    t.TabPages.Add(FlightData.tabActions);
-                }
-                else if (!DisplayConfiguration.displayAdvActionsTab && t.TabPages.Contains(FlightData.tabActions))
-                {
-                    t.TabPages.Remove(FlightData.tabActions);
-                }
-                if (DisplayConfiguration.displaySimpleActionsTab && !t.TabPages.Contains(FlightData.tabActionsSimple))
-                {
-                    t.TabPages.Add(FlightData.tabActionsSimple);
-                }
-                else if (!DisplayConfiguration.displaySimpleActionsTab && t.TabPages.Contains(FlightData.tabActionsSimple))
-                {
-                    t.TabPages.Remove(FlightData.tabActionsSimple);
-                }
+                //if (DisplayConfiguration.displayPreFlightTab && !t.TabPages.Contains(FlightData.tabPagePreFlight))
+                //{
+                //    //t.TabPages.Add(FlightData.tabPagePreFlight);
+                //}
+                //else if (!DisplayConfiguration.displayPreFlightTab && t.TabPages.Contains(FlightData.tabPagePreFlight))
+                //{
+                //    //t.TabPages.Remove(FlightData.tabPagePreFlight);
+                //}
+                //if (DisplayConfiguration.displayAdvActionsTab && !t.TabPages.Contains(FlightData.tabActions))
+                //{
+                //    //t.TabPages.Add(FlightData.tabActions);
+                //}
+                //else if (!DisplayConfiguration.displayAdvActionsTab && t.TabPages.Contains(FlightData.tabActions))
+                //{
+                //    //t.TabPages.Remove(FlightData.tabActions);
+                //}
+                //if (DisplayConfiguration.displaySimpleActionsTab && !t.TabPages.Contains(FlightData.tabActionsSimple))
+                //{
+                //    //t.TabPages.Add(FlightData.tabActionsSimple);
+                //}
+                //else if (!DisplayConfiguration.displaySimpleActionsTab && t.TabPages.Contains(FlightData.tabActionsSimple))
+                //{
+                //    //t.TabPages.Remove(FlightData.tabActionsSimple);
+                //}
                 if (DisplayConfiguration.displayGaugesTab && !t.TabPages.Contains(FlightData.tabGauges))
                 {
                     t.TabPages.Add(FlightData.tabGauges);
@@ -590,46 +590,46 @@ namespace MissionPlanner
                 {
                     t.TabPages.Remove(FlightData.tabGauges);
                 }
-                if (DisplayConfiguration.displayStatusTab && !t.TabPages.Contains(FlightData.tabStatus))
-                {
-                    t.TabPages.Add(FlightData.tabStatus);
-                }
-                else if (!DisplayConfiguration.displayStatusTab && t.TabPages.Contains(FlightData.tabStatus))
-                {
-                    t.TabPages.Remove(FlightData.tabStatus);
-                }
-                if (DisplayConfiguration.displayServoTab && !t.TabPages.Contains(FlightData.tabServo))
-                {
-                    t.TabPages.Add(FlightData.tabServo);
-                }
-                else if (!DisplayConfiguration.displayServoTab && t.TabPages.Contains(FlightData.tabServo))
-                {
-                    t.TabPages.Remove(FlightData.tabServo);
-                }
-                if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts))
-                {
-                    t.TabPages.Add(FlightData.tabScripts);
-                }
-                else if (!DisplayConfiguration.displayScriptsTab && t.TabPages.Contains(FlightData.tabScripts))
-                {
-                    t.TabPages.Remove(FlightData.tabScripts);
-                }
-                if (DisplayConfiguration.displayTelemetryTab && !t.TabPages.Contains(FlightData.tabTLogs))
-                {
-                    t.TabPages.Add(FlightData.tabTLogs);
-                }
-                else if (!DisplayConfiguration.displayTelemetryTab && t.TabPages.Contains(FlightData.tabTLogs))
-                {
-                    t.TabPages.Remove(FlightData.tabTLogs);
-                }
-                if (DisplayConfiguration.displayDataflashTab && !t.TabPages.Contains(FlightData.tablogbrowse))
-                {
-                    t.TabPages.Add(FlightData.tablogbrowse);
-                }
-                else if (!DisplayConfiguration.displayDataflashTab && t.TabPages.Contains(FlightData.tablogbrowse))
-                {
-                    t.TabPages.Remove(FlightData.tablogbrowse);
-                }
+                //if (DisplayConfiguration.displayStatusTab && !t.TabPages.Contains(FlightData.tabStatus))
+                //{
+                //    //t.TabPages.Add(FlightData.tabStatus);
+                //}
+                //else if (!DisplayConfiguration.displayStatusTab && t.TabPages.Contains(FlightData.tabStatus))
+                //{
+                //    //t.TabPages.Remove(FlightData.tabStatus);
+                //}
+                //if (DisplayConfiguration.displayServoTab && !t.TabPages.Contains(FlightData.tabServo))
+                //{
+                //    //t.TabPages.Add(FlightData.tabServo);
+                //}
+                //else if (!DisplayConfiguration.displayServoTab && t.TabPages.Contains(FlightData.tabServo))
+                //{
+                //    //t.TabPages.Remove(FlightData.tabServo);
+                //}
+                //if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts))
+                //{
+                //    //t.TabPages.Add(FlightData.tabScripts);
+                //}
+                //else if (!DisplayConfiguration.displayScriptsTab && t.TabPages.Contains(FlightData.tabScripts))
+                //{
+                //    //t.TabPages.Remove(FlightData.tabScripts);
+                //}
+                //if (DisplayConfiguration.displayTelemetryTab && !t.TabPages.Contains(FlightData.tabTLogs))
+                //{
+                //    //t.TabPages.Add(FlightData.tabTLogs);
+                //}
+                //else if (!DisplayConfiguration.displayTelemetryTab && t.TabPages.Contains(FlightData.tabTLogs))
+                //{
+                //    //t.TabPages.Remove(FlightData.tabTLogs);
+                //}
+                //if (DisplayConfiguration.displayDataflashTab && !t.TabPages.Contains(FlightData.tablogbrowse))
+                //{
+                //    //t.TabPages.Add(FlightData.tablogbrowse);
+                //}
+                //else if (!DisplayConfiguration.displayDataflashTab && t.TabPages.Contains(FlightData.tablogbrowse))
+                //{
+                //    //t.TabPages.Remove(FlightData.tablogbrowse);
+                //}
                 if (DisplayConfiguration.displayMessagesTab && !t.TabPages.Contains(FlightData.tabPagemessages))
                 {
                     t.TabPages.Add(FlightData.tabPagemessages);
