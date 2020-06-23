@@ -6659,7 +6659,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             if (zoomicon.Rectangle.Contains(e.Location))
             {
-                contextMenuStripZoom.Show(MainMap, e.Location);
+                //contextMenuStripZoom.Show(MainMap, e.Location);
+                if (e.Button == MouseButtons.Left)
+                {
+                    contextMenuStripMain.Visible = false;
+                    TiffOverlayToolStripMenuItem_Click(this, null);
+                }
+                if (layerpolygonsoverlay.Polygons.Count > 0)
+                {
+                    zoomicon.IsSelected = true;
+                }
+                else
+                {
+                    zoomicon.IsSelected = false;
+                }
                 return;
             }
 

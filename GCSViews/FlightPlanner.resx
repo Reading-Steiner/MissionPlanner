@@ -2480,4 +2480,7 @@
   <data name="fromPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>From Ploygon</value>
   </data>
+  <data name="tiffReadToolStripMenuItem.Text" xml:space="preserve">
+    <value>Load local map</value>
+  </data>
 </root>

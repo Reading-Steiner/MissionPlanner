@@ -855,4 +855,7 @@
   <data name="fromPolygonToolStripMenuItem.Text" xml:space="preserve">
     <value>读取ploygon文件</value>
   </data>
+  <data name="tiffReadToolStripMenuItem.Text" xml:space="preserve">
+    <value>添加本地地图</value>
+  </data>
 </root>
