@@ -1359,7 +1359,7 @@ namespace MissionPlanner.GCSViews
                         MainMap.Overlays.Remove(b);
                     }
 
-                    MainMap.Overlays.Insert(1, overlay.overlay);
+                    MainMap.Overlays.Add(overlay.overlay);
 
                     overlay.overlay.ForceUpdate();
 
@@ -1453,7 +1453,7 @@ namespace MissionPlanner.GCSViews
                         MainMap.Overlays.Remove(b);
                     }
 
-                    MainMap.Overlays.Insert(1, overlay.overlay);
+                    MainMap.Overlays.Add(overlay.overlay);
 
                     overlay.overlay.ForceUpdate();
 
@@ -1509,7 +1509,7 @@ namespace MissionPlanner.GCSViews
                         MainMap.Overlays.Remove(b);
                     }
 
-                    MainMap.Overlays.Insert(1, overlay.overlay);
+                    MainMap.Overlays.Add(overlay.overlay);
 
                     overlay.overlay.ForceUpdate();
 
