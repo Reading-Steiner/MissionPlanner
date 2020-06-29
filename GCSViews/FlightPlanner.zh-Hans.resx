@@ -858,4 +858,7 @@
   <data name="tiffReadToolStripMenuItem.Text" xml:space="preserve">
     <value>添加本地地图</value>
   </data>
+  <data name="zoomToTiffToolStripMenuItem.Text" xml:space="preserve">
+    <value>返回工作区</value>
+  </data>
 </root>

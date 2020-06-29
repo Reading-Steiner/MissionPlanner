@@ -87,7 +87,7 @@ namespace MissionPlanner
             this.MenuFlightData,
             this.MenuFlightPlanner,
             this.toolStripConnectionControl,
-            this.MenuArduPilot
+            //this.MenuArduPilot
             });
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.ShowItemToolTips = true;

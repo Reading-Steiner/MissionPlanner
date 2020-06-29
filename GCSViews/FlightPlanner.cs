@@ -80,6 +80,7 @@ namespace MissionPlanner.GCSViews
         private static GMapOverlay rallypointoverlay;
         public GMapOverlay drawnpolygonsoverlay;
         public GMapOverlay kmlpolygonsoverlay;
+        GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
         public GMapOverlay layerpolygonsoverlay;
 
         static public Object thisLock = new Object();
@@ -3761,18 +3762,32 @@ namespace MissionPlanner.GCSViews
                     //string FilePath = "D:\\MegoMap Download\\谷歌地球_卫星影像_影像_山东省(2)\\GeoTIFF拼接大图\\影像_level_7.tif";
                     string FilePath = ofd.FileName;
                     GDAL.GDAL.GeoBitmap geobitmap = GDAL.GDAL.LoadImageInfo(FilePath);
+                    //PointLatLngAlt.FromUTM();
                     if (!geobitmap.Rect.IsEmpty)
                     {
                         layerpolygonsoverlay.Polygons.Clear();
                         layerpolygonsoverlay.Routes.Clear();
-                        var rect = geobitmap.Rect;
+                        this.rect = geobitmap.Rect;
+
                         PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
                         PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
-                        
-                        var mark = new GMapLayer(pos1, pos2, geobitmap.Bitmap);
 
+                        var mark = new GMapMarkerLayer(pos1, pos2, geobitmap.Bitmap);
+                        bool IsEmpty = true;
+                        for(int i=0;i< geobitmap.Bitmap.Size.Width; i++)
+                        {
+                            for (int j = 0; j < geobitmap.Bitmap.Size.Height; j++)
+                            {
+                                if (geobitmap.Bitmap.GetPixel(i, j) != Color.FromArgb(0, 0, 0, 0))
+                                    IsEmpty = false;
+                            }
+
+                        }
                         FlightData.layerpolygons.Polygons.Add(mark);
                         layerpolygonsoverlay.Polygons.Add(mark);
+
+                        zoomToTiffToolStripMenuItem_Click(this, null);
+
                         #region 删除
                         //var mark = new GMarkerGoogle(pos1, geobitmap.Bitmap);
                         //FlightData.kmlpolygons.Markers.Add(mark);
@@ -3802,7 +3817,6 @@ namespace MissionPlanner.GCSViews
             
             
         }
-
 
         public void kMLOverlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -6652,7 +6666,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 else if (e.Button == MouseButtons.Left)
                 {
                     surveyGridToolStripMenuItem_Click(this, null);
-
                 }
                 return;
             }
@@ -6660,18 +6673,33 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (zoomicon.Rectangle.Contains(e.Location))
             {
                 //contextMenuStripZoom.Show(MainMap, e.Location);
+                if (layerpolygonsoverlay.Polygons.Count > 0)
+                    zoomicon.IsSelected = true;
+                else
+                    zoomicon.IsSelected = false;
                 if (e.Button == MouseButtons.Left)
                 {
+                    if (zoomicon.IsSelected)
+                    {
+                        zoomToTiffToolStripMenuItem_Click(this, null);
+                    }
+                    else
+                    {
+                        contextMenuStripMain.Visible = false;
+                        TiffOverlayToolStripMenuItem_Click(this, null);
+                    }
+                    if (layerpolygonsoverlay.Polygons.Count > 0)
+                        zoomicon.IsSelected = true;
+                    else
+                        zoomicon.IsSelected = false;
+                    return;
+
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
                     contextMenuStripMain.Visible = false;
-                    TiffOverlayToolStripMenuItem_Click(this, null);
-                }
-                if (layerpolygonsoverlay.Polygons.Count > 0)
-                {
-                    zoomicon.IsSelected = true;
-                }
-                else
-                {
-                    zoomicon.IsSelected = false;
+                    contextMenuStripTiff.Show(MainMap, e.Location);
+                    return;
                 }
                 return;
             }
@@ -7347,6 +7375,15 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     MainMap.Zoom = 15;
                 }
             }
+        }
+
+        private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TXT_homealt.Text = (srtm.getAltitude(rect.Lat, rect.Lng).alt * CurrentState.multiplieralt).ToString("0");
+            TXT_homelat.Text = rect.Lat.ToString();
+            TXT_homelng.Text = rect.Lng.ToString();
+
+            MainMap.SetZoomToFitRect(rect);
         }
 
         private void zoomToVehicleToolStripMenuItem_Click(object sender, EventArgs e)

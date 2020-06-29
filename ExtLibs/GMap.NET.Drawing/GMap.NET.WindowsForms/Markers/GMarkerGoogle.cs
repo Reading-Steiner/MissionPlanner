@@ -222,22 +222,22 @@ namespace GMap.NET.WindowsForms.Markers
                 return;
 
 #if !PocketPC
-         //if(!Bearing.HasValue)
-         {
+            if (!Bearing.HasValue)
+            {
             if(BitmapShadow != null)
             {
                g.DrawImage(BitmapShadow, LocalPosition.X, LocalPosition.Y, BitmapShadow.Width, BitmapShadow.Height);
             }
          }
 
-         //if(Bearing.HasValue)
-         //{
-         //   g.RotateTransform(Bearing.Value - Overlay.Control.Bearing);
-         //   g.FillPolygon(Brushes.Red, Arrow);
-         //}
+            if (Bearing.HasValue)
+            {
+                g.RotateTransform(Bearing.Value - Overlay.Control.Bearing);
+                g.FillPolygon(Brushes.Red, Arrow);
+            }
 
-         //if(!Bearing.HasValue)
-         {
+            if (!Bearing.HasValue)
+            {
             g.DrawImage(Bitmap, LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
          }
 #else

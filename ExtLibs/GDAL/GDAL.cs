@@ -270,6 +270,13 @@ namespace GDAL
             {
                 using (var ds = OSGeo.GDAL.Gdal.Open(file, OSGeo.GDAL.Access.GA_ReadOnly))
                 {
+                    int rasterXSize = ds.RasterXSize;
+                    int rasterYSize = ds.RasterYSize;
+                    while (rasterXSize > 20000 || rasterYSize > 20000)
+                    {
+                        rasterXSize = rasterXSize >> 1;
+                        rasterYSize = rasterXSize >> 1;
+                    }
                     // 8bit geotiff - single band
                     if (ds.RasterCount == 1)
                     {
@@ -322,7 +329,7 @@ namespace GDAL
                     }
 
                     {
-                        Bitmap bitmap = new Bitmap(ds.RasterXSize, ds.RasterYSize, PixelFormat.Format32bppArgb);
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, PixelFormat.Format64bppArgb);
 
                         for (int a = 1; a <= ds.RasterCount; a++)
                         {
@@ -335,17 +342,17 @@ namespace GDAL
 
                 
                             // Obtaining the bitmap buffer
-                            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, ds.RasterXSize, ds.RasterYSize),
+                            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
                                 ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
                             try
                             {
 
                                 int stride = bitmapData.Stride;
                                 IntPtr buf = bitmapData.Scan0;
-                                var buffer = new byte[ds.RasterXSize * ds.RasterYSize];
+                                var buffer = new byte[rasterXSize * rasterYSize];
 
-                                band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buffer, ds.RasterXSize,
-                                    ds.RasterYSize, 1, ds.RasterXSize);
+                                band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buffer, rasterXSize,
+                                    rasterYSize, 1, rasterXSize);
 
                                 int c = 0;
                                 if (cint == ColorInterp.GCI_AlphaBand)

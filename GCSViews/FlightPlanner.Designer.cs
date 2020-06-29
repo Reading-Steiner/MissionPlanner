@@ -135,9 +135,9 @@ namespace MissionPlanner.GCSViews
             this.panelBASE = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStripPoly = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextMenuStripZoom = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.zoomToVehicleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zoomToMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripTiff = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.zoomToTiffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReadTiffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -176,7 +176,7 @@ namespace MissionPlanner.GCSViews
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.contextMenuStripMain.SuspendLayout();
             this.panelBASE.SuspendLayout();
-            this.contextMenuStripZoom.SuspendLayout();
+            this.contextMenuStripTiff.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
             this.SuspendLayout();
             // 
@@ -808,25 +808,23 @@ namespace MissionPlanner.GCSViews
             // 
             // contextMenuStripZoom
             // 
-            resources.ApplyResources(this.contextMenuStripZoom, "contextMenuStripZoom");
-            this.contextMenuStripZoom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zoomToVehicleToolStripMenuItem,
-            this.zoomToMissionToolStripMenuItem,
-            this.zoomToHomeToolStripMenuItem});
-            this.contextMenuStripZoom.Name = "contextMenuStripZoom";
-            this.toolTip1.SetToolTip(this.contextMenuStripZoom, resources.GetString("contextMenuStripZoom.ToolTip"));
+            resources.ApplyResources(this.contextMenuStripTiff, "contextMenuStripTiff");
+            this.contextMenuStripTiff.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ReadTiffToolStripMenuItem});
+            this.contextMenuStripTiff.Name = "contextMenuStripTiff";
+            this.toolTip1.SetToolTip(this.contextMenuStripTiff, resources.GetString("contextMenuStripTiff.ToolTip"));
             // 
-            // zoomToVehicleToolStripMenuItem
+            // zoomToTiffToolStripMenuItem
             // 
-            resources.ApplyResources(this.zoomToVehicleToolStripMenuItem, "zoomToVehicleToolStripMenuItem");
-            this.zoomToVehicleToolStripMenuItem.Name = "zoomToVehicleToolStripMenuItem";
-            this.zoomToVehicleToolStripMenuItem.Click += new System.EventHandler(this.zoomToVehicleToolStripMenuItem_Click);
+            resources.ApplyResources(this.zoomToTiffToolStripMenuItem, "zoomToTiffToolStripMenuItem");
+            this.zoomToTiffToolStripMenuItem.Name = "zoomToTiffToolStripMenuItem";
+            this.zoomToTiffToolStripMenuItem.Click += new System.EventHandler(this.zoomToVehicleToolStripMenuItem_Click);
             // 
-            // zoomToMissionToolStripMenuItem
+            // ReadTiffToolStripMenuItem
             // 
-            resources.ApplyResources(this.zoomToMissionToolStripMenuItem, "zoomToMissionToolStripMenuItem");
-            this.zoomToMissionToolStripMenuItem.Name = "zoomToMissionToolStripMenuItem";
-            this.zoomToMissionToolStripMenuItem.Click += new System.EventHandler(this.zoomToMissionToolStripMenuItem_Click);
+            resources.ApplyResources(this.ReadTiffToolStripMenuItem, "tiffReadToolStripMenuItem");
+            this.ReadTiffToolStripMenuItem.Name = "tiffReadToolStripMenuItem";
+            this.ReadTiffToolStripMenuItem.Click += new System.EventHandler(this.TiffOverlayToolStripMenuItem_Click);
             // 
             // zoomToHomeToolStripMenuItem
             // 
@@ -1065,7 +1063,7 @@ namespace MissionPlanner.GCSViews
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.contextMenuStripMain.ResumeLayout(false);
             this.panelBASE.ResumeLayout(false);
-            this.contextMenuStripZoom.ResumeLayout(false);
+            this.contextMenuStripTiff.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Commands)).EndInit();
             this.ResumeLayout(false);
 
@@ -1131,9 +1129,9 @@ namespace MissionPlanner.GCSViews
 
         public ContextMenuStrip contextMenuStripPoly;
 
-        private ContextMenuStrip contextMenuStripZoom;
-        private ToolStripMenuItem zoomToVehicleToolStripMenuItem;
-        private ToolStripMenuItem zoomToMissionToolStripMenuItem;
+        private ContextMenuStrip contextMenuStripTiff;
+        private ToolStripMenuItem zoomToTiffToolStripMenuItem;
+        private ToolStripMenuItem ReadTiffToolStripMenuItem;
         private ToolStripMenuItem zoomToHomeToolStripMenuItem;
         //public ToolStripMenuItem loiterToolStripMenuItem;
         //public ToolStripMenuItem loiterForeverToolStripMenuItem;

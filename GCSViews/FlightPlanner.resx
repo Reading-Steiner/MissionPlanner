@@ -2483,4 +2483,7 @@
   <data name="tiffReadToolStripMenuItem.Text" xml:space="preserve">
     <value>Load local map</value>
   </data>
+  <data name="zoomToTiffToolStripMenuItem.Text" xml:space="preserve">
+    <value>ZoomToTiffArea</value>
+  </data>
 </root>
