@@ -814,6 +814,12 @@
     <EmbeddedResource Include="GCSViews\FlightPlanner.zh-Hans.resx">
       <DependentUpon>FlightPlanner.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.zh-CHT.resx">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid\GridUI.zh-Hans.resx">
+      <DependentUpon>GridUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Joystick\JoystickAxis.resx" />
     <EmbeddedResource Include="Log\LogStrings.resx">
       <DependentUpon>LogStrings.cs</DependentUpon>
