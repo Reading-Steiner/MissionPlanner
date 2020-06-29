@@ -3773,16 +3773,7 @@ namespace MissionPlanner.GCSViews
                         PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
 
                         var mark = new GMapMarkerLayer(pos1, pos2, geobitmap.Bitmap);
-                        bool IsEmpty = true;
-                        for(int i=0;i< geobitmap.Bitmap.Size.Width; i++)
-                        {
-                            for (int j = 0; j < geobitmap.Bitmap.Size.Height; j++)
-                            {
-                                if (geobitmap.Bitmap.GetPixel(i, j) != Color.FromArgb(0, 0, 0, 0))
-                                    IsEmpty = false;
-                            }
 
-                        }
                         FlightData.layerpolygons.Polygons.Add(mark);
                         layerpolygonsoverlay.Polygons.Add(mark);
 

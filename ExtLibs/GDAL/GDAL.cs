@@ -272,10 +272,10 @@ namespace GDAL
                 {
                     int rasterXSize = ds.RasterXSize;
                     int rasterYSize = ds.RasterYSize;
-                    while (rasterXSize > 20000 || rasterYSize > 20000)
+                    while (rasterXSize > 15000 || rasterYSize > 15000)
                     {
                         rasterXSize = rasterXSize >> 1;
-                        rasterYSize = rasterXSize >> 1;
+                        rasterYSize = rasterYSize >> 1;
                     }
                     // 8bit geotiff - single band
                     if (ds.RasterCount == 1)
@@ -289,10 +289,10 @@ namespace GDAL
                         PixelFormat format = PixelFormat.Format8bppIndexed;
 
                         // Create a Bitmap to store the GDAL image in
-                        Bitmap bitmap = new Bitmap(ds.RasterXSize, ds.RasterYSize, format);
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, format);
 
                         // Obtaining the bitmap buffer
-                        BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, ds.RasterXSize, ds.RasterYSize),
+                        BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, rasterXSize, rasterYSize),
                             ImageLockMode.ReadWrite, format);
                         try
                         {
@@ -316,7 +316,7 @@ namespace GDAL
                             int stride = bitmapData.Stride;
                             IntPtr buf = bitmapData.Scan0;
 
-                            band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buf, ds.RasterXSize, ds.RasterYSize,
+                            band.ReadRaster(0, 0, ds.RasterXSize, ds.RasterYSize, buf, rasterXSize, rasterYSize,
                                 DataType.GDT_Byte, 1, stride);
                         }
                         finally
@@ -329,7 +329,7 @@ namespace GDAL
                     }
 
                     {
-                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, PixelFormat.Format64bppArgb);
+                        Bitmap bitmap = new Bitmap(rasterXSize, rasterYSize, PixelFormat.Format32bppArgb);
 
                         for (int a = 1; a <= ds.RasterCount; a++)
                         {
