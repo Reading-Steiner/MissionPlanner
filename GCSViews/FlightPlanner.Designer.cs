@@ -669,6 +669,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.polygonToolStripMenuItem, "polygonToolStripMenuItem");
             this.polygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPolygonPointToolStripMenuItem,
+
             this.clearPolygonToolStripMenuItem,
             this.toolStripSeparator2,
             this.savePolygonToolStripMenuItem,

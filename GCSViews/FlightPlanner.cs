@@ -7,6 +7,7 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using GMap.NET.CacheProviders;
 using Ionic.Zip;
 using log4net;
 using MissionPlanner.ArduPilot;
@@ -82,6 +83,8 @@ namespace MissionPlanner.GCSViews
         public GMapOverlay kmlpolygonsoverlay;
         GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
         public GMapOverlay layerpolygonsoverlay;
+
+        public MemoryLayerCache layerCache;
 
         static public Object thisLock = new Object();
         public bool quickadd;
@@ -181,6 +184,7 @@ namespace MissionPlanner.GCSViews
 
             //MainMap.MaxZoom = 18;
 
+            layerCache = new MemoryLayerCache();
             // get zoom  
             MainMap.MinZoom = 0;
             MainMap.MaxZoom = 24;
@@ -280,6 +284,12 @@ namespace MissionPlanner.GCSViews
             drawnpolygon.Stroke = new Pen(Color.Red, 2);
             drawnpolygon.Fill = Brushes.Transparent;
 
+            var layer = layerCache.GetLastLayerFromMemoryCache();
+            if (layer != null)
+            {
+                GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
+                AddLayerOverlay(layerInfo.path, layerInfo.IsDefaultOrigin, layerInfo.originX, layerInfo.originY, layerInfo.scale); ;
+            }
             /*
             var timer = new System.Timers.Timer();
 
@@ -1000,8 +1010,7 @@ namespace MissionPlanner.GCSViews
 
                     var pnt = new GMapMarkerPlus(mid);
                     pnt.Tag = new midline() { now = now, next = next };
-                    drawnpolygonsoverlay.Markers.Add(pnt);
-                }
+                    drawnpolygonsoverlay.Markers.Add(pnt);            }
             }
 
             MainMap.Invalidate();
@@ -2900,6 +2909,76 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+
+        public void deletePolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int no = 0;
+            if (CurentRectMarker != null)
+            {
+                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out no))
+                {
+                    try
+                    {
+                        if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                            MAVLink.MAV_MISSION_TYPE.FENCE)
+                            ReCalcFence(no - 1, false, true);
+
+                        Commands.Rows.RemoveAt(no - 1); // home is 0
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        CustomMessageBox.Show("error selecting wp, please try again.");
+                    }
+                }
+                else if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out no))
+                {
+                    try
+                    {
+                        drawnpolygon.Points.RemoveAt(no - 1);
+
+                        redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        CustomMessageBox.Show("Remove point Failed. Please try again.");
+                    }
+                }
+            }
+            else if (CurrentRallyPt != null)
+            {
+                rallypointoverlay.Markers.Remove(CurrentRallyPt);
+                MainMap.Invalidate(true);
+
+                CurrentRallyPt = null;
+            }
+            else if (groupmarkers.Count > 0)
+            {
+                for (int a = Commands.Rows.Count; a > 0; a--)
+                {
+                    try
+                    {
+                        if (groupmarkers.Contains(a)) Commands.Rows.RemoveAt(a - 1); // home is 0
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        CustomMessageBox.Show("error selecting wp, please try again.");
+                    }
+                }
+
+                groupmarkers.Clear();
+            }
+
+
+            if (currentMarker != null)
+                CurentRectMarker = null;
+
+            writeKML();
+        }
+
+
         public void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int no = 0;
@@ -3759,54 +3838,123 @@ namespace MissionPlanner.GCSViews
 
                 if (File.Exists(ofd.FileName))
                 {
-                    //string FilePath = "D:\\MegoMap Download\\谷歌地球_卫星影像_影像_山东省(2)\\GeoTIFF拼接大图\\影像_level_7.tif";
-                    string FilePath = ofd.FileName;
-                    GDAL.GDAL.GeoBitmap geobitmap = GDAL.GDAL.LoadImageInfo(FilePath);
-                    //PointLatLngAlt.FromUTM();
-                    if (!geobitmap.Rect.IsEmpty)
+                    string path = ofd.FileName;
+                    bool isDefaultOrigin = false;
+                    double OriginX = 0;
+                    double OriginY = 0;
+                    double scale = 0;
+                    string origin = null;
+                    if (InputBox.Show("输入原点坐标", "示例：x,y", ref origin) == DialogResult.OK)
                     {
-                        layerpolygonsoverlay.Polygons.Clear();
-                        layerpolygonsoverlay.Routes.Clear();
-                        this.rect = geobitmap.Rect;
-
-                        PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
-                        PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
-
-                        var mark = new GMapMarkerLayer(pos1, pos2, geobitmap.Bitmap);
-
-                        FlightData.layerpolygons.Polygons.Add(mark);
-                        layerpolygonsoverlay.Polygons.Add(mark);
-
-                        zoomToTiffToolStripMenuItem_Click(this, null);
-
-                        #region 删除
-                        //var mark = new GMarkerGoogle(pos1, geobitmap.Bitmap);
-                        //FlightData.kmlpolygons.Markers.Add(mark);
-                        //kmlpolygonsoverlay.Markers.Add(mark);
-
-                        //var mark1 = new GMarkerGoogle(pos1, GMarkerGoogleType.brown_small);
-                        //var mark2 = new GMarkerGoogle(pos2, GMarkerGoogleType.brown_small);
-
-                        ////FlightData.kmlpolygons.Markers.Add(mark1);
-                        ////kmlpolygonsoverlay.Markers.Add(mark1);
-
-                        ////FlightData.kmlpolygons.Markers.Add(mark2);
-                        ////kmlpolygonsoverlay.Markers.Add(mark2);
-
-
-                        //float al = (float)(x * loacl_y) / (float)(y * loacl_x);
-
-                        //var mark = new GMarkerGoogle(new PointLatLngAlt(rect.Bottom, rect.Lng), geobitmap.Bitmap);
-                        #endregion
+                        if (Regex.IsMatch(origin, @"^\D*[+-]?\d+[.]?\d*\D*[+-]?\d+[.]?\d*\D*$"))
+                        {
+                            MatchCollection match = Regex.Matches(origin, @"[+-]?\d+[.]?\d*");
+                            if (match.Count >= 2)
+                            {
+                                isDefaultOrigin = false;
+                                OriginX = System.Convert.ToDouble(match[0].Value);
+                                OriginY = System.Convert.ToDouble(match[1].Value);
+                            }
+                            else
+                            {
+                                isDefaultOrigin = true;
+                            }
+                        }
+                        else
+                        {
+                            isDefaultOrigin = true;
+                        }
                     }
                     else
                     {
-                        CustomMessageBox.Show("该TIFF影像文件没有地理坐标.", "Error");
+                        isDefaultOrigin = true;
                     }
+                    if (isDefaultOrigin)
+                    {
+                        CustomMessageBox.Show("将使用默认坐标原点（left，bottom）", Strings.Warning);
+                    }
+                    origin = null;
+                    if (InputBox.Show("输入沙盘比例尺", "输入一个数值", ref origin) == DialogResult.OK)
+                    {
+                        if (Regex.IsMatch(origin, @"^[+-]?\d+[.]?\d*$"))
+                        {
+                            scale = System.Convert.ToDouble(origin);
+                            if (scale < 1)
+                                scale = 1 / scale;
+                        }
+                        else if (Regex.IsMatch(origin, @"^[+-]?\d+[.]?\d*[:\：][+-]?\d+[.]?\d*$"))
+                        {
+                            MatchCollection match = Regex.Matches(origin, @"[+-]?\d+[.]?\d*");
+                            if (match.Count >= 2)
+                            {
+                                scale = System.Convert.ToDouble(match[1].Value) / System.Convert.ToDouble(match[0].Value);
+                                if (scale < 1)
+                                    scale = System.Convert.ToDouble(match[0].Value) / System.Convert.ToDouble(match[1].Value);
+                            }
+                            else
+                            {
+                                CustomMessageBox.Show("非法比例尺", Strings.ERROR);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            CustomMessageBox.Show("非法比例尺", Strings.ERROR);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show("沙盘比例尺不能为空", Strings.ERROR);
+                        return;
+                    }
+                    AddLayerOverlay(path, isDefaultOrigin, OriginX, OriginY, scale);
                 }
             }
-            
-            
+        }
+
+        public bool AddLayerOverlay(string path, bool isDefaultOrigin, double x, double y, double scale)
+        {
+            if (File.Exists(path))
+            {
+                //string FilePath = "D:\\MegoMap Download\\谷歌地球_卫星影像_影像_山东省(2)\\GeoTIFF拼接大图\\影像_level_7.tif";
+                string FilePath = path;
+                GDAL.GDAL.GeoBitmap geobitmap = GDAL.GDAL.LoadImageInfo(FilePath);
+                //PointLatLngAlt.FromUTM();
+                if (!geobitmap.Rect.IsEmpty)
+                {
+                    layerpolygonsoverlay.Polygons.Clear();
+                    layerpolygonsoverlay.Routes.Clear();
+                    this.rect = geobitmap.Rect;
+
+                    PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
+                    PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
+                    var mark = new GMapMarkerLayer(pos1, pos2, geobitmap.Bitmap);
+
+                    FlightData.layerpolygons.Polygons.Add(mark);
+                    layerpolygonsoverlay.Polygons.Add(mark);
+
+                    if (isDefaultOrigin)
+                    {
+                        layerCache.AddTileToMemoryCache(path.GetHashCode().ToString(), new GMap.NET.Internals.LayerInfo(path, scale));
+                    }
+                    else
+                    {
+                        layerCache.AddTileToMemoryCache(path.GetHashCode().ToString(), new GMap.NET.Internals.LayerInfo(path, x, y, scale));
+                    }
+                    
+                    zoomToTiffToolStripMenuItem_Click(this, null);
+
+                }
+                else
+                {
+                    CustomMessageBox.Show("该TIFF影像文件没有地理坐标.", "Error");
+                    return false;
+                }
+                return true;
+            }
+            else
+                return false;
         }
 
         public void kMLOverlayToolStripMenuItem_Click(object sender, EventArgs e)
