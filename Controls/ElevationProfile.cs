@@ -22,7 +22,7 @@ namespace MissionPlanner
         PointPairList list4terrain = new PointPairList();
         int distance = 0;
         double homealt = 0;
-        FlightPlanner.altmode altmode = FlightPlanner.altmode.Relative;
+        FlightPlanner.Altmode altmode = FlightPlanner.Altmode.Relative;
 
         public ElevationProfile(List<PointLatLngAlt> locs, double homealt)
         {
@@ -113,12 +113,12 @@ namespace MissionPlanner
                 }
 
                 // deal with at mode
-                if (altmode == FlightPlanner.altmode.Terrain)
+                if (altmode == FlightPlanner.Altmode.Terrain)
                 {
                     list1 = list4terrain;
                     break;
                 }
-                else if (altmode == FlightPlanner.altmode.Relative)
+                else if (altmode == FlightPlanner.Altmode.Relative)
                 {
                     // already includes the home alt
                     list1.Add(a * CurrentState.multiplierdist, (planloc.Alt * CurrentState.multiplieralt), 0, planloc.Tag);
@@ -153,14 +153,14 @@ namespace MissionPlanner
                 if (last == null)
                 {
                     last = loc;
-                    if (altmode == FlightPlanner.altmode.Terrain)
+                    if (altmode == FlightPlanner.Altmode.Terrain)
                         loc.Alt -= srtm.getAltitude(loc.Lat, loc.Lng).alt;
                     continue;
                 }
 
                 double dist = last.GetDistance(loc);
 
-                if (altmode == FlightPlanner.altmode.Terrain)
+                if (altmode == FlightPlanner.Altmode.Terrain)
                     loc.Alt -= srtm.getAltitude(loc.Lat, loc.Lng).alt;
 
                 int points = (int)(dist / 10) + 1;

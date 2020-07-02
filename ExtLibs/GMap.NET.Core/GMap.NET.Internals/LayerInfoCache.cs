@@ -42,12 +42,10 @@ namespace GMap.NET.Internals
         {
             if (Queue.Contains(key))
             {
+                Queue.Remove(key);
                 base.Remove(key);
             }
-            else
-            {
-                Queue.Add(key);
-            }
+            Queue.Add(key);
             base.Add(key, value);
         }
 

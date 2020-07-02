@@ -94,7 +94,7 @@ namespace MissionPlanner
         }
 
         public static List<PointLatLngAlt> CreateCorridor(List<PointLatLngAlt> polygon, double height, double camViewHeight, double camVertSpacing, double distance, double angle,
-            double camPitch, bool flipDirection, double bermDepth, int numBenches, double toeHeight, double toepoint, double toepoint_runs, bool pathHome, double homeAlt, FlightPlanner.altmode altmode)
+            double camPitch, bool flipDirection, double bermDepth, int numBenches, double toeHeight, double toepoint, double toepoint_runs, bool pathHome, double homeAlt, FlightPlanner.Altmode altmode)
         {
             int direction = (flipDirection == true ? -1 : 1);
 

@@ -9,6 +9,7 @@
     public class MemoryLayerCache
     {
         static readonly LayerInfoCache layerInfoInMemory = new LayerInfoCache();
+        static string selectedLayer;
 
         static MemoryLayerCache()
         {
@@ -31,6 +32,14 @@
             }
         }
 
+        public int Count
+        {
+            get
+            {
+                return layerInfoInMemory.Count;
+            }
+        }
+
         public bool IsEmpty
         {
             get
@@ -45,12 +54,12 @@
             }
         }
 
-        public LayerInfo? GetLayerFromMemoryCache(string path)
+        public LayerInfo? GetLayerFromMemoryCache(string key)
         {
             try
             {
                 LayerInfo ret;
-                if (layerInfoInMemory.TryGetValue(path, out ret))
+                if (layerInfoInMemory.TryGetValue(key, out ret))
                 {
                     return ret;
                 }
@@ -75,13 +84,13 @@
             }
         }
 
-        public LayerInfo? GetLastLayerFromMemoryCache()
+        public LayerInfo? GetSelectedLayerFromMemoryCache()
         {
             try
             {
                 if (layerInfoInMemory.Count <= 0)
                     return null;
-                return layerInfoInMemory[layerInfoInMemory.Count - 1];
+                return GetLayerFromMemoryCache(selectedLayer);
             }
             finally
             {
@@ -89,22 +98,44 @@
         }
 
 
-        public void AddTileToMemoryCache(string key, LayerInfo data)
+        public bool AddLayerToMemoryCache(LayerInfo data)
         {
 
             try
             {
+                string key = GetHashCode(data);
+                if (key == null)
+                    return false;
+                selectedLayer = key;
                 if (!layerInfoInMemory.ContainsKey(key))
                 {
                     layerInfoInMemory.Add(key, data);
                 }
-                else if (!data.Equals(GetLayerFromMemoryCache(key)))
+                else if (!data.Equals(GetLayerFromMemoryCache(key).GetValueOrDefault()))
                 {
                     layerInfoInMemory.Modify(key, data);
                 }
             }
             finally
             {
+            }
+            return true;
+        }
+
+        internal static string GetHashCode(LayerInfo data)
+        {
+            if(data.path != null || data.path != "")
+            {
+                return (data.path.GetHashCode().ToString());
+            }
+            else
+            {
+                if (data.IsDefaultOrigin)
+                    return null;
+                else
+                {
+                    return (data.originX + data.originY).GetHashCode().ToString();
+                }
             }
         }
 
@@ -162,9 +193,15 @@
                         if (originX == null || originY == null)
                             isDefaultOrigin = true;
                         if (isDefaultOrigin)
+                        {
                             layerInfoInMemory.Add(key, new LayerInfo(path, (double)scale));
+                            selectedLayer = key;
+                        }
                         else
+                        {
                             layerInfoInMemory.Add(key, new LayerInfo(path, (double)originX, (double)originY, (double)scale));
+                            selectedLayer = key;
+                        }
                     }
                 }
             }

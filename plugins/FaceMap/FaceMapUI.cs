@@ -613,7 +613,7 @@ namespace MissionPlanner
             grid = FaceMap.CreateCorridor(list, CurrentState.fromDistDisplayUnit((double)NUM_BenchHeight.Value), (double)viewheight,
                      (double)camVerticalSpacing, (double)NUM_Distance.Value, (double)NUM_angle.Value, (double)NUM_cameraPitch.Value,
                      CHK_facedirection.Checked, (double)NUM_BermDepth.Value, (int)NUM_Benches.Value, (double)NUM_toeHeight.Value, (double)NUM_toepoint.Value, (double)NUM_toepoint_runs.Value,
-                     CHK_FollowPathHome.Checked, startalt, (FlightPlanner.altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue);
+                     CHK_FollowPathHome.Checked, startalt, (FlightPlanner.Altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue);
 
             if (grid.Count == 0)
                 return;
@@ -1285,7 +1285,7 @@ namespace MissionPlanner
                     int wpend = wpsplit * (splitno + 1);
 
                     // If planning in absolute mode.
-                    if ((FlightPlanner.altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue == FlightPlanner.altmode.Absolute)
+                    if ((FlightPlanner.Altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue == FlightPlanner.Altmode.Absolute)
                     {
                         // TODO - Restore me!
 
@@ -1306,7 +1306,7 @@ namespace MissionPlanner
                        otherwise stay at the entry altitude. */
 
                     // If planning in absolute mode.
-                    if ((FlightPlanner.altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue == FlightPlanner.altmode.Absolute)
+                    if ((FlightPlanner.Altmode)plugin.Host.MainForm.FlightPlanner.CMB_altmode.SelectedValue == FlightPlanner.Altmode.Absolute)
                     {
                         if (plugin.Host.cs.HomeAlt < grid[wpstart].Alt) entryAltitude += grid[wpstart].Alt;
                         else entryAltitude += plugin.Host.cs.HomeAlt;

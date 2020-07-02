@@ -149,8 +149,8 @@
   <data name="BUT_write.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 23</value>
   </data>
-  <data name="lbl_status.Text" xml:space="preserve">
-    <value>Status</value>
+  <data name="loadWPToolStripMenuItem.Text" xml:space="preserve">
+    <value>Load WP</value>
   </data>
   <data name="panelAction.Text" xml:space="preserve">
     <value>Action</value>
@@ -161,6 +161,9 @@
   </data>
   <data name="cmb_missiontype.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;loadWPToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="cmb_missiontype.Items2" xml:space="preserve">
     <value>Rally</value>
@@ -191,17 +194,17 @@
   <data name="contextMenuStripMain.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="but_mincommands.Location" type="System.Drawing.Point, System.Drawing">
-    <value>944, 0</value>
+  <data name="setHomeHereToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set Home Here</value>
   </data>
   <data name="&gt;&gt;Grad.Name" xml:space="preserve">
     <value>Grad</value>
   </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
   <data name="but_mincommands.TabIndex" type="System.Int32, mscorlib">
     <value>55</value>
+  </data>
+  <data name="&gt;&gt;tiffReadToolStripMenuItem.Name" xml:space="preserve">
+    <value>tiffReadToolStripMenuItem</value>
   </data>
   <data name="coords1.ToolTip" xml:space="preserve">
     <value />
@@ -221,8 +224,8 @@
   <data name="&gt;&gt;loadKMLFileToolStripMenuItem.Name" xml:space="preserve">
     <value>loadKMLFileToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;chk_grid.Parent" xml:space="preserve">
-    <value>panel3</value>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Loiter Radius</value>
   </data>
   <data name="Angle.Width" type="System.Int32, mscorlib">
     <value>35</value>
@@ -233,8 +236,8 @@
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 319</value>
+  <data name="zoomToHomeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Zoom to Home</value>
   </data>
   <data name="&gt;&gt;panel4.Parent" xml:space="preserve">
     <value>flowLayoutPanel1</value>
@@ -251,8 +254,8 @@
   <data name="&gt;&gt;Lat.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label17.Text" xml:space="preserve">
+    <value>Alt Warn</value>
   </data>
   <data name="contextMenuStripPoly.ToolTip" xml:space="preserve">
     <value />
@@ -275,14 +278,17 @@
   <data name="BUT_saveWPFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 23</value>
   </data>
+  <data name="lbl_status.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="&gt;&gt;chk_grid.Name" xml:space="preserve">
     <value>chk_grid</value>
   </data>
-  <data name="&gt;&gt;lnk_kml.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
+  </data>
+  <data name="planningWPToolStripMenuItem.Text" xml:space="preserve">
+    <value>Planning WP</value>
   </data>
   <data name="lbl_status.TabIndex" type="System.Int32, mscorlib">
     <value>43</value>
@@ -295,6 +301,9 @@
   </data>
   <data name="TagData.HeaderText" xml:space="preserve">
     <value>TagData</value>
+  </data>
+  <data name="&gt;&gt;planningWPToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;contextMenuStripZoom.Name" xml:space="preserve">
     <value>contextMenuStripZoom</value>
@@ -376,6 +385,9 @@
   <data name="&gt;&gt;flowLayoutPanel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="lbl_prevdist.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="&gt;&gt;splitter2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -414,8 +426,8 @@
   <data name="cmb_missiontype.Items" xml:space="preserve">
     <value>Mission</value>
   </data>
-  <data name="Delete.Width" type="System.Int32, mscorlib">
-    <value>40</value>
+  <data name="&gt;&gt;splitter1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -429,8 +441,8 @@
   <data name="&gt;&gt;trackBar1.Name" xml:space="preserve">
     <value>trackBar1</value>
   </data>
-  <data name="&gt;&gt;BUT_read.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="MGRS.MinimumWidth" type="System.Int32, mscorlib">
+    <value>50</value>
   </data>
   <data name="panelAction.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 488</value>
@@ -492,9 +504,6 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Lat</value>
   </data>
-  <data name="MGRS.MinimumWidth" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
   <data name="&gt;&gt;but_mincommands.Name" xml:space="preserve">
     <value>but_mincommands</value>
   </data>
@@ -521,6 +530,9 @@
   </data>
   <data name="but_mincommands.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="&gt;&gt;zoomToTiffToolStripTiffMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;surveyGridToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -552,9 +564,6 @@
   <data name="Delete.ToolTipText" xml:space="preserve">
     <value>Delete the row</value>
   </data>
-  <data name="Dist.HeaderText" xml:space="preserve">
-    <value>Dist</value>
-  </data>
   <data name="&gt;&gt;comboBoxMapType.Name" xml:space="preserve">
     <value>comboBoxMapType</value>
   </data>
@@ -564,8 +573,14 @@
   <data name="label17.TabIndex" type="System.Int32, mscorlib">
     <value>51</value>
   </data>
+  <data name="&gt;&gt;tiffReadToolStripTiffMenuItem.Name" xml:space="preserve">
+    <value>tiffReadToolStripTiffMenuItem</value>
+  </data>
   <data name="&gt;&gt;panel3.Parent" xml:space="preserve">
     <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStripTiff.Name" xml:space="preserve">
+    <value>contextMenuStripTiff</value>
   </data>
   <data name="lnk_kml.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -584,6 +599,9 @@
   </data>
   <data name="CMB_altmode.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="zoomToTiffToolStripMenuItem.Text" xml:space="preserve">
+    <value>ZoomToTiffArea</value>
   </data>
   <data name="lbl_wpfile.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -606,14 +624,17 @@
   <data name="&gt;&gt;fromSHPToolStripMenuItem.Name" xml:space="preserve">
     <value>fromSHPToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;splitter1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="fileLoadSaveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 22</value>
   </data>
+  <data name="&gt;&gt;LBL_WPRad.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="CHK_splinedefault.Text" xml:space="preserve">
     <value>Spline</value>
+  </data>
+  <data name="Lon.HeaderText" xml:space="preserve">
+    <value>Lon</value>
   </data>
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -621,8 +642,11 @@
   <data name="label2.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="Lon.HeaderText" xml:space="preserve">
-    <value>Lon</value>
+  <data name="&gt;&gt;flowLayoutPanel1.Parent" xml:space="preserve">
+    <value>panelAction</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;CMB_altmode.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -663,8 +687,8 @@
   <data name="polygonToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 22</value>
   </data>
-  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save Polygon</value>
+  <data name="&gt;&gt;TXT_DefaultAlt.Name" xml:space="preserve">
+    <value>TXT_DefaultAlt</value>
   </data>
   <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -687,11 +711,11 @@
   <data name="&gt;&gt;label5.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 12</value>
+  <data name="LBL_defalutalt.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;addPolygonPointToolStripMenuItem.Name" xml:space="preserve">
-    <value>addPolygonPointToolStripMenuItem</value>
+  <data name="&gt;&gt;lnk_kml.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -699,8 +723,8 @@
   <data name="Alt.MinimumWidth" type="System.Int32, mscorlib">
     <value>30</value>
   </data>
-  <data name="LBL_defalutalt.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;BUT_loadwpfile.Parent" xml:space="preserve">
+    <value>panel2</value>
   </data>
   <data name="loadSHPFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 22</value>
@@ -717,8 +741,8 @@
   <data name="&gt;&gt;panel3.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;LBL_WPRad.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Param4.HeaderText" xml:space="preserve">
     <value>P4</value>
@@ -749,6 +773,9 @@
   </data>
   <data name="TXT_altwarn.Location" type="System.Drawing.Point, System.Drawing">
     <value>482, 20</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="contextMenuStripZoom.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 70</value>
@@ -781,6 +808,9 @@
     <value>3</value>
   </data>
   <data name="&gt;&gt;LBL_WPRad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_distance.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Alt.Width" type="System.Int32, mscorlib">
@@ -828,8 +858,11 @@
   <data name="Lon.Width" type="System.Int32, mscorlib">
     <value>70</value>
   </data>
-  <data name="&gt;&gt;contextMenuStripMain.Name" xml:space="preserve">
-    <value>contextMenuStripMain</value>
+  <data name="tiffManagerToolStripTiffMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 22</value>
+  </data>
+  <data name="but_mincommands.Location" type="System.Drawing.Point, System.Drawing">
+    <value>944, 0</value>
   </data>
   <data name="panelBASE.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -855,9 +888,6 @@
   <data name="lbl_homedist.Text" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="MGRS.HeaderText" xml:space="preserve">
-    <value>MGRS</value>
-  </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
@@ -875,6 +905,9 @@
   </data>
   <data name="&gt;&gt;toolStripMenuItem3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BUT_Add.Name" xml:space="preserve">
+    <value>BUT_Add</value>
   </data>
   <data name="&gt;&gt;addPolygonPointToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -908,6 +941,9 @@
   </data>
   <data name="&gt;&gt;TagData.Name" xml:space="preserve">
     <value>TagData</value>
+  </data>
+  <data name="&gt;&gt;addPolygonPointToolStripMenuItem.Name" xml:space="preserve">
+    <value>addPolygonPointToolStripMenuItem</value>
   </data>
   <data name="coordEasting.Width" type="System.Int32, mscorlib">
     <value>67</value>
@@ -945,8 +981,8 @@
   <data name="TXT_WPRad.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 21</value>
   </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="saveWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 22</value>
   </data>
   <data name="Frame.MinimumWidth" type="System.Int32, mscorlib">
     <value>30</value>
@@ -960,11 +996,14 @@
   <data name="&gt;&gt;contextMenuStripPoly.Name" xml:space="preserve">
     <value>contextMenuStripPoly</value>
   </data>
+  <data name="&gt;&gt;loadPolygonToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 12</value>
   </data>
   <data name="&gt;&gt;Commands.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.MyDataGridView, MissionPlanner, Version=1.3.7475.28082, Culture=neutral, PublicKeyToken=null</value>
+    <value>MissionPlanner.Controls.MyDataGridView, MissionPlanner, Version=1.3.7487.29338, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="BUT_loadwpfile.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 23</value>
@@ -978,8 +1017,8 @@
   <data name="CMB_altmode.TabIndex" type="System.Int32, mscorlib">
     <value>54</value>
   </data>
-  <data name="&gt;&gt;lbl_distance.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="loadWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 22</value>
   </data>
   <data name="Param3.Width" type="System.Int32, mscorlib">
     <value>40</value>
@@ -1026,17 +1065,20 @@
   <data name="&gt;&gt;TXT_DefaultAlt.Parent" xml:space="preserve">
     <value>panelWaypoints</value>
   </data>
+  <data name="&gt;&gt;planningWPToolStripMenuItem.Name" xml:space="preserve">
+    <value>planningWPToolStripMenuItem</value>
+  </data>
   <data name="&gt;&gt;cmb_missiontype.Parent" xml:space="preserve">
     <value>panelMap</value>
   </data>
   <data name="BUT_Add.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="saveWPToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save WP</value>
-  </data>
   <data name="&gt;&gt;Commands.Name" xml:space="preserve">
     <value>Commands</value>
+  </data>
+  <data name="contextMenuStripZoom.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>578, 17</value>
   </data>
   <data name="&gt;&gt;BUT_write.Type" xml:space="preserve">
     <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
@@ -1056,11 +1098,11 @@
   <data name="CHK_verifyheight.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="&gt;&gt;tiffReadToolStripTiffMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="coordEasting.MinimumWidth" type="System.Int32, mscorlib">
     <value>60</value>
-  </data>
-  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>Clear Polygon</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>33</value>
@@ -1107,8 +1149,14 @@
   <data name="&gt;&gt;panel5.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="tiffReadToolStripMenuItem.Text" xml:space="preserve">
+    <value>Load local map</value>
+  </data>
   <data name="&gt;&gt;LBL_WPRad.Parent" xml:space="preserve">
     <value>panelWaypoints</value>
+  </data>
+  <data name="zoomToTiffToolStripTiffMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 19</value>
   </data>
   <data name="coordZone.Width" type="System.Int32, mscorlib">
     <value>57</value>
@@ -1152,6 +1200,9 @@
   <data name="comboBoxMapType.ToolTip" xml:space="preserve">
     <value>Change the current map type</value>
   </data>
+  <data name="&gt;&gt;saveWPToolStripMenuItem.Name" xml:space="preserve">
+    <value>saveWPToolStripMenuItem</value>
+  </data>
   <data name="panel5.TabIndex" type="System.Int32, mscorlib">
     <value>29</value>
   </data>
@@ -1164,11 +1215,11 @@
   <data name="panel4.TabIndex" type="System.Int32, mscorlib">
     <value>50</value>
   </data>
-  <data name="&gt;&gt;loadSHPFileToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="but_mincommands.Text" xml:space="preserve">
     <value>˅</value>
+  </data>
+  <data name="contextMenuStripTiff.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="coordEasting.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -1254,8 +1305,8 @@
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="trackBar1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cmb_missiontype.Name" xml:space="preserve">
     <value>cmb_missiontype</value>
@@ -1265,6 +1316,9 @@
   </data>
   <data name="Dist.MinimumWidth" type="System.Int32, mscorlib">
     <value>30</value>
+  </data>
+  <data name="&gt;&gt;loadWPToolStripMenuItem.Name" xml:space="preserve">
+    <value>loadWPToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;splitter1.Name" xml:space="preserve">
     <value>splitter1</value>
@@ -1284,8 +1338,8 @@
   <data name="but_mincommands.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Loiter Radius</value>
+  <data name="&gt;&gt;contextMenuStripTiff.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;coordEasting.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1293,20 +1347,17 @@
   <data name="coords1.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
-  <data name="&gt;&gt;panel4.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;tiffManagerToolStripTiffMenuItem.Name" xml:space="preserve">
+    <value>tiffManagerToolStripTiffMenuItem</value>
   </data>
   <data name="cmb_missiontype.Items1" xml:space="preserve">
     <value>Fence</value>
   </data>
-  <data name="&gt;&gt;flowLayoutPanel1.Parent" xml:space="preserve">
-    <value>panelAction</value>
+  <data name="&gt;&gt;zoomToVehicleToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Delete.MinimumWidth" type="System.Int32, mscorlib">
     <value>40</value>
-  </data>
-  <data name="&gt;&gt;BUT_loadwpfile.Parent" xml:space="preserve">
-    <value>panel2</value>
   </data>
   <data name="&gt;&gt;coordNorthing.Name" xml:space="preserve">
     <value>coordNorthing</value>
@@ -1319,9 +1370,6 @@
   </data>
   <data name="panelWaypoints.TabIndex" type="System.Int32, mscorlib">
     <value>49</value>
-  </data>
-  <data name="BUT_read.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 23</value>
   </data>
   <data name="Delete.HeaderText" xml:space="preserve">
     <value>Delete</value>
@@ -1368,14 +1416,17 @@
   <data name="Param3.HeaderText" xml:space="preserve">
     <value>P3</value>
   </data>
-  <data name="&gt;&gt;zoomToVehicleToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;zoomToTiffToolStripTiffMenuItem.Name" xml:space="preserve">
+    <value>zoomToTiffToolStripTiffMenuItem</value>
   </data>
   <data name="coordZone.HeaderText" xml:space="preserve">
     <value>Zone</value>
   </data>
   <data name="&gt;&gt;splitter1.Parent" xml:space="preserve">
     <value>panelBASE</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbl_wpfile.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1422,8 +1473,11 @@
   <data name="loadSHPFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Load SHP File</value>
   </data>
-  <data name="&gt;&gt;BUT_Add.Name" xml:space="preserve">
-    <value>BUT_Add</value>
+  <data name="&gt;&gt;tiffReadToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lnk_kml.Parent" xml:space="preserve">
+    <value>panel3</value>
   </data>
   <data name="panel1.ToolTip" xml:space="preserve">
     <value />
@@ -1449,6 +1503,9 @@
   <data name="CHK_verifyheight.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
   <data name="comboBoxMapType.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 22</value>
   </data>
@@ -1473,9 +1530,6 @@
   <data name="BUT_saveWPFile.TabIndex" type="System.Int32, mscorlib">
     <value>47</value>
   </data>
-  <data name="LBL_WPRad.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;BUT_saveWPFile.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -1485,17 +1539,14 @@
   <data name="panelAction.TabIndex" type="System.Int32, mscorlib">
     <value>50</value>
   </data>
-  <data name="planningWPToolStripMenuItem.Text" xml:space="preserve">
-    <value>Planning WP</value>
+  <data name="&gt;&gt;saveWPToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;splitter2.Parent" xml:space="preserve">
     <value>panelBASE</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 23</value>
-  </data>
-  <data name="&gt;&gt;clearPolygonToolStripMenuItem.Name" xml:space="preserve">
-    <value>clearPolygonToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;LBL_defalutalt.Name" xml:space="preserve">
     <value>LBL_defalutalt</value>
@@ -1536,11 +1587,14 @@
   <data name="lbl_distance.TabIndex" type="System.Int32, mscorlib">
     <value>48</value>
   </data>
-  <data name="&gt;&gt;but_mincommands.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
   </data>
   <data name="flowLayoutPanel1.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
   </data>
   <data name="&gt;&gt;loadWPFileToolStripMenuItem.Name" xml:space="preserve">
     <value>loadWPFileToolStripMenuItem</value>
@@ -1587,17 +1641,17 @@
   <data name="TXT_altwarn.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 21</value>
   </data>
-  <data name="&gt;&gt;TXT_homelng.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Dist.HeaderText" xml:space="preserve">
+    <value>Dist</value>
   </data>
   <data name="BUT_read.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="&gt;&gt;but_mincommands.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
   <data name="&gt;&gt;Param3.Name" xml:space="preserve">
     <value>Param3</value>
-  </data>
-  <data name="trackBar1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Lat.MinimumWidth" type="System.Int32, mscorlib">
     <value>70</value>
@@ -1659,8 +1713,8 @@
   <data name="&gt;&gt;BUT_read.Type" xml:space="preserve">
     <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="BUT_read.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 23</value>
   </data>
   <data name="&gt;&gt;lnk_kml.Name" xml:space="preserve">
     <value>lnk_kml</value>
@@ -1688,6 +1742,9 @@
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="TXT_homealt.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;zoomToHomeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1721,6 +1778,9 @@
   </data>
   <data name="lnk_kml.Text" xml:space="preserve">
     <value>View KML</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 6</value>
   </data>
   <data name="LBL_defalutalt.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1806,6 +1866,9 @@
   <data name="&gt;&gt;panel2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="lbl_wpfile.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
   <data name="coordNorthing.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -1824,8 +1887,14 @@
   <data name="CHK_splinedefault.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 16</value>
   </data>
+  <data name="savePolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>Save Polygon</value>
+  </data>
   <data name="Up.Width" type="System.Int32, mscorlib">
     <value>30</value>
+  </data>
+  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="BUT_loadwpfile.TabIndex" type="System.Int32, mscorlib">
     <value>46</value>
@@ -1869,11 +1938,11 @@
   <data name="panelBASE.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="loadAndAppendToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 22</value>
+  <data name="&gt;&gt;panel3.Name" xml:space="preserve">
+    <value>panel3</value>
   </data>
-  <data name="loadWPToolStripMenuItem.Text" xml:space="preserve">
-    <value>Load WP</value>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 6</value>
   </data>
   <data name="label11.TabIndex" type="System.Int32, mscorlib">
     <value>47</value>
@@ -1938,8 +2007,8 @@
   <data name="&gt;&gt;panelMap.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;TXT_DefaultAlt.Name" xml:space="preserve">
-    <value>TXT_DefaultAlt</value>
+  <data name="loadAndAppendToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 22</value>
   </data>
   <data name="CHK_verifyheight.TabIndex" type="System.Int32, mscorlib">
     <value>45</value>
@@ -1953,14 +2022,14 @@
   <data name="TXT_homelat.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
-  <data name="lbl_wpfile.Text" xml:space="preserve">
-    <value>...</value>
+  <data name="&gt;&gt;TXT_homelng.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;coordNorthing.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="setHomeHereToolStripMenuItem.Text" xml:space="preserve">
-    <value>Set Home Here</value>
+  <data name="&gt;&gt;clearPolygonToolStripMenuItem.Name" xml:space="preserve">
+    <value>clearPolygonToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;TXT_homealt.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1968,11 +2037,20 @@
   <data name="Lat.HeaderText" xml:space="preserve">
     <value>Lat</value>
   </data>
-  <data name="&gt;&gt;lnk_kml.Parent" xml:space="preserve">
-    <value>panel3</value>
+  <data name="lbl_homedist.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
   </data>
-  <data name="lbl_prevdist.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="TXT_DefaultAlt.Location" type="System.Drawing.Point, System.Drawing">
+    <value>154, 20</value>
+  </data>
+  <data name="MGRS.HeaderText" xml:space="preserve">
+    <value>MGRS</value>
+  </data>
+  <data name="&gt;&gt;BUT_read.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="fromPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>From Ploygon</value>
   </data>
   <data name="CHK_splinedefault.ToolTip" xml:space="preserve">
     <value />
@@ -1980,14 +2058,11 @@
   <data name="Commands.Size" type="System.Drawing.Size, System.Drawing">
     <value>968, 126</value>
   </data>
-  <data name="lbl_homedist.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 12</value>
+  <data name="LBL_WPRad.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="panelMap.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;panel3.Name" xml:space="preserve">
-    <value>panel3</value>
   </data>
   <data name="Down.Width" type="System.Int32, mscorlib">
     <value>30</value>
@@ -1997,6 +2072,9 @@
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>76, 4</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStripMain.Name" xml:space="preserve">
+    <value>contextMenuStripMain</value>
   </data>
   <data name="&gt;&gt;comboBoxMapType.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2025,6 +2103,9 @@
   <data name="&gt;&gt;surveyGridToolStripMenuItem.Name" xml:space="preserve">
     <value>surveyGridToolStripMenuItem</value>
   </data>
+  <data name="saveWPToolStripMenuItem.Text" xml:space="preserve">
+    <value>Save WP</value>
+  </data>
   <data name="TXT_loiterrad.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 20</value>
   </data>
@@ -2036,6 +2117,9 @@
   </data>
   <data name="&gt;&gt;autoWPToolStripMenuItem.Name" xml:space="preserve">
     <value>autoWPToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
+    <value>toolStripSeparator3</value>
   </data>
   <data name="trackBar1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Right</value>
@@ -2049,11 +2133,14 @@
   <data name="&gt;&gt;AZ.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TXT_DefaultAlt.Location" type="System.Drawing.Point, System.Drawing">
-    <value>154, 20</value>
+  <data name="clearPolygonToolStripMenuItem.Text" xml:space="preserve">
+    <value>Clear Polygon</value>
   </data>
   <data name="Param3.MinimumWidth" type="System.Int32, mscorlib">
     <value>30</value>
+  </data>
+  <data name="&gt;&gt;tiffManagerToolStripTiffMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;timer1.Name" xml:space="preserve">
     <value>timer1</value>
@@ -2073,14 +2160,17 @@
   <data name="cmb_missiontype.Location" type="System.Drawing.Point, System.Drawing">
     <value>798, 3</value>
   </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
+  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="planningWPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 22</value>
   </data>
   <data name="lbl_wpfile.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 12</value>
   </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TXT_loiterrad.Text" xml:space="preserve">
     <value>45</value>
@@ -2091,8 +2181,8 @@
   <data name="MGRS.Width" type="System.Int32, mscorlib">
     <value>64</value>
   </data>
-  <data name="&gt;&gt;loadPolygonToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 319</value>
   </data>
   <data name="toolStripMenuItem3.Text" xml:space="preserve">
     <value>1</value>
@@ -2103,8 +2193,8 @@
   <data name="&gt;&gt;loadKMLFileToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label17.Text" xml:space="preserve">
-    <value>Alt Warn</value>
+  <data name="&gt;&gt;chk_grid.Parent" xml:space="preserve">
+    <value>panel3</value>
   </data>
   <data name="CMB_altmode.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 20</value>
@@ -2142,8 +2232,11 @@
   <data name="panel4.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 55</value>
   </data>
-  <data name="zoomToHomeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Zoom to Home</value>
+  <data name="Delete.Width" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;loadSHPFileToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TXT_homelat.Name" xml:space="preserve">
     <value>TXT_homelat</value>
@@ -2151,11 +2244,14 @@
   <data name="&gt;&gt;TXT_altwarn.Parent" xml:space="preserve">
     <value>panelWaypoints</value>
   </data>
-  <data name="TXT_homealt.ToolTip" xml:space="preserve">
-    <value />
+  <data name="tiffReadToolStripTiffMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 22</value>
   </data>
   <data name="but_writewpfast.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 23</value>
+  </data>
+  <data name="&gt;&gt;panel4.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="lnk_kml.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2178,6 +2274,9 @@
   <data name="chk_grid.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
   </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 12</value>
+  </data>
   <data name="contextMenuStripPoly.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 4</value>
   </data>
@@ -2189,6 +2288,9 @@
   </data>
   <data name="&gt;&gt;loadAndAppendToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tiffReadToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 22</value>
   </data>
   <data name="&gt;&gt;lnk_kml.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2390,100 +2492,91 @@
   <data name="fromSHPToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 22</value>
   </data>
-  <data name="contextMenuStripMain.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>17, 17</value>
-  </data>
-  <data name="Param3.UserAddedColumn" type="System.Boolean, mscorlib">
+  <metadata name="contextMenuStripMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>194, 17</value>
+  </metadata>
+  <metadata name="Param3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Param4.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Param4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Param1.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Param1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Down.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Lat.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Lat.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Param2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Param2.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Frame.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Frame.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Dist.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Dist.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="TagData.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="TagData.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Command.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Command.UserAddedColumn" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="$this.Language" type="System.Globalization.CultureInfo, mscorlib">
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>zh-CHS</value>
-  </data>
-  <data name="Alt.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Alt.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="coordNorthing.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="coordNorthing.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Up.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Up.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="contextMenuStripZoom.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>578, 17</value>
-  </data>
-  <data name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>204, 17</value>
-  </data>
-  <data name="Delete.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>381, 17</value>
+  </metadata>
+  <metadata name="Down.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="$this.TrayHeight" type="System.Int32, mscorlib">
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>55</value>
-  </data>
-  <data name="contextMenuStripPoly.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>395, 17</value>
-  </data>
-  <data name="MGRS.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Delete.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Angle.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="contextMenuStripPoly.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>572, 17</value>
+  </metadata>
+  <metadata name="MGRS.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="AZ.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Angle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="coordEasting.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="AZ.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="coordZone.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="coordEasting.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Lon.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="coordZone.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="Grad.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="Lon.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>305, 17</value>
-  </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="contextMenuStripTiff.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="Grad.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="fromPolygonToolStripMenuItem.Text" xml:space="preserve">
-    <value>From Ploygon</value>
-  </data>
-  <data name="tiffReadToolStripMenuItem.Text" xml:space="preserve">
-    <value>Load local map</value>
-  </data>
-  <data name="zoomToTiffToolStripMenuItem.Text" xml:space="preserve">
-    <value>ZoomToTiffArea</value>
-  </data>
+  </metadata>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>482, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

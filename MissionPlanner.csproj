@@ -390,6 +390,18 @@
     <Compile Include="Controls\Icon\File.cs" />
     <Compile Include="Controls\Icon\WP.cs" />
     <Compile Include="Controls\Icon\Zoom.cs" />
+    <Compile Include="Controls\LayerListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LayerListView.Designer.cs">
+      <DependentUpon>LayerListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LayerManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LayerManager.Designer.cs">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Status.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -676,6 +688,21 @@
     <EmbeddedResource Include="Controls\GMAPCache.resx">
       <DependentUpon>GMAPCache.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerListView.resx">
+      <DependentUpon>LayerListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerListView.zh-Hans.resx">
+      <DependentUpon>LayerListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerManager.resx">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerManager.zh-CHS.resx">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerManager.zh-Hans.resx">
+      <DependentUpon>LayerManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Status.resx">
       <DependentUpon>Status.cs</DependentUpon>
     </EmbeddedResource>
@@ -807,6 +834,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\ConfigurationView\ConfigUserDefined.resx">
       <DependentUpon>ConfigUserDefined.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GCSViews\FlightPlanner.zh-CHS.resx">
+      <DependentUpon>FlightPlanner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\FlightPlanner.zh-CN.resx">
       <DependentUpon>FlightPlanner.cs</DependentUpon>
