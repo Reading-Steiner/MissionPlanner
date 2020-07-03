@@ -72,6 +72,10 @@ namespace MissionPlanner.GCSViews
                 but_mincommands.Text = @"˄";
             }
         }
+        #region 图层信息
+        GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
+        PointLatLngAlt defaultOrigin = new PointLatLngAlt();
+        #endregion
 
         public static GMapOverlay airportsoverlay;
         public static GMapOverlay objectsoverlay;
@@ -81,7 +85,6 @@ namespace MissionPlanner.GCSViews
         private static GMapOverlay rallypointoverlay;
         public GMapOverlay drawnpolygonsoverlay;
         public GMapOverlay kmlpolygonsoverlay;
-        GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
 
         public GMapOverlay layerpolygonsoverlay;
 
@@ -289,7 +292,7 @@ namespace MissionPlanner.GCSViews
             if (layer != null)
             {
                 GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-                AddLayerOverlay(layerInfo.path, layerInfo.IsDefaultOrigin, layerInfo.originX, layerInfo.originY, layerInfo.scale); ;
+                AddLayerOverlay(layerInfo.Layer, layerInfo.IsDefaultOrigin, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Scale); ;
             }
             /*
             var timer = new System.Timers.Timer();
@@ -1753,7 +1756,8 @@ namespace MissionPlanner.GCSViews
 
         public void BUT_saveWPFile_Click(object sender, EventArgs e)
         {
-            SaveFile_Click(null, null);
+            //SaveFile_Click(null, null);
+            SaveLocalWPFile_Click(this, null);
         }
 
         public void But_writewpfast_Click(object sender, EventArgs e)
@@ -3829,11 +3833,12 @@ namespace MissionPlanner.GCSViews
                     bool isDefaultOrigin = false;
                     double OriginX = 0;
                     double OriginY = 0;
+                    double OriginZ = 0;
                     double scale = 0;
                     string origin = null;
-                    if (InputBox.Show("输入原点坐标", "示例：(longitude,latitude)", ref origin) == DialogResult.OK)
+                    if (InputBox.Show("输入原点坐标", "示例：(longitude,latitude,Alititude)", ref origin) == DialogResult.OK)
                     {
-                        if (Regex.IsMatch(origin, @"^\D*[+-]?\d+[.]?\d*\D*[+-]?\d+[.]?\d*\D*$"))
+                        if (Regex.IsMatch(origin, @"^\D*[+-]?\d+[.]?\d*\D*[+-]?\d+[.]?\d*\D*[+-]?\d+[.]?\d*\D*$"))
                         {
                             MatchCollection match = Regex.Matches(origin, @"[+-]?\d+[.]?\d*");
                             if (match.Count >= 2)
@@ -3841,6 +3846,10 @@ namespace MissionPlanner.GCSViews
                                 isDefaultOrigin = false;
                                 OriginX = System.Convert.ToDouble(match[0].Value);
                                 OriginY = System.Convert.ToDouble(match[1].Value);
+                                if(match.Count >= 3)
+                                {
+                                    OriginZ = System.Convert.ToDouble(match[2].Value);
+                                }
                             }
                             else
                             {
@@ -3858,7 +3867,7 @@ namespace MissionPlanner.GCSViews
                     }
                     if (isDefaultOrigin)
                     {
-                        CustomMessageBox.Show("将使用默认坐标原点（left，bottom）", Strings.Warning);
+                        CustomMessageBox.Show("将使用映像文件默认坐标原点", Strings.Warning);
                     }
                     origin = null;
                     if (InputBox.Show("输入沙盘比例尺", "输入一个数值", ref origin) == DialogResult.OK)
@@ -3895,12 +3904,27 @@ namespace MissionPlanner.GCSViews
                         CustomMessageBox.Show("沙盘比例尺不能为空", Strings.ERROR);
                         return;
                     }
-                    AddLayerOverlay(path, isDefaultOrigin, OriginX, OriginY, scale);
+                    if(AddLayerOverlay(path, isDefaultOrigin, OriginX, OriginY, OriginZ, scale))
+                    {
+                        if (isDefaultOrigin)
+                        {
+                            var layer = new GMap.NET.Internals.LayerInfo(path, scale);
+                            layer.SetDefaultOrigin(this.defaultOrigin.Lng, this.defaultOrigin.Lat, this.defaultOrigin.Alt);
+                            layerCache.AddLayerToMemoryCache(layer);
+                        }
+                        else
+                        {
+                            var layer = new GMap.NET.Internals.LayerInfo(path, OriginX, OriginY, OriginZ, scale);
+                            layer.SetDefaultOrigin(this.defaultOrigin.Lng, this.defaultOrigin.Lat, this.defaultOrigin.Alt);
+                            layerCache.AddLayerToMemoryCache(layer);
+                        }
+                    }
+
                 }
             }
         }
 
-        public bool AddLayerOverlay(string path, bool isDefaultOrigin, double x, double y, double scale)
+        public bool AddLayerOverlay(string path, bool isDefaultOrigin, double x, double y, double z, double scale)
         {
             if (File.Exists(path))
             {
@@ -3912,28 +3936,21 @@ namespace MissionPlanner.GCSViews
                 {
                     layerpolygonsoverlay.Polygons.Clear();
                     layerpolygonsoverlay.Routes.Clear();
+                    this.defaultOrigin = new PointLatLngAlt(geobitmap.Rect.Lat, geobitmap.Rect.Lng);
                     this.rect = geobitmap.Rect;
 
                     PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
                     PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
-                    var mark = new GMapMarkerLayer(pos1, pos2, geobitmap.Bitmap);
 
+                    var mark = new GMapMarkerLayer(pos1, pos2, geobitmap.Bitmap);
                     FlightData.layerpolygons.Polygons.Add(mark);
                     layerpolygonsoverlay.Polygons.Add(mark);
-
+                    zoomToTiffToolStripMenuItem_Click(this, null);
                 }
                 else
                 {
                     CustomMessageBox.Show("该TIFF影像文件没有地理坐标.", "Error");
                     return false;
-                }
-                if (isDefaultOrigin)
-                {
-                    layerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, scale));
-                }
-                else
-                {
-                    layerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, x, y, scale));
                 }
                 return true;
             }
@@ -3943,8 +3960,12 @@ namespace MissionPlanner.GCSViews
                     return false;
                 else
                 {
-                    layerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, x, y, scale));
-                    zoomToTiffToolStripMenuItem_Click(this, null);
+                    this.rect = new RectLatLng
+                    {
+                        Lat = x,
+                        Lng = y,
+                    };
+                    this.defaultOrigin = new PointLatLngAlt(y, x, z);
                     return true;
                 }
             }
@@ -5549,15 +5570,77 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
+        /// <summary>
+        /// form WGS84 covert to Local coordinates
+        /// </summary>
+        private void CovertToWorkCoordinate(PointLatLngAlt WGS84Point, out PointLatLngAlt WorkPoint)
+        {
+            var layer = layerCache.GetSelectedLayerFromMemoryCache();
+            if (layer == null)
+            {
+            }
+            PointLatLngAlt Origin;
+            double Scale = layer.GetValueOrDefault().Scale;
+            if (layer.GetValueOrDefault().IsDefaultOrigin)
+            {
+                Origin = new PointLatLngAlt(
+                    this.defaultOrigin.Lat, 
+                    this.defaultOrigin.Lng, 
+                    this.defaultOrigin.Alt);
+            }
+            else
+            {
+                Origin = new PointLatLngAlt(
+                    layer.GetValueOrDefault().Lat, 
+                    layer.GetValueOrDefault().Lng, 
+                    layer.GetValueOrDefault().Alt);
+            }
+            int OriginZone = Origin.GetUTMZone();
+            double[] OriginCoord = Origin.ToUTM(OriginZone);
+
+            int WorkZone = WGS84Point.GetUTMZone();
+            double[] WorkCoord = WGS84Point.ToUTM(OriginZone);
+            
+            var OriginUTM = new UTM(OriginZone, OriginCoord[1], OriginCoord[0], Geocentric.Hemisphere.North);
+            var WorkUTM = new UTM(OriginZone, WorkCoord[1], WorkCoord[0], Geocentric.Hemisphere.North);
+
+            double deltaLng, deltaLat, deltaAlt;
+            if (OriginZone >= 0)
+            {
+                deltaLng = (WorkUTM.East - OriginUTM.East) / Scale;
+                deltaLat = (WorkUTM.North - OriginUTM.North) / Scale;
+                deltaAlt = (WGS84Point.Alt - Origin.Alt) / Scale;
+            }
+            else
+            {
+                deltaLng = (WorkUTM.East - OriginUTM.East) / Scale;
+                deltaLat = (OriginUTM.North - WorkUTM.North) / Scale;
+                deltaAlt = (WGS84Point.Alt - Origin.Alt) / Scale;
+            }
+            WorkPoint = new PointLatLngAlt(deltaLat, deltaLng, deltaAlt);
+
+        }
 
         /// <summary>
-        /// Saves localwp as a waypoint writer file
+        /// form WGS84 covert to Local coordinates
         /// </summary>
-        private void savelocalwaypoints()
+        private void CovertToWorkCoordinate(double lng, double lat, double alt, out double x, out double y, out double z)
+        {
+            this.CovertToWorkCoordinate(new PointLatLngAlt(lat, lng, alt), out PointLatLngAlt local);
+            x = local.Lng;
+            y = local.Lat;
+            z = local.Alt;
+        }
+
+
+    /// <summary>
+    /// Saves localwp as a waypoint writer file
+    /// </summary>
+    private void savelocalwaypoints()
         {
             using (SaveFileDialog fd = new SaveFileDialog())
             {
-                fd.Filter = "Mission|*.waypoints;*.txt|Mission JSON|*.mission";
+                fd.Filter = "Mission|*.waypoints;*.txt|Shapefile|*.shp";
                 fd.DefaultExt = ".waypoints";
                 fd.InitialDirectory = Settings.Instance["WPFileDirectory"] ?? "";
                 fd.FileName = wpfilename;
@@ -5568,37 +5651,17 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     Settings.Instance["WPFileDirectory"] = Path.GetDirectoryName(file);
                     try
                     {
-                        if (file.EndsWith(".mission"))
-                        {
-                            var list = GetCommandList();
-                            Locationwp home = new Locationwp();
-                            try
-                            {
-                                home.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-                                home.lat = (double.Parse(TXT_homelat.Text));
-                                home.lng = (double.Parse(TXT_homelng.Text));
-                                home.alt = (float.Parse(TXT_homealt.Text) / CurrentState.multiplieralt); // use saved home
-                            }
-                            catch { }
-
-                            list.Insert(0, home);
-
-                            var format = MissionFile.ConvertFromLocationwps(list, (byte)(Altmode)CMB_altmode.SelectedValue);
-
-                            MissionFile.WriteFile(file, format);
-                            return;
-                        }
-
                         StreamWriter sw = new StreamWriter(file);
                         sw.WriteLine("QGC WPL 110");
                         try
                         {
+                            CovertToWorkCoordinate(double.Parse(TXT_homelng.Text), double.Parse(TXT_homelat.Text), double.Parse(TXT_homealt.Text), out double x, out double y, out double z);
                             sw.WriteLine("0\t1\t0\t16\t0\t0\t0\t0\t" +
-                                         double.Parse(TXT_homelat.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                         y.ToString("0.000000", new CultureInfo("en-US")) +
                                          "\t" +
-                                         double.Parse(TXT_homelng.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                         x.ToString("0.000000", new CultureInfo("en-US")) +
                                          "\t" +
-                                         double.Parse(TXT_homealt.Text).ToString("0.000000", new CultureInfo("en-US")) +
+                                         z.ToString("0.000000", new CultureInfo("en-US")) +
                                          "\t1");
                         }
                         catch (Exception ex)
@@ -5609,7 +5672,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         for (int a = 0; a < Commands.Rows.Count - 0; a++)
                         {
                             ushort mode = 0;
-
+                            if (double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()) == 0 &&
+                                double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()) == 0)
+                            {
+                                continue;
+                            }
                             if (Commands.Rows[a].Cells[0].Value.ToString() == "UNKNOWN")
                             {
                                 mode = (ushort)Commands.Rows[a].Cells[Command.Index].Tag;
@@ -5626,6 +5693,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                             sw.Write("\t" + 0); // current
                             sw.Write("\t" + ((int)Commands.Rows[a].Cells[Frame.Index].Value).ToString()); //frame 
                             sw.Write("\t" + mode);
+
                             sw.Write("\t" +
                                      double.Parse(Commands.Rows[a].Cells[Param1.Index].Value.ToString())
                                          .ToString("0.00000000", new CultureInfo("en-US")));
@@ -5638,15 +5706,17 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                             sw.Write("\t" +
                                      double.Parse(Commands.Rows[a].Cells[Param4.Index].Value.ToString())
                                          .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString())
-                                         .ToString("0.00000000", new CultureInfo("en-US")));
-                            sw.Write("\t" +
-                                     (double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) /
-                                      CurrentState.multiplieralt).ToString("0.000000", new CultureInfo("en-US")));
+                            double x, y, z;
+
+                            CovertToWorkCoordinate(
+                                double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()),
+                                double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()),
+                                double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) / CurrentState.multiplieralt,
+                                out x, out y, out z);
+
+                            sw.Write("\t" + x.ToString("0.00000000", new CultureInfo("en-US")));
+                            sw.Write("\t" + y.ToString("0.00000000", new CultureInfo("en-US")));
+                            sw.Write("\t" + z.ToString("0.000000", new CultureInfo("en-US")));
                             sw.Write("\t" + 1);
                             sw.WriteLine("");
                         }
@@ -7642,19 +7712,21 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             var layerInfo = layerCache.GetSelectedLayerFromMemoryCache();
             if (layerInfo == null)
                 return;
-            double lat, lng;
+            double lat, lng, alt;
             if (layerInfo.GetValueOrDefault().IsDefaultOrigin)
             {
-                lng = rect.Left;
-                lat = rect.Bottom;
+                lng = this.defaultOrigin.Lng;
+                lat = this.defaultOrigin.Lat;
+                alt = this.defaultOrigin.Alt;
             }
             else
             {
-                lng = layerInfo.GetValueOrDefault().originX;
-                lat = layerInfo.GetValueOrDefault().originY;
+                lng = layerInfo.GetValueOrDefault().Lng;
+                lat = layerInfo.GetValueOrDefault().Lat;
+                alt = layerInfo.GetValueOrDefault().Alt;
             }
 
-            TXT_homealt.Text = (srtm.getAltitude(lng, lat).alt * CurrentState.multiplieralt).ToString("0");
+            TXT_homealt.Text = alt.ToString();
             TXT_homelat.Text = lat.ToString();
             TXT_homelng.Text = lng.ToString();
 

@@ -117,6 +117,78 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;LatColumn.Name" xml:space="preserve">
+    <value>LatColumn</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="DefaultColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="PathColumn.Text" xml:space="preserve">
+    <value>Layer</value>
+  </data>
+  <data name="ScaleColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="AltCoulmn.Text" xml:space="preserve">
+    <value>OriginAltitude</value>
+  </data>
+  <data name="&gt;&gt;PathColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LatColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="NormalGroup.Header" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="&gt;&gt;LayerInfoList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LngColumn.Text" xml:space="preserve">
+    <value>OriginLongitude</value>
+  </data>
+  <data name="SelectedGroup.Header" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>600, 360</value>
+  </data>
+  <data name="&gt;&gt;LatColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>600, 360</value>
+  </data>
+  <data name="&gt;&gt;LngColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ScaleColumn.Text" xml:space="preserve">
+    <value>LocalScale</value>
+  </data>
+  <data name="&gt;&gt;LayerInfoList.Name" xml:space="preserve">
+    <value>LayerInfoList</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>584, 321</value>
+  </data>
+  <data name="&gt;&gt;PathColumn.Name" xml:space="preserve">
+    <value>PathColumn</value>
+  </data>
+  <data name="&gt;&gt;AltCoulmn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="LayerInfoList.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AltCoulmn.Name" xml:space="preserve">
+    <value>AltCoulmn</value>
+  </data>
+  <data name="LayerInfoList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>585, 320</value>
+  </data>
   <data name="LayerInfoList.Groups" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
@@ -126,6 +198,48 @@
         AwAAAAbljoblj7IF/P///yhTeXN0ZW0uV2luZG93cy5Gb3Jtcy5Ib3Jpem9udGFsQWxpZ25tZW50AQAA
         AAd2YWx1ZV9fAAgCAAAAAAAAAAoGBQAAAAtOb3JtYWxHcm91cAs=
 </value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>LayerManager</value>
+  </data>
+  <data name="&gt;&gt;LayerInfoList.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ScaleColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LngColumn.Width" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <data name="&gt;&gt;LayerInfoList.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="DefaultColumn.Width" type="System.Int32, mscorlib">
+    <value>110</value>
+  </data>
+  <data name="LatColumn.Width" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <data name="DefaultColumn.Text" xml:space="preserve">
+    <value>DefaultOrigin</value>
+  </data>
+  <data name="&gt;&gt;LngColumn.Name" xml:space="preserve">
+    <value>LngColumn</value>
+  </data>
+  <data name="&gt;&gt;DefaultColumn.Name" xml:space="preserve">
+    <value>DefaultColumn</value>
+  </data>
+  <data name="&gt;&gt;ScaleColumn.Name" xml:space="preserve">
+    <value>ScaleColumn</value>
+  </data>
+  <data name="LngColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="ScaleColumn.Width" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
+  <data name="PathColumn.Width" type="System.Int32, mscorlib">
+    <value>240</value>
   </data>
   <data name="LayerInfoList.Groups1" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -137,127 +251,28 @@
         AQAAAAd2YWx1ZV9fAAgCAAAAAAAAAAoGBQAAAA1TZWxlY3RlZEdyb3VwCw==
 </value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="LayerInfoList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="LayerInfoList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>585, 320</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LayerInfoList.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;LayerInfoList.Name" xml:space="preserve">
-    <value>LayerInfoList</value>
-  </data>
-  <data name="&gt;&gt;LayerInfoList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LayerInfoList.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;LayerInfoList.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PathColumn.Text" xml:space="preserve">
-    <value>Layer</value>
-  </data>
-  <data name="PathColumn.Width" type="System.Int32, mscorlib">
-    <value>240</value>
-  </data>
-  <data name="DefaultColumn.Text" xml:space="preserve">
-    <value>DefaultOrigin</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DefaultColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="DefaultColumn.Width" type="System.Int32, mscorlib">
-    <value>110</value>
-  </data>
-  <data name="LngColumn.Text" xml:space="preserve">
-    <value>OriginLongitude</value>
-  </data>
-  <data name="LngColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="LngColumn.Width" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="LatColumn.Text" xml:space="preserve">
-    <value>OriginLatitude</value>
-  </data>
-  <data name="LatColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="LatColumn.Width" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="ScaleColumn.Text" xml:space="preserve">
-    <value>LocalScale</value>
-  </data>
-  <data name="ScaleColumn.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="ScaleColumn.Width" type="System.Int32, mscorlib">
-    <value>90</value>
-  </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>zh-CHS</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>584, 321</value>
-  </data>
-  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>600, 360</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>600, 360</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>LayerManager</value>
-  </data>
-  <data name="&gt;&gt;PathColumn.Name" xml:space="preserve">
-    <value>PathColumn</value>
-  </data>
-  <data name="&gt;&gt;PathColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DefaultColumn.Name" xml:space="preserve">
-    <value>DefaultColumn</value>
-  </data>
   <data name="&gt;&gt;DefaultColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LngColumn.Name" xml:space="preserve">
-    <value>LngColumn</value>
-  </data>
-  <data name="&gt;&gt;LngColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LatColumn.Name" xml:space="preserve">
-    <value>LatColumn</value>
-  </data>
-  <data name="&gt;&gt;LatColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ScaleColumn.Name" xml:space="preserve">
-    <value>ScaleColumn</value>
-  </data>
-  <data name="&gt;&gt;ScaleColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>LayerManager</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="LayerInfoList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>LayerManager</value>
+  </data>
+  <data name="LatColumn.Text" xml:space="preserve">
+    <value>OriginLatitude</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>zh-CHS</value>
+  </metadata>
 </root>

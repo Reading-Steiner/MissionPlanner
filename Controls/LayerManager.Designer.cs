@@ -36,25 +36,29 @@ namespace MissionPlanner.Controls
             this.LayerInfoList = new System.Windows.Forms.ListView();
             this.PathColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DefaultColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.LatColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LngColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.LatColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.AltCoulmn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ScaleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.SelectedGroup = ((System.Windows.Forms.ListViewGroup)(new System.Windows.Forms.ListViewGroup("SelectedGroup", System.Windows.Forms.HorizontalAlignment.Left)));
-            this.NormalGroup = ((System.Windows.Forms.ListViewGroup)(new System.Windows.Forms.ListViewGroup("NormalGroup", System.Windows.Forms.HorizontalAlignment.Left)));
+            this.SelectedGroup = ((System.Windows.Forms.ListViewGroup)(new System.Windows.Forms.ListViewGroup("Selected")));
+            this.NormalGroup = ((System.Windows.Forms.ListViewGroup)(new System.Windows.Forms.ListViewGroup("History")));
+
             this.SuspendLayout();
             // 
             // LayerInfoList
             // 
+            resources.ApplyResources(this.LayerInfoList, "LayerInfoList");
             this.LayerInfoList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.PathColumn,
             this.DefaultColumn,
             this.LngColumn,
             this.LatColumn,
+            this.AltCoulmn,
             this.ScaleColumn});
-            this.LayerInfoList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            this.SelectedGroup,
-            this.NormalGroup});
-            resources.ApplyResources(this.LayerInfoList, "LayerInfoList");
+            this.LayerInfoList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[]{
+                this.SelectedGroup,
+                this.NormalGroup});
+
             this.LayerInfoList.Name = "LayerInfoList";
             this.LayerInfoList.UseCompatibleStateImageBehavior = false;
             this.LayerInfoList.View = System.Windows.Forms.View.Details;
@@ -67,13 +71,17 @@ namespace MissionPlanner.Controls
             // 
             resources.ApplyResources(this.DefaultColumn, "DefaultColumn");
             // 
+            // LngColumn
+            // 
+            resources.ApplyResources(this.LngColumn, "LngColumn");
+            // 
             // LatColumn
             // 
             resources.ApplyResources(this.LatColumn, "LatColumn");
             // 
-            // LngColumn
+            // AltCoulmn
             // 
-            resources.ApplyResources(this.LngColumn, "LngColumn");
+            resources.ApplyResources(this.AltCoulmn, "AltCoulmn");
             // 
             // ScaleColumn
             // 
@@ -109,11 +117,12 @@ namespace MissionPlanner.Controls
                 var layerInfo = layerCache.GetLayerFromMemoryCache(i);
                 if (layerInfo == null)
                     continue;
-                item.Text = layerInfo.GetValueOrDefault().path;
+                item.Text = layerInfo.GetValueOrDefault().Layer;
                 item.SubItems.Add(layerInfo.GetValueOrDefault().IsDefaultOrigin.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().originX.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().originY.ToString());
-                item.SubItems.Add(layerInfo.GetValueOrDefault().scale.ToString());
+                item.SubItems.Add(layerInfo.GetValueOrDefault().Lng.ToString());
+                item.SubItems.Add(layerInfo.GetValueOrDefault().Lat.ToString());
+                item.SubItems.Add(layerInfo.GetValueOrDefault().Alt.ToString());
+                item.SubItems.Add(layerInfo.GetValueOrDefault().ScaleFormat);
                 if (layerInfo.GetValueOrDefault().Equals(layerCache.GetSelectedLayerFromMemoryCache().GetValueOrDefault()))
                     this.SelectedGroup.Items.Add(item);
                 else
@@ -133,7 +142,6 @@ namespace MissionPlanner.Controls
 
         private System.Windows.Forms.ListViewGroup SelectedGroup;
         private System.Windows.Forms.ListViewGroup NormalGroup;
-
-
+        private System.Windows.Forms.ColumnHeader AltCoulmn;
     }
 }

@@ -97,7 +97,6 @@
             }
         }
 
-
         public bool AddLayerToMemoryCache(LayerInfo data)
         {
 
@@ -115,6 +114,10 @@
                 {
                     layerInfoInMemory.Modify(key, data);
                 }
+                else
+                {
+                    layerInfoInMemory.MoveToLast(key);
+                }
             }
             finally
             {
@@ -124,9 +127,9 @@
 
         internal static string GetHashCode(LayerInfo data)
         {
-            if(data.path != null || data.path != "")
+            if(data.Layer != null || data.Layer != "")
             {
-                return (data.path.GetHashCode().ToString());
+                return (data.Layer.GetHashCode().ToString());
             }
             else
             {
@@ -134,7 +137,7 @@
                     return null;
                 else
                 {
-                    return (data.originX + data.originY).GetHashCode().ToString();
+                    return (data.Lng + data.Lat + data.Alt).GetHashCode().ToString();
                 }
             }
         }
@@ -155,8 +158,12 @@
                         string key = LayerInfoKeys.FirstChild.Value;
                         string path = null;
                         bool isDefaultOrigin = true;
-                        double? originX = null;
-                        double? originY = null;
+                        double? originLng = null;
+                        double? originLat = null;
+                        double? originAlt = null;
+                        double? defaultLng = null;
+                        double? defaultLat = null;
+                        double? defaultAlt = null;
                         double? scale = null;
                         foreach (XmlNode Info in LayerInfoKeys.ChildNodes)
                         {
@@ -168,17 +175,41 @@
                                 case "isDefaultOrigin":
                                     isDefaultOrigin = System.Convert.ToBoolean(Info.InnerText);
                                     break;
-                                case "originX":
+                                case "originLng":
                                     if (Info.InnerText == null)
-                                        originX = null;
+                                        originLng = null;
                                     else
-                                        originX = System.Convert.ToDouble(Info.InnerText);
+                                        originLng = System.Convert.ToDouble(Info.InnerText);
                                     break;
-                                case "originY":
+                                case "originLat":
                                     if (Info.InnerText == null)
-                                        originY = null;
+                                        originLat = null;
                                     else
-                                        originY = System.Convert.ToDouble(Info.InnerText);
+                                        originLat = System.Convert.ToDouble(Info.InnerText);
+                                    break;
+                                case "originAlt":
+                                    if (Info.InnerText == null)
+                                        originAlt = null;
+                                    else
+                                        originAlt = System.Convert.ToDouble(Info.InnerText);
+                                    break;
+                                case "defaultLng":
+                                    if (Info.InnerText == null)
+                                        defaultLng = null;
+                                    else
+                                        defaultLng = System.Convert.ToDouble(Info.InnerText);
+                                    break;
+                                case "defaultLat":
+                                    if (Info.InnerText == null)
+                                        defaultLat = null;
+                                    else
+                                        defaultLat = System.Convert.ToDouble(Info.InnerText);
+                                    break;
+                                case "defaultAlt":
+                                    if (Info.InnerText == null)
+                                        defaultAlt = null;
+                                    else
+                                        defaultAlt = System.Convert.ToDouble(Info.InnerText);
                                     break;
                                 case "scale":
                                     if (Info.InnerText == null)
@@ -190,16 +221,20 @@
                         }
                         if (path == null || scale == null)
                             continue;
-                        if (originX == null || originY == null)
+                        if (originLng == null || originLat == null)
                             isDefaultOrigin = true;
                         if (isDefaultOrigin)
                         {
-                            layerInfoInMemory.Add(key, new LayerInfo(path, (double)scale));
+                            var layer = new LayerInfo(path, (double)scale);
+                            layer.SetDefaultOrigin(defaultLng.GetValueOrDefault(), defaultLat.GetValueOrDefault(), defaultAlt.GetValueOrDefault());
+                            layerInfoInMemory.Add(key, layer);
                             selectedLayer = key;
                         }
                         else
                         {
-                            layerInfoInMemory.Add(key, new LayerInfo(path, (double)originX, (double)originY, (double)scale));
+                            var layer = new LayerInfo(path, (double)originLng, (double)originLat, (double)originAlt, (double)scale);
+                            layer.SetDefaultOrigin(defaultLng.GetValueOrDefault(), defaultLat.GetValueOrDefault(), defaultAlt.GetValueOrDefault());
+                            layerInfoInMemory.Add(key, layer);
                             selectedLayer = key;
                         }
                     }
@@ -224,27 +259,48 @@
             {
                 // (4)给根节点Books创建第1个子节点
                 XmlElement key = xmlDoc.CreateElement("key");
-                key.InnerText = layerInfoInMemory[i].path.GetHashCode().ToString();
+                key.InnerText = GetHashCode(layerInfoInMemory[i]);
                 LayerInfos.AppendChild(key);
 
                 XmlElement path = xmlDoc.CreateElement("path");
-                path.InnerText = layerInfoInMemory[i].path;
+                path.InnerText = layerInfoInMemory[i].Layer;
                 key.AppendChild(path);
 
                 XmlElement isDefaultOrigin = xmlDoc.CreateElement("isDefaultOrigin");
                 isDefaultOrigin.InnerXml = layerInfoInMemory[i].IsDefaultOrigin.ToString();
                 key.AppendChild(isDefaultOrigin);
 
-                XmlElement originX = xmlDoc.CreateElement("originX");
-                originX.InnerText = layerInfoInMemory[i].originX.ToString();
-                key.AppendChild(originX);
+                if (!layerInfoInMemory[i].IsDefaultOrigin)
+                {
+                    XmlElement originX = xmlDoc.CreateElement("originLng");
+                    originX.InnerText = layerInfoInMemory[i].Lng.ToString();
+                    key.AppendChild(originX);
 
-                XmlElement originY = xmlDoc.CreateElement("originY");
-                originY.InnerText = layerInfoInMemory[i].originY.ToString();
-                key.AppendChild(originY);
+                    XmlElement originY = xmlDoc.CreateElement("originLat");
+                    originY.InnerText = layerInfoInMemory[i].Lat.ToString();
+                    key.AppendChild(originY);
+
+                    XmlElement originZ = xmlDoc.CreateElement("originAlt");
+                    originY.InnerText = layerInfoInMemory[i].Lat.ToString();
+                    key.AppendChild(originZ);
+                }
+
+                layerInfoInMemory[i].GetDefaultOrigin(out double lng, out double lat, out double alt);
+
+                XmlElement defaultX = xmlDoc.CreateElement("defaultLng");
+                defaultX.InnerText = lng.ToString();
+                key.AppendChild(defaultX);
+
+                XmlElement defaultY = xmlDoc.CreateElement("defaultLat");
+                defaultY.InnerText = lat.ToString();
+                key.AppendChild(defaultY);
+
+                XmlElement defaultZ = xmlDoc.CreateElement("defaultAlt");
+                defaultZ.InnerText = alt.ToString();
+                key.AppendChild(defaultZ);
 
                 XmlElement scale = xmlDoc.CreateElement("scale");
-                scale.InnerText = layerInfoInMemory[i].scale.ToString();
+                scale.InnerText = layerInfoInMemory[i].Scale.ToString();
                 key.AppendChild(scale);
             }
             //需要保存修改的值

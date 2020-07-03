@@ -1882,13 +1882,13 @@
     <value>相机始终向前</value>
   </data>
   <data name="CHK_footprints.Text" xml:space="preserve">
-    <value>足迹</value>
+    <value>拍摄区域</value>
   </data>
   <data name="CHK_grid.Text" xml:space="preserve">
     <value>航线</value>
   </data>
   <data name="CHK_internals.Text" xml:space="preserve">
-    <value>内部航点</value>
+    <value>指令点</value>
   </data>
   <data name="CHK_markers.Text" xml:space="preserve">
     <value>航点</value>
@@ -1976,16 +1976,16 @@ Control-O 读取航线</value>
     <value>保存</value>
   </data>
   <data name="CHK_copter_headinghold.Text" xml:space="preserve">
-    <value>航向固定</value>
+    <value>固定航向</value>
   </data>
   <data name="CHK_copter_headingholdlock.Text" xml:space="preserve">
     <value>航线解锁</value>
   </data>
   <data name="chk_Corridor.Text" xml:space="preserve">
-    <value>廊道航线</value>
+    <value>廊线航线</value>
   </data>
   <data name="chk_crossgrid.Text" xml:space="preserve">
-    <value>交叉航线</value>
+    <value>栅格航线</value>
   </data>
   <data name="chk_spiral.Text" xml:space="preserve">
     <value>螺旋航线</value>
@@ -2054,7 +2054,7 @@ Control-O 读取航线</value>
     <value>拍摄间距 [m]</value>
   </data>
   <data name="label32.Text" xml:space="preserve">
-    <value>LeadIn [m]</value>
+    <value>引入线【m】</value>
   </data>
   <data name="label39.Text" xml:space="preserve">
     <value>PWM L</value>
@@ -2069,13 +2069,13 @@ Control-O 读取航线</value>
     <value>廊道宽度【m】</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>OverShoot [m]</value>
+    <value>前冲量（来）【m】</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>起始点</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>OverShoot [m]</value>
+    <value>前冲量（去）【m】</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>航向重叠度【%】</value>
@@ -2084,13 +2084,13 @@ Control-O 读取航线</value>
     <value>传感器高度【mm】</value>
   </data>
   <data name="LBL_Alternating_lanes.Text" xml:space="preserve">
-    <value>Alternate Lanes</value>
+    <value>备用航线</value>
   </data>
   <data name="LBL_copter_delay.Text" xml:space="preserve">
-    <value>航点停滞【sec】</value>
+    <value>航点滞留【sec】</value>
   </data>
   <data name="LBL_Lane_Dist.Text" xml:space="preserve">
-    <value>最小行间距</value>
+    <value>最小航线数</value>
   </data>
   <data name="rad_digicam.Text" xml:space="preserve">
     <value>DO_DIGICAM_CONTROL</value>

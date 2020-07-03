@@ -861,4 +861,7 @@
   <data name="zoomToTiffToolStripMenuItem.Text" xml:space="preserve">
     <value>返回工作区</value>
   </data>
+  <data name="tiffManagerToolStripTiffMenuItem.Text" xml:space="preserve">
+    <value>图层管理器</value>
+  </data>
 </root>

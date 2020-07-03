@@ -120,6 +120,9 @@
   <data name="$this.Text" xml:space="preserve">
     <value>图层管理器</value>
   </data>
+  <data name="AltCoulmn.Text" xml:space="preserve">
+    <value>原点高程</value>
+  </data>
   <data name="DefaultColumn.Text" xml:space="preserve">
     <value>使用默认原点</value>
   </data>

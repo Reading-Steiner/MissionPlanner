@@ -6,33 +6,153 @@
 
     public struct LayerInfo
     {
-        public string path;
-        public bool IsDefaultOrigin;
-        public double originX;
-        public double originY;
-        public double scale;
+        private string path;
+        private bool isDefaultOrigin;
+        private double originLng;
+        private double originLat;
+        private double originAlt;
+        private double scale;
+        public double? defaultLng;
+        public double? defaultLat;
+        public double? defaultAlt;
 
-        public LayerInfo(string path, double Zoom)
+        public bool IsDefaultOrigin
         {
-            this.path = path;
-            IsDefaultOrigin = true;
-            originX = 0;
-            originY = 0;
-            scale = Zoom;
+            get
+            {
+                return isDefaultOrigin;
+            }
+            set
+            {
+                isDefaultOrigin = value;
+            }
+        }
+        public double Lng
+        {
+            get
+            {
+                if (isDefaultOrigin)
+                    return defaultLng.GetValueOrDefault();
+                else
+                    return originLng;
+            }
+            set
+            {
+                if (isDefaultOrigin) ;
+                else
+                    originLng = value;
+
+            }
         }
 
-        public LayerInfo(string path, double x, double y, double Zoom)
+        public double Lat
+        {
+            get
+            {
+                if (isDefaultOrigin)
+                    return defaultLat.GetValueOrDefault();
+                else
+                    return originLat;
+            }
+            set
+            {
+                if (isDefaultOrigin) ;
+                else
+                    originLat = value;
+
+            }
+        }
+
+        public double Alt
+        {
+            get
+            {
+                if (isDefaultOrigin)
+                    return defaultAlt.GetValueOrDefault();
+                else
+                    return originAlt;
+            }
+            set
+            {
+                if (isDefaultOrigin) ;
+                else
+                    originAlt = value;
+
+            }
+        }
+
+        public double Scale
+        {
+            get
+            {
+                return scale;
+            }
+            set
+            {
+                scale = value;
+            }
+        }
+
+        public string ScaleFormat
+        {
+            get
+            {
+                return "1:" + scale.ToString();
+            }
+        }
+
+        public string Layer
+        {
+            get
+            {
+                return path;
+            }
+        }
+
+
+        public LayerInfo(string path, double scale)
         {
             this.path = path;
-            IsDefaultOrigin = false;
-            originX = x;
-            originY = y;
-            scale = Zoom;
+            this.isDefaultOrigin = true;
+            this.originLng = 0;
+            this.originLat = 0;
+            this.originAlt = 0;
+            this.scale = scale;
+            this.defaultLng = null;
+            this.defaultLat = null;
+            this.defaultAlt = null;
+        }
+
+        public LayerInfo(string path, double lng, double lat, double alt, double scale)
+        {
+            this.path = path;
+            this.isDefaultOrigin = false;
+            this.originLng = lng;
+            this.originLat = lat;
+            this.originAlt = alt;
+            this.scale = scale;
+            this.defaultLng = null;
+            this.defaultLat = null;
+            this.defaultAlt = null;
+        }
+
+        public void SetDefaultOrigin(double lng,double lat,double alt)
+        {
+            this.defaultLng = lng;
+            this.defaultLat = lat;
+            this.defaultAlt = alt;
+        }
+
+        public void GetDefaultOrigin(out double lng, out double lat, out double alt)
+        {
+            lng = this.defaultLng.GetValueOrDefault();
+            lat = this.defaultLat.GetValueOrDefault();
+            alt = this.defaultAlt.GetValueOrDefault();
         }
 
         public override string ToString()
         {
-            return path + " with origin (" + originX + "," + originY + "), scale (:"+ scale.ToString("N") + ")";
+            return Layer + " with origin (" + Lng + "," + Lat + "), scale ("+ ScaleFormat + ")";
         }
 
         public bool Equals(LayerInfo obj)
@@ -41,16 +161,16 @@
                 return false;
             if (obj.scale != scale)
                 return false;
-            if (obj.IsDefaultOrigin != IsDefaultOrigin)
+            if (obj.isDefaultOrigin != isDefaultOrigin)
             {
-                if (!obj.IsDefaultOrigin)
+                if (!obj.isDefaultOrigin)
                     return false;
             }
             else
             {
-                if (!obj.IsDefaultOrigin)
+                if (!obj.isDefaultOrigin)
                 {
-                    if (obj.originX != originX || obj.originY != originY)
+                    if (obj.originLng != originLng || obj.originLat != originLat)
                         return false;
                 }
             }
@@ -58,19 +178,4 @@
         }
     }
 
-
-
-
-    internal class LayerInfoComparer : IEqualityComparer<LayerInfo>
-    {
-        public bool Equals(LayerInfo x, LayerInfo y)
-        {
-            return x.path == y.path;
-        }
-
-        public int GetHashCode(LayerInfo obj)
-        {
-            return obj.path.GetHashCode();
-        }
-    }
 }

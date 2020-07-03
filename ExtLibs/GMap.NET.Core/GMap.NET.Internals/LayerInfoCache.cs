@@ -49,6 +49,16 @@ namespace GMap.NET.Internals
             base.Add(key, value);
         }
 
+        public new void MoveToLast(string key)
+        {
+            if (Queue.Contains(key))
+            {
+                Queue.Remove(key);
+                Queue.Add(key);
+            }
+        }
+
+
         // do not allow directly removal of elements
         private new void Remove(string key)
         {
