@@ -1428,13 +1428,13 @@ namespace MissionPlanner.GCSViews
 
                     if (overlay.pointlist.Count <= 1)
                     {
-                        RectLatLng? rect = MainMap.GetRectOfAllMarkers(overlay.overlay.Id);
-                        if (rect.HasValue)
-                        {
-                            MainMap.Position = rect.Value.LocationMiddle;
-                        }
+                        //RectLatLng? rect = MainMap.GetRectOfAllMarkers(overlay.overlay.Id);
+                        //if (rect.HasValue)
+                        //{
+                        //    MainMap.Position = rect.Value.LocationMiddle;
+                        //}
 
-                        MainMap_OnMapZoomChanged();
+                        //MainMap_OnMapZoomChanged();
                     }
 
                     pointlist = overlay.pointlist;
@@ -2479,20 +2479,38 @@ namespace MissionPlanner.GCSViews
 
         public void ContextMenuStripMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            //  if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
-            //     isMouseClickOffMenu = true;
+            if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
+                isMouseClickOffMenu = true;
         }
 
         public void ContextMenuStripMain_Opening(object sender, CancelEventArgs e)
         {
-            //if (CurentRectMarker == null && CurrentRallyPt == null && groupmarkers.Count == 0)
-            //{
-            //    deleteWPToolStripMenuItem.Enabled = false;
-            //}
-            //else
-            //{
-            //    deleteWPToolStripMenuItem.Enabled = true;
-            //}
+            if (CurentRectMarker == null && CurrentRallyPt == null && groupmarkers.Count == 0)
+            {
+                deleteMarkerToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                deleteMarkerToolStripMenuItem.Enabled = true;
+            }
+
+            if(CurentRectMarker != null && CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+            {
+                deletePolygonPointToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                deletePolygonPointToolStripMenuItem.Enabled = false;
+            }
+
+            if (CurentRectMarker != null && CurentRectMarker.InnerMarker.Tag.ToString().IsNumber())
+            {
+                deleteWPToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                deleteWPToolStripMenuItem.Enabled = false;
+            }
 
             //if (MainV2.comPort != null && MainV2.comPort.MAV != null)
             //{
@@ -2893,10 +2911,33 @@ namespace MissionPlanner.GCSViews
 
         public void DeletePolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int no = 0;
+
             if (CurentRectMarker != null)
             {
-                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out no))
+                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
+                {
+                    try
+                    {
+                        drawnpolygon.Points.RemoveAt(no - 1);
+                        redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        //CustomMessageBox.Show("Remove point Failed. Please try again.");
+                    }
+                }
+            }
+            if (currentMarker != null)
+                CurentRectMarker = null;
+            writeKML();
+        }
+
+        public void DeleteWPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurentRectMarker != null)
+            {
+                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out int no))
                 {
                     try
                     {
@@ -2909,49 +2950,10 @@ namespace MissionPlanner.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("error selecting wp, please try again.");
-                    }
-                }
-                else if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", ""), out no))
-                {
-                    try
-                    {
-                        drawnpolygon.Points.RemoveAt(no - 1);
-
-                        redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        CustomMessageBox.Show("Remove point Failed. Please try again.");
+                        //CustomMessageBox.Show("error selecting wp, please try again.");
                     }
                 }
             }
-            else if (CurrentRallyPt != null)
-            {
-                rallypointoverlay.Markers.Remove(CurrentRallyPt);
-                MainMap.Invalidate(true);
-
-                CurrentRallyPt = null;
-            }
-            else if (groupmarkers.Count > 0)
-            {
-                for (int a = Commands.Rows.Count; a > 0; a--)
-                {
-                    try
-                    {
-                        if (groupmarkers.Contains(a)) Commands.Rows.RemoveAt(a - 1); // home is 0
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
-                        CustomMessageBox.Show("error selecting wp, please try again.");
-                    }
-                }
-
-                groupmarkers.Clear();
-            }
-
 
             if (currentMarker != null)
                 CurentRectMarker = null;
@@ -2959,13 +2961,11 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
-
-        public void deleteWPToolStripMenuItem_Click(object sender, EventArgs e)
+        public void DeleteMarkerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int no = 0;
             if (CurentRectMarker != null)
             {
-                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out no))
+                if (int.TryParse(CurentRectMarker.InnerMarker.Tag.ToString(), out int no))
                 {
                     try
                     {
@@ -2992,7 +2992,7 @@ namespace MissionPlanner.GCSViews
                     catch (Exception ex)
                     {
                         log.Error(ex);
-                        CustomMessageBox.Show("Remove point Failed. Please try again.");
+                        //CustomMessageBox.Show("Remove point Failed. Please try again.");
                     }
                 }
             }
@@ -3857,7 +3857,7 @@ namespace MissionPlanner.GCSViews
                     }
                     if (isDefaultOrigin)
                     {
-                        CustomMessageBox.Show("将使用映像文件默认坐标原点", Strings.Warning);
+                        CustomMessageBox.Show("将使用影像文件默认坐标原点", Strings.Warning);
                     }
                     origin = null;
                     if (InputBox.Show("输入沙盘比例尺", "输入一个数值", ref origin) == DialogResult.OK)
@@ -6219,7 +6219,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        public void setHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SetHomeHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TXT_homealt.Text = (srtm.getAltitude(MouseDownStart.Lat, MouseDownStart.Lng).alt * CurrentState.multiplieralt).ToString("0");
             TXT_homelat.Text = MouseDownStart.Lat.ToString();

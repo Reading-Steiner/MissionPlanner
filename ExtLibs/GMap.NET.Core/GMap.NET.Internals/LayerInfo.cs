@@ -3,6 +3,7 @@
     using System.IO;
     using System;
     using System.Collections.Generic;
+    using System.Xml;
 
     public struct LayerInfo
     {
@@ -175,6 +176,56 @@
                 }
             }
             return true;
+        }
+
+        public XmlElement GetXML(XmlDocument xmlDoc, string key)
+        {
+
+            XmlElement keyIndex = xmlDoc.CreateElement("key");
+            keyIndex.InnerText = key;
+
+            XmlElement path = xmlDoc.CreateElement("path");
+            path.InnerText = Layer;
+            keyIndex.AppendChild(path);
+
+            XmlElement isDefaultOrigin = xmlDoc.CreateElement("isDefaultOrigin");
+            isDefaultOrigin.InnerXml = IsDefaultOrigin.ToString();
+            keyIndex.AppendChild(isDefaultOrigin);
+
+            if (!IsDefaultOrigin)
+            {
+                XmlElement originX = xmlDoc.CreateElement("originLng");
+                originX.InnerText = Lng.ToString();
+                keyIndex.AppendChild(originX);
+
+                XmlElement originY = xmlDoc.CreateElement("originLat");
+                originY.InnerText = Lat.ToString();
+                keyIndex.AppendChild(originY);
+
+                XmlElement originZ = xmlDoc.CreateElement("originAlt");
+                originY.InnerText = Alt.ToString();
+                keyIndex.AppendChild(originZ);
+            }
+
+            GetDefaultOrigin(out double lng, out double lat, out double alt);
+
+            XmlElement defaultX = xmlDoc.CreateElement("defaultLng");
+            defaultX.InnerText = lng.ToString();
+            keyIndex.AppendChild(defaultX);
+
+            XmlElement defaultY = xmlDoc.CreateElement("defaultLat");
+            defaultY.InnerText = lat.ToString();
+            keyIndex.AppendChild(defaultY);
+
+            XmlElement defaultZ = xmlDoc.CreateElement("defaultAlt");
+            defaultZ.InnerText = alt.ToString();
+            keyIndex.AppendChild(defaultZ);
+
+            XmlElement scale = xmlDoc.CreateElement("scale");
+            scale.InnerText = Scale.ToString();
+            keyIndex.AppendChild(scale);
+
+            return keyIndex;
         }
     }
 

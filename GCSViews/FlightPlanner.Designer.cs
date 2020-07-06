@@ -130,10 +130,12 @@ namespace MissionPlanner.GCSViews
             this.MainMap = new MissionPlanner.Controls.myGMAP();
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setHomeHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteMarkerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.polygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deletePolygonPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.savePolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -142,6 +144,7 @@ namespace MissionPlanner.GCSViews
             this.planningWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.surveyGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearMissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadWPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -820,6 +823,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.contextMenuStripMain, "contextMenuStripMain");
             this.contextMenuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setHomeHereToolStripMenuItem,
+            this.deleteMarkerToolStripMenuItem,
             this.toolStripSeparator1,
             this.polygonToolStripMenuItem,
             this.planningWPToolStripMenuItem,
@@ -834,7 +838,13 @@ namespace MissionPlanner.GCSViews
             // 
             resources.ApplyResources(this.setHomeHereToolStripMenuItem, "setHomeHereToolStripMenuItem");
             this.setHomeHereToolStripMenuItem.Name = "setHomeHereToolStripMenuItem";
-            this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.setHomeHereToolStripMenuItem_Click);
+            this.setHomeHereToolStripMenuItem.Click += new System.EventHandler(this.SetHomeHereToolStripMenuItem_Click);
+            // 
+            // deleteMarkerToolStripMenuItem
+            // 
+            resources.ApplyResources(this.deleteMarkerToolStripMenuItem, "deleteMarkerToolStripMenuItem");
+            this.deleteMarkerToolStripMenuItem.Name = "deleteMarkerToolStripMenuItem";
+            this.deleteMarkerToolStripMenuItem.Click += new System.EventHandler(this.DeleteMarkerToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -846,6 +856,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.polygonToolStripMenuItem, "polygonToolStripMenuItem");
             this.polygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPolygonPointToolStripMenuItem,
+            this.deletePolygonPointToolStripMenuItem,
             this.clearPolygonToolStripMenuItem,
             this.toolStripSeparator2,
             this.savePolygonToolStripMenuItem,
@@ -857,6 +868,12 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.addPolygonPointToolStripMenuItem, "addPolygonPointToolStripMenuItem");
             this.addPolygonPointToolStripMenuItem.Name = "addPolygonPointToolStripMenuItem";
             this.addPolygonPointToolStripMenuItem.Click += new System.EventHandler(this.AddPolygonPointToolStripMenuItem_Click);
+            // 
+            // clearPolygonToolStripMenuItem
+            // 
+            resources.ApplyResources(this.deletePolygonPointToolStripMenuItem, "deletePolygonPointToolStripMenuItem");
+            this.deletePolygonPointToolStripMenuItem.Name = "deletePolygonPointToolStripMenuItem";
+            this.deletePolygonPointToolStripMenuItem.Click += new System.EventHandler(this.DeletePolygonPointToolStripMenuItem_Click);
             // 
             // clearPolygonToolStripMenuItem
             // 
@@ -900,6 +917,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.planningWPToolStripMenuItem, "planningWPToolStripMenuItem");
             this.planningWPToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.surveyGridToolStripMenuItem,
+            this.deleteWPToolStripMenuItem,
             this.clearMissionToolStripMenuItem,
             this.toolStripSeparator3,
             this.saveWPToolStripMenuItem,
@@ -917,6 +935,12 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.clearMissionToolStripMenuItem, "clearMissionToolStripMenuItem");
             this.clearMissionToolStripMenuItem.Name = "clearMissionToolStripMenuItem";
             this.clearMissionToolStripMenuItem.Click += new System.EventHandler(this.ClearMissionToolStripMenuItem_Click);
+            // 
+            // deleteWPToolStripMenuItem
+            // 
+            resources.ApplyResources(this.deleteWPToolStripMenuItem, "deleteWPToolStripMenuItem");
+            this.deleteWPToolStripMenuItem.Name = "deleteWPToolStripMenuItem";
+            this.deleteWPToolStripMenuItem.Click += new System.EventHandler(this.DeleteWPToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1108,14 +1132,17 @@ namespace MissionPlanner.GCSViews
 
         public System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
         public ToolStripMenuItem setHomeHereToolStripMenuItem;
+        public ToolStripMenuItem deleteMarkerToolStripMenuItem;
         public ToolStripMenuItem clearMissionToolStripMenuItem;
         public ToolStripSeparator toolStripSeparator1;
         public ToolStripSeparator toolStripSeparator2;
         public ToolStripSeparator toolStripSeparator3;
+        public ToolStripMenuItem deleteWPToolStripMenuItem;
         public ToolStripMenuItem planningWPToolStripMenuItem;
         public ToolStripMenuItem surveyGridToolStripMenuItem;
         private ToolStripMenuItem polygonToolStripMenuItem;
         public ToolStripMenuItem addPolygonPointToolStripMenuItem;
+        public ToolStripMenuItem deletePolygonPointToolStripMenuItem;
         public ToolStripMenuItem clearPolygonToolStripMenuItem;
         private ToolStripMenuItem loadPolygonToolStripMenuItem;
         public ToolStripMenuItem fromPolygonToolStripMenuItem;
@@ -1135,7 +1162,6 @@ namespace MissionPlanner.GCSViews
         //public ToolStripMenuItem jumpToolStripMenuItem;
         //public ToolStripMenuItem jumpstartToolStripMenuItem;
         //public ToolStripMenuItem jumpwPToolStripMenuItem;
-        //public ToolStripMenuItem deleteWPToolStripMenuItem;
         public Timer timer1;
         //public ToolStripMenuItem setROIToolStripMenuItem;
         //public ToolStripMenuItem mapToolToolStripMenuItem;

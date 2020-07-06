@@ -5,19 +5,22 @@ namespace GMap.NET.Internals
     using System.IO;
     using System;
     using System.Diagnostics;
+    using System.Xml;
+
     class LayerInfoCache : Dictionary<string, LayerInfo>
     {
         public LayerInfoCache() : base()
         {
         }
 
+        private int vaildIndex = 0;
         readonly List<string> Queue = new List<string>();
 
-        public int Size
+        public new int Count
         {
             get
             {
-                return Queue.Count;
+                return Queue.Count - vaildIndex;
             }
         }
 
@@ -26,36 +29,64 @@ namespace GMap.NET.Internals
             get
             {
                 LayerInfo layerInfo;
-                base.TryGetValue(Queue[index], out layerInfo);
+                base.TryGetValue(Queue[index + vaildIndex], out layerInfo);
                 return layerInfo;
             }
         }
 
-        public new void Add(string key, LayerInfo value)
+        public new bool Add(string key, LayerInfo value)
         {
-            Queue.Add(key);
             base.Add(key, value);
+            if (File.Exists(value.Layer))
+            {
+                Queue.Add(key);
+                return true;
+            }
+            else
+            {
+                Queue.Insert(0, key);
+                vaildIndex++;
+                return false;
+            }
+            
         }
 
 
-        public new void Modify(string key, LayerInfo value)
+        public bool Modify(string key, LayerInfo value)
         {
             if (Queue.Contains(key))
             {
                 Queue.Remove(key);
                 base.Remove(key);
             }
-            Queue.Add(key);
             base.Add(key, value);
+            if (File.Exists(value.Layer))
+            {
+                Queue.Add(key);
+                return true;
+            }
+            else
+            {
+                Queue.Insert(0, key);
+                vaildIndex++;
+                return false;
+            }
+
         }
 
-        public new void MoveToLast(string key)
+        public bool MoveToLast(string key)
         {
             if (Queue.Contains(key))
             {
-                Queue.Remove(key);
-                Queue.Add(key);
+                if (Queue.IndexOf(key) > vaildIndex)
+                {
+                    Queue.Remove(key);
+                    Queue.Add(key);
+                    return true;
+                }
             }
+            vaildIndex++;
+            return false;
         }
 
 
@@ -71,6 +102,27 @@ namespace GMap.NET.Internals
             base.Clear();
         }
 
+
+        public XmlElement GetXML(XmlDocument xmlDoc)
+        {
+            XmlElement LayerInfos = xmlDoc.CreateElement("MemoryLayerCache");
+            xmlDoc.AppendChild(LayerInfos);
+
+            for (int i = 0; i < Queue.Count; i++)
+            {
+                // (4)给根节点Books创建第1个子节点
+                try
+                {
+                    base.TryGetValue(Queue[i], out LayerInfo layerInfo);
+                    LayerInfos.AppendChild(layerInfo.GetXML(xmlDoc, Queue[i]));
+                }
+                catch
+                {
+
+                }
+            }
+            return LayerInfos;
+        }
         
     }
 }

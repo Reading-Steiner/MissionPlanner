@@ -64,7 +64,7 @@
                     return ret;
                 }
             }
-            finally
+            catch
             {
 
             }
@@ -105,18 +105,20 @@
                 string key = GetHashCode(data);
                 if (key == null)
                     return false;
-                selectedLayer = key;
                 if (!layerInfoInMemory.ContainsKey(key))
                 {
-                    layerInfoInMemory.Add(key, data);
+                    if (layerInfoInMemory.Add(key, data))
+                        selectedLayer = key;
                 }
                 else if (!data.Equals(GetLayerFromMemoryCache(key).GetValueOrDefault()))
                 {
-                    layerInfoInMemory.Modify(key, data);
+                    if (layerInfoInMemory.Modify(key, data))
+                        selectedLayer = key;
                 }
                 else
                 {
-                    layerInfoInMemory.MoveToLast(key);
+                    if (layerInfoInMemory.MoveToLast(key))
+                        selectedLayer = key;
                 }
             }
             finally
@@ -226,16 +228,22 @@
                         if (isDefaultOrigin)
                         {
                             var layer = new LayerInfo(path, (double)scale);
-                            layer.SetDefaultOrigin(defaultLng.GetValueOrDefault(), defaultLat.GetValueOrDefault(), defaultAlt.GetValueOrDefault());
-                            layerInfoInMemory.Add(key, layer);
-                            selectedLayer = key;
+                            layer.SetDefaultOrigin(
+                                defaultLng.GetValueOrDefault(), 
+                                defaultLat.GetValueOrDefault(), 
+                                defaultAlt.GetValueOrDefault());
+                            if (layerInfoInMemory.Add(key, layer))
+                                selectedLayer = key;
                         }
                         else
                         {
                             var layer = new LayerInfo(path, (double)originLng, (double)originLat, (double)originAlt, (double)scale);
-                            layer.SetDefaultOrigin(defaultLng.GetValueOrDefault(), defaultLat.GetValueOrDefault(), defaultAlt.GetValueOrDefault());
-                            layerInfoInMemory.Add(key, layer);
-                            selectedLayer = key;
+                            layer.SetDefaultOrigin(
+                                defaultLng == null ? (double)originLng : defaultLng.GetValueOrDefault(),
+                                defaultLat == null ? (double)originLat : defaultLat.GetValueOrDefault(),
+                                defaultAlt == null ? (double)originAlt : defaultAlt.GetValueOrDefault());
+                            if (layerInfoInMemory.Add(key, layer))
+                                selectedLayer = key;
                         }
                     }
                 }
@@ -252,57 +260,8 @@
             XmlDeclaration dec = xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null);
             xmlDoc.AppendChild(dec);
 
-            XmlElement LayerInfos = xmlDoc.CreateElement("MemoryLayerCache");
-            xmlDoc.AppendChild(LayerInfos);
-
-            for (int i = 0; i < layerInfoInMemory.Count; i++)
-            {
-                // (4)给根节点Books创建第1个子节点
-                XmlElement key = xmlDoc.CreateElement("key");
-                key.InnerText = GetHashCode(layerInfoInMemory[i]);
-                LayerInfos.AppendChild(key);
-
-                XmlElement path = xmlDoc.CreateElement("path");
-                path.InnerText = layerInfoInMemory[i].Layer;
-                key.AppendChild(path);
-
-                XmlElement isDefaultOrigin = xmlDoc.CreateElement("isDefaultOrigin");
-                isDefaultOrigin.InnerXml = layerInfoInMemory[i].IsDefaultOrigin.ToString();
-                key.AppendChild(isDefaultOrigin);
-
-                if (!layerInfoInMemory[i].IsDefaultOrigin)
-                {
-                    XmlElement originX = xmlDoc.CreateElement("originLng");
-                    originX.InnerText = layerInfoInMemory[i].Lng.ToString();
-                    key.AppendChild(originX);
-
-                    XmlElement originY = xmlDoc.CreateElement("originLat");
-                    originY.InnerText = layerInfoInMemory[i].Lat.ToString();
-                    key.AppendChild(originY);
-
-                    XmlElement originZ = xmlDoc.CreateElement("originAlt");
-                    originY.InnerText = layerInfoInMemory[i].Lat.ToString();
-                    key.AppendChild(originZ);
-                }
-
-                layerInfoInMemory[i].GetDefaultOrigin(out double lng, out double lat, out double alt);
-
-                XmlElement defaultX = xmlDoc.CreateElement("defaultLng");
-                defaultX.InnerText = lng.ToString();
-                key.AppendChild(defaultX);
-
-                XmlElement defaultY = xmlDoc.CreateElement("defaultLat");
-                defaultY.InnerText = lat.ToString();
-                key.AppendChild(defaultY);
-
-                XmlElement defaultZ = xmlDoc.CreateElement("defaultAlt");
-                defaultZ.InnerText = alt.ToString();
-                key.AppendChild(defaultZ);
-
-                XmlElement scale = xmlDoc.CreateElement("scale");
-                scale.InnerText = layerInfoInMemory[i].Scale.ToString();
-                key.AppendChild(scale);
-            }
+            xmlDoc.AppendChild(layerInfoInMemory.GetXML(xmlDoc));
+            
             //需要保存修改的值
             xmlDoc.Save(".\\plugins\\GMap.NET.CacheProviders.MemoryLayerCache.xml");
             xmlDoc = null;

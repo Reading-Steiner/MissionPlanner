@@ -864,4 +864,10 @@
   <data name="tiffManagerToolStripTiffMenuItem.Text" xml:space="preserve">
     <value>图层管理器</value>
   </data>
+  <data name="deleteMarkerToolStripMenuItem.Text" xml:space="preserve">
+    <value>删除标记</value>
+  </data>
+  <data name="deletePolygonPointToolStripMenuItem.Text" xml:space="preserve">
+    <value>删除区域点</value>
+  </data>
 </root>
