@@ -6804,7 +6804,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 return;
             }
 
-            if (e.Button == MouseButtons.Left && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
                 isMouseDown = true;
                 isMouseDraging = false;
@@ -7021,7 +7021,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 return;
             }
-
             if (zoomicon.Rectangle.Contains(e.Location))
             {
                 //contextMenuStripZoom.Show(MainMap, e.Location);
@@ -7052,11 +7051,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     contextMenuStripMain.Visible = false;
                     contextMenuStripTiff.Show(MainMap, e.Location);
                     return;
-                }else if(e.Button == MouseButtons.Middle)
-                {
-                    MissionPlanner.Controls.test dlg = new MissionPlanner.Controls.test();
-                    dlg.ShowDialog();
                 }
+                //else if(e.Button == MouseButtons.Middle)
+                //{
+                //    MissionPlanner.Controls.test dlg = new MissionPlanner.Controls.test();
+                //    dlg.ShowDialog();
+                //}
                 return;
             }
 
@@ -7084,18 +7084,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     var midline = CurrentMidLine.Tag as midline;
                     // var pnt1 = int.Parse(midline.now.Tag);
 
-                    if (polygongridmode && midline.now != null)
+                    if (polygongridmode && midline.now != null && e.Button == MouseButtons.Middle)
                     {
+                        //点击到多边形中线
                         var idx = drawnpolygon.Points.IndexOf(midline.now);
                         drawnpolygon.Points.Insert(idx + 1,
                             new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
 
                         redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
                     }
-                    else
+                    else if(e.Button == MouseButtons.Middle)
                     {
                         if (int.TryParse(midline.next.Tag, out pnt2))
                         {
+                            //点击到航点中线
                             if ((MAVLink.MAV_MISSION_TYPE) cmb_missiontype.SelectedValue ==
                                 MAVLink.MAV_MISSION_TYPE.FENCE)
                             {
@@ -7162,7 +7164,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     isMouseDraging = false;
                     return;
                 }
-                if (!isMouseDraging)
+                if (!isMouseDraging && e.Button == MouseButtons.Middle)
                 {
                     if (CurentRectMarker != null)
                     {
@@ -7173,7 +7175,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
                     }
                 }
-                else
+                else if(isMouseDraging)
                 {
                     if (groupmarkers.Count > 0)
                     {

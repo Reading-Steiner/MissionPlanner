@@ -86,7 +86,7 @@ namespace MissionPlanner
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuFlightData,
             this.MenuFlightPlanner,
-            this.toolStripConnectionControl,
+            this.toolStripConnectionControl
             //this.MenuArduPilot
             });
             this.MainMenu.Name = "MainMenu";

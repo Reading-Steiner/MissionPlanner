@@ -39,8 +39,6 @@ namespace MissionPlanner.Controls
             this.LatColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AltCoulmn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ScaleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.SelectedGroup = ((System.Windows.Forms.ListViewGroup)(new System.Windows.Forms.ListViewGroup()));
-            this.NormalGroup = ((System.Windows.Forms.ListViewGroup)(new System.Windows.Forms.ListViewGroup()));
             this.SuspendLayout();
             // 
             // LayerInfoList
@@ -53,8 +51,8 @@ namespace MissionPlanner.Controls
             this.AltCoulmn,
             this.ScaleColumn});
             this.LayerInfoList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-                this.SelectedGroup,
-                this.NormalGroup });
+            ((System.Windows.Forms.ListViewGroup)(resources.GetObject("LayerInfoList.Groups"))),
+            ((System.Windows.Forms.ListViewGroup)(resources.GetObject("LayerInfoList.Groups1")))});
             this.LayerInfoList.Name = "LayerInfoList";
             this.LayerInfoList.UseCompatibleStateImageBehavior = false;
             this.LayerInfoList.View = System.Windows.Forms.View.Details;
@@ -79,14 +77,6 @@ namespace MissionPlanner.Controls
             // 
             resources.ApplyResources(this.ScaleColumn, "ScaleColumn");
             // 
-            // SelectedGroup
-            // 
-            resources.ApplyResources(this.SelectedGroup, "SelectedGroup");
-            // 
-            // NormalGroup
-            // 
-            resources.ApplyResources(this.NormalGroup, "NormalGroup");
-            // 
             // LayerManager
             // 
             resources.ApplyResources(this, "$this");
@@ -95,12 +85,15 @@ namespace MissionPlanner.Controls
             this.Name = "LayerManager";
             this.ResumeLayout(false);
 
+            
         }
 
         #endregion
 
         private void Init()
         {
+            this.SelectedGroup = this.LayerInfoList.Groups[0];
+            this.NormalGroup = this.LayerInfoList.Groups[1];
             layerCache = new GMap.NET.CacheProviders.MemoryLayerCache();
             
             for (int i =0; i < layerCache.Count; i++)

@@ -148,8 +148,8 @@
   <data name="LngColumn.Text" xml:space="preserve">
     <value>OriginLongitude</value>
   </data>
-  <data name="SelectedGroup.Header" xml:space="preserve">
-    <value>Selected</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>LayerManager</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
@@ -157,6 +157,9 @@
   </data>
   <data name="&gt;&gt;LatColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>600, 360</value>
@@ -196,8 +199,8 @@
   <data name="&gt;&gt;ScaleColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>LayerManager</value>
+  <data name="SelectedGroup.Header" xml:space="preserve">
+    <value>Selected</value>
   </data>
   <data name="&gt;&gt;LayerInfoList.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -222,9 +225,6 @@
   </data>
   <data name="&gt;&gt;LngColumn.Name" xml:space="preserve">
     <value>LngColumn</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
   </data>
   <data name="&gt;&gt;DefaultColumn.Name" xml:space="preserve">
     <value>DefaultColumn</value>
@@ -254,11 +254,11 @@
   <data name="&gt;&gt;DefaultColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;AltCoulmn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
   </data>
   <data name="LayerInfoList.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>

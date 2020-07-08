@@ -252,7 +252,7 @@
     <value>53, 12</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>绝对高度</value>
+    <value>高程</value>
   </data>
   <data name="label3.ToolTip" xml:space="preserve">
     <value />
