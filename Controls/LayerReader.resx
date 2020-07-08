@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="&gt;&gt;Latitude.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Cancel.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;MapGroup.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;LeftLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MapGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="RightLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>295, 161</value>
+  </data>
+  <data name="&gt;&gt;Transparent.Parent" xml:space="preserve">
+    <value>ViewGroup</value>
+  </data>
+  <data name="&gt;&gt;Scale.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Longitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 25</value>
+  </data>
+  <data name="Accept.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="AltitudeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 94</value>
+  </data>
+  <data name="&gt;&gt;Longitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Longitude.Parent" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
+  <data name="&gt;&gt;TopLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="TransparentLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 12</value>
+  </data>
+  <data name="Altitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 91</value>
+  </data>
+  <data name="LongitudeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BottomLabel.Text" xml:space="preserve">
+    <value>Bottom：</value>
+  </data>
+  <data name="LatitudeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;LatitudeLabel.Parent" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LeftLabel.Text" xml:space="preserve">
+    <value>Left：</value>
+  </data>
+  <data name="LongitudeLabel.Text" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="&gt;&gt;TopLabel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;Altitude.Parent" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
+  <data name="FileOpen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 23</value>
+  </data>
+  <data name="Latitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 21</value>
+  </data>
+  <data name="&gt;&gt;LeftLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;RightLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Scale.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TransparentLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 28</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>LayerReader</value>
+  </data>
+  <data name="Cancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 305</value>
+  </data>
+  <data name="&gt;&gt;MapGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;BottomLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FileOpen.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ScaleLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ScaleLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ViewGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 243</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="Transparent.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="TopLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Scale.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 20</value>
+  </data>
+  <data name="&gt;&gt;AltitudeLabel.Parent" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
+  <data name="&gt;&gt;Accept.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ViewGroup.Name" xml:space="preserve">
+    <value>ViewGroup</value>
+  </data>
+  <data name="&gt;&gt;FileOpen.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="&gt;&gt;Longitude.Name" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="&gt;&gt;LayerPrevView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="Accept.Text" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="LayerPrevView.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="LeftLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 161</value>
+  </data>
+  <data name="RightLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="MapGroup.Text" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="OriginGroup.Text" xml:space="preserve">
+    <value>Origin</value>
+  </data>
+  <data name="&gt;&gt;RightLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Cancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Latitude.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 58</value>
+  </data>
+  <data name="AltitudeLabel.Text" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="Accept.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="LeftLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;Altitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LatitudeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;FilePath.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="LayerPrevView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>64, 77</value>
+  </data>
+  <data name="RightLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Latitude.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Transparent.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;Scale.Name" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="&gt;&gt;BottomLabel.Name" xml:space="preserve">
+    <value>BottomLabel</value>
+  </data>
+  <data name="LatitudeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="&gt;&gt;TopLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Altitude.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Accept.Name" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Altitude.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="ViewGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 52</value>
+  </data>
+  <data name="&gt;&gt;Cancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>LayerReader</value>
+  </data>
+  <data name="OriginGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>134</value>
+  </data>
+  <data name="&gt;&gt;ScaleLabel.Parent" xml:space="preserve">
+    <value>MapGroup</value>
+  </data>
+  <data name="ScaleLabel.Text" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="&gt;&gt;LeftLabel.Name" xml:space="preserve">
+    <value>LeftLabel</value>
+  </data>
+  <data name="&gt;&gt;BottomLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="RightLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 14</value>
+  </data>
+  <data name="&gt;&gt;BottomLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="Longitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 21</value>
+  </data>
+  <data name="&gt;&gt;LongitudeLabel.Name" xml:space="preserve">
+    <value>LongitudeLabel</value>
+  </data>
+  <data name="LeftLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 14</value>
+  </data>
+  <data name="&gt;&gt;Cancel.Name" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;Longitude.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Latitude.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FileOpen.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;LeftLabel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="AltitudeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="LatitudeLabel.Text" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="MapGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 60</value>
+  </data>
+  <data name="&gt;&gt;Transparent.Type" xml:space="preserve">
+    <value>DotSpatial.Symbology.Forms.ColorButton, DotSpatial.Symbology.Forms, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0544cdeefb662382</value>
+  </data>
+  <data name="&gt;&gt;Altitude.Name" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="&gt;&gt;TopLabel.Name" xml:space="preserve">
+    <value>TopLabel</value>
+  </data>
+  <data name="&gt;&gt;FilePath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LatitudeLabel.Name" xml:space="preserve">
+    <value>LatitudeLabel</value>
+  </data>
+  <data name="&gt;&gt;LatitudeLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TopLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 60</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="LayerPrevView.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="&gt;&gt;Transparent.Name" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="Transparent.Text" xml:space="preserve">
+    <value>colorButton1</value>
+  </data>
+  <data name="ViewGroup.Text" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="BottomLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="LeftLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;Scale.Parent" xml:space="preserve">
+    <value>MapGroup</value>
+  </data>
+  <data name="ViewGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;RightLabel.Name" xml:space="preserve">
+    <value>RightLabel</value>
+  </data>
+  <data name="&gt;&gt;LayerPrevView.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="BottomLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Accept.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 305</value>
+  </data>
+  <data name="&gt;&gt;Cancel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AltitudeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="ScaleLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="TransparentLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="TopLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="Transparent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 23</value>
+  </data>
+  <data name="FileOpen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>448, 12</value>
+  </data>
+  <data name="FilePath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>430, 21</value>
+  </data>
+  <data name="&gt;&gt;TransparentLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LongitudeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 28</value>
+  </data>
+  <data name="&gt;&gt;ViewGroup.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TransparentLabel.Text" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="&gt;&gt;Latitude.Parent" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
+  <data name="Scale.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 21</value>
+  </data>
+  <data name="&gt;&gt;TransparentLabel.Name" xml:space="preserve">
+    <value>TransparentLabel</value>
+  </data>
+  <data name="AltitudeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;FilePath.Name" xml:space="preserve">
+    <value>FilePath</value>
+  </data>
+  <data name="&gt;&gt;LongitudeLabel.Parent" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
+  <data name="TopLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 14</value>
+  </data>
+  <data name="&gt;&gt;ViewGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ScaleLabel.Name" xml:space="preserve">
+    <value>ScaleLabel</value>
+  </data>
+  <data name="&gt;&gt;Latitude.Name" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Altitude.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 21</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>MapGroup</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FilePath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="LeftLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="&gt;&gt;FilePath.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="BottomLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 305</value>
+  </data>
+  <data name="&gt;&gt;MapGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Accept.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RightLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;FileOpen.Name" xml:space="preserve">
+    <value>FileOpen</value>
+  </data>
+  <data name="OriginGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 121</value>
+  </data>
+  <data name="ScaleLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="LatitudeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 61</value>
+  </data>
+  <data name="&gt;&gt;LatitudeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ViewGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TransparentLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="OriginGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 115</value>
+  </data>
+  <data name="TopLabel.Text" xml:space="preserve">
+    <value>Top：</value>
+  </data>
+  <data name="RightLabel.Text" xml:space="preserve">
+    <value>Right：
+</value>
+  </data>
+  <data name="Cancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;OriginGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="LongitudeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="RightLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;OriginGroup.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="FilePath.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="ScaleLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 23</value>
+  </data>
+  <data name="BottomLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 14</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;OriginGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Accept.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Longitude.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="FileOpen.Text" xml:space="preserve">
+    <value>FileOpen</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>565, 340</value>
+  </data>
+  <data name="&gt;&gt;AltitudeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LayerPrevView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TransparentLabel.Parent" xml:space="preserve">
+    <value>ViewGroup</value>
+  </data>
+  <data name="&gt;&gt;TransparentLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="MapGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 49</value>
+  </data>
+  <data name="Scale.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;MapGroup.Name" xml:space="preserve">
+    <value>MapGroup</value>
+  </data>
+  <data name="&gt;&gt;OriginGroup.Name" xml:space="preserve">
+    <value>OriginGroup</value>
+  </data>
+  <data name="LongitudeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
+  </data>
+  <data name="&gt;&gt;LongitudeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Transparent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;AltitudeLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Cancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="TopLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;FileOpen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LayerPrevView.Name" xml:space="preserve">
+    <value>LayerPrevView</value>
+  </data>
+  <data name="&gt;&gt;LongitudeLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;AltitudeLabel.Name" xml:space="preserve">
+    <value>AltitudeLabel</value>
+  </data>
+  <data name="LayerPrevView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 225</value>
+  </data>
+  <data name="BottomLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="ScaleLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>zh-CHS</value>
+  </metadata>
+</root>

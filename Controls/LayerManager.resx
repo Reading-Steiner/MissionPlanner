@@ -164,9 +164,6 @@
   <data name="&gt;&gt;LngColumn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ScaleColumn.Text" xml:space="preserve">
-    <value>LocalScale</value>
-  </data>
   <data name="&gt;&gt;LayerInfoList.Name" xml:space="preserve">
     <value>LayerInfoList</value>
   </data>
@@ -175,9 +172,6 @@
   </data>
   <data name="&gt;&gt;PathColumn.Name" xml:space="preserve">
     <value>PathColumn</value>
-  </data>
-  <data name="&gt;&gt;AltCoulmn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="LayerInfoList.TabIndex" type="System.Int32, mscorlib">
@@ -199,14 +193,17 @@
         AAd2YWx1ZV9fAAgCAAAAAAAAAAoGBQAAAAtOb3JtYWxHcm91cAs=
 </value>
   </data>
+  <data name="&gt;&gt;ScaleColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>LayerManager</value>
   </data>
   <data name="&gt;&gt;LayerInfoList.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;ScaleColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ScaleColumn.Text" xml:space="preserve">
+    <value>LocalScale</value>
   </data>
   <data name="LngColumn.Width" type="System.Int32, mscorlib">
     <value>70</value>
@@ -225,6 +222,9 @@
   </data>
   <data name="&gt;&gt;LngColumn.Name" xml:space="preserve">
     <value>LngColumn</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
   </data>
   <data name="&gt;&gt;DefaultColumn.Name" xml:space="preserve">
     <value>DefaultColumn</value>
@@ -257,8 +257,8 @@
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
+  <data name="&gt;&gt;AltCoulmn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="LayerInfoList.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>

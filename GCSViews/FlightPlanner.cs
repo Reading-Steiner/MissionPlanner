@@ -47,6 +47,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 using ILog = log4net.ILog;
 using Placemark = SharpKml.Dom.Placemark;
 using Point = System.Drawing.Point;
+using System.Runtime.Remoting.Messaging;
 
 namespace MissionPlanner.GCSViews
 {
@@ -292,7 +293,7 @@ namespace MissionPlanner.GCSViews
             if (layer != null)
             {
                 GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
-                AddLayerOverlay(layerInfo.Layer, layerInfo.IsDefaultOrigin, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Scale); ;
+                SetLayerOverlay(layerInfo.Layer, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Scale, layerInfo.Transparent);
             }
             /*
             var timer = new System.Timers.Timer();
@@ -3812,153 +3813,80 @@ namespace MissionPlanner.GCSViews
 
         public void TiffOverlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            LayerReader reader = new LayerReader();
+            DialogResult result = reader.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                ofd.Filter = "TIFF地理影像(*.tif)|*.tif";
-                ofd.ShowDialog();
+                AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetScale(), reader.GetTransparentColor());
+                reader.Dispose();
+                reader.Close();
+            }
+            else if(result == DialogResult.Cancel)
+            {
 
-                if (File.Exists(ofd.FileName))
-                {
-                    string path = ofd.FileName;
-                    bool isDefaultOrigin = false;
-                    double OriginX = 0;
-                    double OriginY = 0;
-                    double OriginZ = 0;
-                    double scale = 0;
-                    string origin = null;
-                    if (InputBox.Show("输入原点坐标", "示例：(longitude,latitude,Alititude)", ref origin) == DialogResult.OK)
-                    {
-                        if (Regex.IsMatch(origin, @"^\D*[+-]?\d+[.]?\d*\D*[+-]?\d+[.]?\d*\D*[+-]?\d+[.]?\d*\D*$"))
-                        {
-                            MatchCollection match = Regex.Matches(origin, @"[+-]?\d+[.]?\d*");
-                            if (match.Count >= 2)
-                            {
-                                isDefaultOrigin = false;
-                                OriginX = System.Convert.ToDouble(match[0].Value);
-                                OriginY = System.Convert.ToDouble(match[1].Value);
-                                if(match.Count >= 3)
-                                {
-                                    OriginZ = System.Convert.ToDouble(match[2].Value);
-                                }
-                            }
-                            else
-                            {
-                                isDefaultOrigin = true;
-                            }
-                        }
-                        else
-                        {
-                            isDefaultOrigin = true;
-                        }
-                    }
-                    else
-                    {
-                        isDefaultOrigin = true;
-                    }
-                    if (isDefaultOrigin)
-                    {
-                        CustomMessageBox.Show("将使用影像文件默认坐标原点", Strings.Warning);
-                    }
-                    origin = null;
-                    if (InputBox.Show("输入沙盘比例尺", "输入一个数值", ref origin) == DialogResult.OK)
-                    {
-                        if (Regex.IsMatch(origin, @"^[+-]?\d+[.]?\d*$"))
-                        {
-                            scale = System.Convert.ToDouble(origin);
-                            if (scale < 1)
-                                scale = 1 / scale;
-                        }
-                        else if (Regex.IsMatch(origin, @"^[+-]?\d+[.]?\d*[:\：][+-]?\d+[.]?\d*$"))
-                        {
-                            MatchCollection match = Regex.Matches(origin, @"[+-]?\d+[.]?\d*");
-                            if (match.Count >= 2)
-                            {
-                                scale = System.Convert.ToDouble(match[1].Value) / System.Convert.ToDouble(match[0].Value);
-                                if (scale < 1)
-                                    scale = System.Convert.ToDouble(match[0].Value) / System.Convert.ToDouble(match[1].Value);
-                            }
-                            else
-                            {
-                                CustomMessageBox.Show("非法比例尺", Strings.ERROR);
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            CustomMessageBox.Show("非法比例尺", Strings.ERROR);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        CustomMessageBox.Show("沙盘比例尺不能为空", Strings.ERROR);
-                        return;
-                    }
-                    if(AddLayerOverlay(path, isDefaultOrigin, OriginX, OriginY, OriginZ, scale))
-                    {
-                        if (isDefaultOrigin)
-                        {
-                            var layer = new GMap.NET.Internals.LayerInfo(path, scale);
-                            layer.SetDefaultOrigin(this.defaultOrigin.Lng, this.defaultOrigin.Lat, this.defaultOrigin.Alt);
-                            layerCache.AddLayerToMemoryCache(layer);
-                        }
-                        else
-                        {
-                            var layer = new GMap.NET.Internals.LayerInfo(path, OriginX, OriginY, OriginZ, scale);
-                            layer.SetDefaultOrigin(this.defaultOrigin.Lng, this.defaultOrigin.Lat, this.defaultOrigin.Alt);
-                            layerCache.AddLayerToMemoryCache(layer);
-                        }
-                    }
-
-                }
+                reader.Dispose();
+                reader.Close();
             }
         }
 
-        public bool AddLayerOverlay(string path, bool isDefaultOrigin, double x, double y, double z, double scale)
+        public bool AddLayerOverlay(string path, PointLatLngAlt origin, double scale, Color transparent)
+        {
+            layerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent));
+            return SetLayerOverlay(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent);
+        }
+
+        public bool SetLayerOverlay(string path, double lng, double lat, double alt, double scale, Color Transparent)
         {
             if (File.Exists(path))
             {
-                //string FilePath = "D:\\MegoMap Download\\谷歌地球_卫星影像_影像_山东省(2)\\GeoTIFF拼接大图\\影像_level_7.tif";
-                string FilePath = path;
-                GDAL.GDAL.GeoBitmap geobitmap = GDAL.GDAL.LoadImageInfo(FilePath);
-                //PointLatLngAlt.FromUTM();
-                if (!geobitmap.Rect.IsEmpty)
+                var bitmap = GDAL.GDAL.LoadImageInfo(path);
+                if (bitmap != null && !bitmap.Rect.IsEmpty)
                 {
-                    layerpolygonsoverlay.Polygons.Clear();
-                    layerpolygonsoverlay.Routes.Clear();
-                    this.defaultOrigin = new PointLatLngAlt(geobitmap.Rect.Lat, geobitmap.Rect.Lng);
-                    this.rect = geobitmap.Rect;
-
-                    PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
-                    PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
-
-                    var mark = new GMapMarkerLayer(pos1, pos2, geobitmap.Bitmap);
-                    FlightData.layerpolygons.Polygons.Add(mark);
-                    layerpolygonsoverlay.Polygons.Add(mark);
-                    zoomToTiffToolStripMenuItem_Click(this, null);
-                }
-                else
-                {
-                    CustomMessageBox.Show("该TIFF影像文件没有地理坐标.", "Error");
-                    return false;
-                }
-                return true;
-            }
-            else
-            {
-                if(isDefaultOrigin)
-                    return false;
-                else
-                {
-                    this.rect = new RectLatLng
+                    Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (_bitmap, _transparent) =>
                     {
-                        Lat = x,
-                        Lng = y,
+                        _bitmap.Bitmap.MakeTransparent(_transparent);
+                        _bitmap.midBitmap.MakeTransparent(_transparent);
+                        _bitmap.smallBitmap.MakeTransparent(_transparent);
+                        return _bitmap;
                     };
-                    this.defaultOrigin = new PointLatLngAlt(y, x, z);
+                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(bitmap, Transparent, CallbackWhenDone, this);
+
+                    this.rect = bitmap.Rect;
+                    this.defaultOrigin = new PointLatLngAlt(lat, lng, alt);
+
+                    zoomToTiffToolStripMenuItem_Click(this, null);
                     return true;
                 }
+                else
+                {
+                    return false;
+                }
             }
+            else
+                return false;
+        }
+
+        public void CallbackWhenDone(IAsyncResult iar)
+        {
+            AsyncResult ar = (AsyncResult)iar;
+            Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> geoFunc = (Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap>)ar.AsyncDelegate;
+
+            var geoBitmap = geoFunc.EndInvoke(iar);
+
+            ShowLayerOverlay(geoBitmap);
+        }
+
+
+        public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        {
+            layerpolygonsoverlay.Polygons.Clear();
+
+            PointLatLngAlt pos1 = new PointLatLngAlt(rect.Top, rect.Left);
+            PointLatLngAlt pos2 = new PointLatLngAlt(rect.Bottom, rect.Right);
+            var mark = new GMapMarkerLayer(pos1, pos2, geoBitmap.Bitmap, geoBitmap.midBitmap, geoBitmap.smallBitmap);
+
+            FlightData.layerpolygons.Polygons.Add(mark);
+            layerpolygonsoverlay.Polygons.Add(mark);
         }
 
 
@@ -5650,44 +5578,34 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (layer == null)
             {
             }
-            PointLatLngAlt Origin;
             double Scale = layer.GetValueOrDefault().Scale;
-            if (layer.GetValueOrDefault().IsDefaultOrigin)
-            {
-                Origin = new PointLatLngAlt(
-                    this.defaultOrigin.Lat, 
-                    this.defaultOrigin.Lng, 
-                    this.defaultOrigin.Alt);
-            }
-            else
-            {
-                Origin = new PointLatLngAlt(
-                    layer.GetValueOrDefault().Lat, 
-                    layer.GetValueOrDefault().Lng, 
-                    layer.GetValueOrDefault().Alt);
-            }
+
+            PointLatLngAlt Origin = new PointLatLngAlt(
+                layer.GetValueOrDefault().Lat,
+                layer.GetValueOrDefault().Lng,
+                layer.GetValueOrDefault().Alt);
+
             int OriginZone = Origin.GetUTMZone();
             double[] OriginCoord = Origin.ToUTM(OriginZone);
 
             int WGS84Zone = WGS84Point.GetUTMZone();
             double[] WGS84Coord = WGS84Point.ToUTM(OriginZone);
-            
-            var OriginUTM = new UTM(OriginZone, OriginCoord[0], OriginCoord[1], Geocentric.Hemisphere.North);
-            var WGS84UTM = new UTM(OriginZone, WGS84Coord[0], WGS84Coord[1], Geocentric.Hemisphere.North);
+
+            double WGS84UTMEast = WGS84Coord[0];
+            double WGS84UTMNorth = WGS84Coord[1];
+            if (WGS84Zone < 0)
+                WGS84UTMNorth = WGS84UTMNorth - 10000000;
+            double OriginUTMEast = OriginCoord[0];
+            double OriginUTMNorth = OriginCoord[1];
+            if (OriginZone < 0)
+                OriginUTMNorth = OriginUTMNorth - 10000000;
 
             double deltaLng, deltaLat, deltaAlt;
-            if (OriginZone >= 0)
-            {
-                deltaLng = (WGS84UTM.East - OriginUTM.East) / Scale;
-                deltaLat = (WGS84UTM.North - OriginUTM.North) / Scale;
-                deltaAlt = (WGS84Point.Alt - Origin.Alt) / Scale;
-            }
-            else
-            {
-                deltaLng = (WGS84UTM.East - OriginUTM.East) / Scale;
-                deltaLat = (OriginUTM.North - WGS84UTM.North) / Scale;
-                deltaAlt = (WGS84Point.Alt - Origin.Alt) / Scale;
-            }
+
+            deltaLng = (WGS84UTMEast - OriginUTMEast) / Scale;
+            deltaLat = (WGS84UTMNorth - OriginUTMNorth) / Scale;
+            deltaAlt = (WGS84Point.Alt - Origin.Alt) / Scale;
+
             // m => mm
             WorkPoint = new PointLatLngAlt(deltaLat * 1000, deltaLng * 1000, deltaAlt * 1000);
 
@@ -5711,46 +5629,32 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (layer == null)
             {
             }
-            PointLatLngAlt Origin;
             double Scale = layer.GetValueOrDefault().Scale;
-            if (layer.GetValueOrDefault().IsDefaultOrigin)
-            {
-                Origin = new PointLatLngAlt(
-                    this.defaultOrigin.Lat,
-                    this.defaultOrigin.Lng,
-                    this.defaultOrigin.Alt);
-            }
-            else
-            {
-                Origin = new PointLatLngAlt(
-                    layer.GetValueOrDefault().Lat,
-                    layer.GetValueOrDefault().Lng,
-                    layer.GetValueOrDefault().Alt);
-            }
+
+            PointLatLngAlt Origin = new PointLatLngAlt(
+                layer.GetValueOrDefault().Lat,
+                layer.GetValueOrDefault().Lng,
+                layer.GetValueOrDefault().Alt);
+
             int OriginZone = Origin.GetUTMZone();
             double[] OriginCoord = Origin.ToUTM();
 
-            var OriginUTM = new UTM(OriginZone, OriginCoord[0], OriginCoord[1], Geocentric.Hemisphere.North);
+            double OriginUTMEast = OriginCoord[0];
+            double OriginUTMNorth = OriginCoord[1];
+            if (OriginZone < 0)
+                OriginUTMNorth = OriginUTMNorth - 10000000;
 
             // mm => m
-            WorkCoordPoint = new PointLatLngAlt(WorkCoordPoint.Lat/1000, WorkCoordPoint.Lng / 1000, WorkCoordPoint.Alt / 1000);
-            double deltaEast, deltaNorth, deltaAlt;
-            if (OriginZone >= 0)
-            {
-                deltaEast = (WorkCoordPoint.Lng * Scale + OriginUTM.East);
-                deltaNorth = (WorkCoordPoint.Lat * Scale + OriginUTM.North);
-                deltaAlt = (WorkCoordPoint.Alt * Scale + Origin.Alt) ;
-            }
-            else
-            {
-                deltaEast = (WorkCoordPoint.Lng * Scale + OriginUTM.East);
-                deltaNorth = (OriginUTM.North - WorkCoordPoint.Lat * Scale);
-                deltaAlt = (WorkCoordPoint.Alt* Scale + Origin.Alt);
-            }
-            var WGS84UTM = new UTM(OriginZone, deltaEast, deltaNorth, Geocentric.Hemisphere.North);
-            Geographic geo = (Geographic)WGS84UTM;
-            WGS84CorrdPoint = new PointLatLngAlt(geo.Latitude, geo.Longitude, deltaAlt);
+            WorkCoordPoint = new PointLatLngAlt(WorkCoordPoint.Lat / 1000, WorkCoordPoint.Lng / 1000, WorkCoordPoint.Alt / 1000);
 
+            double deltaEast, deltaNorth, deltaAlt;
+
+            deltaEast = (WorkCoordPoint.Lng * Scale + OriginUTMEast);
+            deltaNorth = (WorkCoordPoint.Lat * Scale + OriginUTMNorth);
+            deltaAlt = (WorkCoordPoint.Alt * Scale + Origin.Alt);
+
+            WGS84CorrdPoint = PointLatLngAlt.FromUTM(OriginZone, deltaEast, deltaNorth);
+            WGS84CorrdPoint.Alt = deltaAlt;
         }
 
         private void CovertFromWorkCoordinate(double x, double y, double z, out double lng, out double lat, out double alt)
@@ -5826,13 +5730,12 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     sw.Write("\t" +
                              double.Parse(Commands.Rows[a].Cells[Param4.Index].Value.ToString())
                                  .ToString("0.00000000", new CultureInfo("en-US")));
-                    double x, y, z;
 
                     CovertToWorkCoordinate(
                         double.Parse(Commands.Rows[a].Cells[Lon.Index].Value.ToString()),
                         double.Parse(Commands.Rows[a].Cells[Lat.Index].Value.ToString()),
                         double.Parse(Commands.Rows[a].Cells[Alt.Index].Value.ToString()) / CurrentState.multiplieralt,
-                        out x, out y, out z);
+                        out double x, out double y, out double z);
 
                     sw.Write("\t" + y.ToString("0.00000000", new CultureInfo("en-US")));
                     sw.Write("\t" + x.ToString("0.00000000", new CultureInfo("en-US")));
@@ -7149,6 +7052,10 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     contextMenuStripMain.Visible = false;
                     contextMenuStripTiff.Show(MainMap, e.Location);
                     return;
+                }else if(e.Button == MouseButtons.Middle)
+                {
+                    MissionPlanner.Controls.test dlg = new MissionPlanner.Controls.test();
+                    dlg.ShowDialog();
                 }
                 return;
             }
@@ -7832,19 +7739,10 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             var layerInfo = layerCache.GetSelectedLayerFromMemoryCache();
             if (layerInfo == null)
                 return;
-            double lat, lng, alt;
-            if (layerInfo.GetValueOrDefault().IsDefaultOrigin)
-            {
-                lng = this.defaultOrigin.Lng;
-                lat = this.defaultOrigin.Lat;
-                alt = this.defaultOrigin.Alt;
-            }
-            else
-            {
-                lng = layerInfo.GetValueOrDefault().Lng;
-                lat = layerInfo.GetValueOrDefault().Lat;
-                alt = layerInfo.GetValueOrDefault().Alt;
-            }
+
+            double lng = this.defaultOrigin.Lng;
+            double lat = this.defaultOrigin.Lat;
+            double alt = this.defaultOrigin.Alt;
 
             TXT_homealt.Text = alt.ToString();
             TXT_homelat.Text = lat.ToString();

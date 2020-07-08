@@ -264,7 +264,7 @@ namespace GDAL
             return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
         }
 
-        public static Bitmap LoadImage(string file)
+        public static Bitmap LoadImage(string file, int xSize = 16384, int ySize = 16384)
         {
             lock (locker)
             {
@@ -272,7 +272,7 @@ namespace GDAL
                 {
                     int rasterXSize = ds.RasterXSize;
                     int rasterYSize = ds.RasterYSize;
-                    while (rasterXSize > 15000 || rasterYSize > 15000)
+                    while (rasterXSize > xSize || rasterYSize > ySize)
                     {
                         rasterXSize = rasterXSize >> 1;
                         rasterYSize = rasterYSize >> 1;
@@ -426,6 +426,8 @@ namespace GDAL
         public class GeoBitmap
         {
             Bitmap _bitmap = null;
+            Bitmap _smallbitmap = null;
+            Bitmap _midBitmap = null;
             // load on demand
             public Bitmap Bitmap
             {
@@ -433,8 +435,35 @@ namespace GDAL
                 {
                     lock (this)
                     {
+                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
+                        if (_midBitmap == null) _midBitmap = LoadImage(File, 4096, 4096);
                         if (_bitmap == null) _bitmap = LoadImage(File);
                         return _bitmap;
+                    }
+                }
+            }
+
+            public Bitmap midBitmap
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
+                        if (_midBitmap == null) _midBitmap = LoadImage(File, 4096, 4096);
+                        return _midBitmap;
+                    }
+                }
+            }
+
+            public Bitmap smallBitmap
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        if (_smallbitmap == null) _smallbitmap = LoadImage(File, 1024, 1024);
+                        return _smallbitmap;
                     }
                 }
             }

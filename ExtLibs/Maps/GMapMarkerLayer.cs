@@ -12,10 +12,10 @@ namespace GMap.NET.WindowsForms.Markers
     [Serializable]
     public class GMapMarkerLayer : GMapPolygon
     {
-        PointLatLng LeftBottom;
-        PointLatLng RightTop;
+        Bitmap smallBitmap;
+        Bitmap midBitmap;
         Bitmap bitmap;
-        public GMapMarkerLayer(PointLatLng p1, PointLatLng p2, Bitmap bitMap)
+        public GMapMarkerLayer(PointLatLng p1, PointLatLng p2, Bitmap bitMap, Bitmap midMap = null, Bitmap smallMap = null)
          : base(new List<PointLatLng>(), p1.ToString() + p2.ToString())
         {
             double maxLat = p1.Lat > p2.Lat ? p1.Lat : p2.Lat;
@@ -27,6 +27,8 @@ namespace GMap.NET.WindowsForms.Markers
             this.Points.Add(new PointLatLng(minLat, maxLng));
             this.Points.Add(new PointLatLng(minLat, minLng));
             this.bitmap = bitMap;
+            this.midBitmap = midMap;
+            this.smallBitmap = smallMap;
         }
 
         public override void OnRender(IGraphics g)
@@ -41,7 +43,13 @@ namespace GMap.NET.WindowsForms.Markers
                     if (this.bitmap != null)
                     {
                         //g.DrawImageUnscaled(this.bitmap, (int)pos1.X, (int)pos1.Y);
-                        g.DrawImage(this.bitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
+                        if(smallBitmap!=null && (pos2.X - pos1.X) < smallBitmap.Width)
+                            g.DrawImage(this.smallBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
+                        else if (midBitmap != null && (pos2.X - pos1.X) < midBitmap.Width)
+                            g.DrawImage(this.midBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
+                        else
+                            g.DrawImage(this.bitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
+
                     }
                 }
             }

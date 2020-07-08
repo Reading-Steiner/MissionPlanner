@@ -123,6 +123,26 @@ namespace GMap.NET.Internals
             }
             return LayerInfos;
         }
-        
+
+        public void FromXML(XmlDocument xmlDoc, out string selectedKey)
+        {
+            selectedKey = null;
+            XmlNode root = xmlDoc.SelectSingleNode("MemoryLayerCache");
+            foreach (XmlNode LayerInfoKey in root)
+            {
+                if (LayerInfoKey.Name == "key")
+                {
+                    string key = LayerInfoKey.FirstChild.Value;
+                    LayerInfo? layer = LayerInfo.FromXML(LayerInfoKey);
+                    if (layer != null)
+                    {
+                        if (Add(key, layer.GetValueOrDefault()))
+                            selectedKey = key;
+                    }
+                }
+            }
+        }
+
+
     }
 }

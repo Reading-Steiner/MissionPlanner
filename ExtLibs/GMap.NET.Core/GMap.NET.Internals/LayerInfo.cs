@@ -4,44 +4,27 @@
     using System;
     using System.Collections.Generic;
     using System.Xml;
+    using System.Drawing;
 
     public struct LayerInfo
     {
         private string path;
-        private bool isDefaultOrigin;
+        private readonly Color transparent;
         private double originLng;
         private double originLat;
         private double originAlt;
         private double scale;
-        public double? defaultLng;
-        public double? defaultLat;
-        public double? defaultAlt;
 
-        public bool IsDefaultOrigin
-        {
-            get
-            {
-                return isDefaultOrigin;
-            }
-            set
-            {
-                isDefaultOrigin = value;
-            }
-        }
+       
         public double Lng
         {
             get
             {
-                if (isDefaultOrigin)
-                    return defaultLng.GetValueOrDefault();
-                else
-                    return originLng;
+                return originLng;
             }
             set
             {
-                if (isDefaultOrigin) ;
-                else
-                    originLng = value;
+                originLng = value;
 
             }
         }
@@ -50,16 +33,11 @@
         {
             get
             {
-                if (isDefaultOrigin)
-                    return defaultLat.GetValueOrDefault();
-                else
-                    return originLat;
+                return originLat;
             }
             set
             {
-                if (isDefaultOrigin) ;
-                else
-                    originLat = value;
+                originLat = value;
 
             }
         }
@@ -68,16 +46,11 @@
         {
             get
             {
-                if (isDefaultOrigin)
-                    return defaultAlt.GetValueOrDefault();
-                else
                     return originAlt;
             }
             set
             {
-                if (isDefaultOrigin) ;
-                else
-                    originAlt = value;
+                originAlt = value;
 
             }
         }
@@ -110,46 +83,24 @@
             }
         }
 
-
-        public LayerInfo(string path, double scale)
+        public Color Transparent
         {
-            this.path = path;
-            this.isDefaultOrigin = true;
-            this.originLng = 0;
-            this.originLat = 0;
-            this.originAlt = 0;
-            this.scale = scale;
-            this.defaultLng = null;
-            this.defaultLat = null;
-            this.defaultAlt = null;
+            get
+            {
+                return transparent;
+            }
         }
 
-        public LayerInfo(string path, double lng, double lat, double alt, double scale)
+        public LayerInfo(string path, double lng, double lat, double alt, double scale, System.Drawing.Color transparent)
         {
             this.path = path;
-            this.isDefaultOrigin = false;
             this.originLng = lng;
             this.originLat = lat;
             this.originAlt = alt;
             this.scale = scale;
-            this.defaultLng = null;
-            this.defaultLat = null;
-            this.defaultAlt = null;
+            this.transparent = transparent;
         }
 
-        public void SetDefaultOrigin(double lng,double lat,double alt)
-        {
-            this.defaultLng = lng;
-            this.defaultLat = lat;
-            this.defaultAlt = alt;
-        }
-
-        public void GetDefaultOrigin(out double lng, out double lat, out double alt)
-        {
-            lng = this.defaultLng.GetValueOrDefault();
-            lat = this.defaultLat.GetValueOrDefault();
-            alt = this.defaultAlt.GetValueOrDefault();
-        }
 
         public override string ToString()
         {
@@ -162,19 +113,9 @@
                 return false;
             if (obj.scale != scale)
                 return false;
-            if (obj.isDefaultOrigin != isDefaultOrigin)
-            {
-                if (!obj.isDefaultOrigin)
-                    return false;
-            }
-            else
-            {
-                if (!obj.isDefaultOrigin)
-                {
-                    if (obj.originLng != originLng || obj.originLat != originLat)
-                        return false;
-                }
-            }
+            if (obj.originLng != originLng || obj.originLat != originLat)
+                return false;
+
             return true;
         }
 
@@ -185,47 +126,115 @@
             keyIndex.InnerText = key;
 
             XmlElement path = xmlDoc.CreateElement("path");
-            path.InnerText = Layer;
+            path.InnerText = this.Layer;
             keyIndex.AppendChild(path);
 
-            XmlElement isDefaultOrigin = xmlDoc.CreateElement("isDefaultOrigin");
-            isDefaultOrigin.InnerXml = IsDefaultOrigin.ToString();
-            keyIndex.AppendChild(isDefaultOrigin);
+            XmlElement originX = xmlDoc.CreateElement("originLng");
+            originX.InnerText = this.Lng.ToString();
+            keyIndex.AppendChild(originX);
 
-            if (!IsDefaultOrigin)
-            {
-                XmlElement originX = xmlDoc.CreateElement("originLng");
-                originX.InnerText = Lng.ToString();
-                keyIndex.AppendChild(originX);
+            XmlElement originY = xmlDoc.CreateElement("originLat");
+            originY.InnerText = this.Lat.ToString();
+            keyIndex.AppendChild(originY);
 
-                XmlElement originY = xmlDoc.CreateElement("originLat");
-                originY.InnerText = Lat.ToString();
-                keyIndex.AppendChild(originY);
+            XmlElement originZ = xmlDoc.CreateElement("originAlt");
+            originZ.InnerText = this.Alt.ToString();
+            keyIndex.AppendChild(originZ);
 
-                XmlElement originZ = xmlDoc.CreateElement("originAlt");
-                originY.InnerText = Alt.ToString();
-                keyIndex.AppendChild(originZ);
-            }
+            XmlElement Scale = xmlDoc.CreateElement("scale");
+            Scale.InnerText = this.Scale.ToString();
+            keyIndex.AppendChild(Scale);
 
-            GetDefaultOrigin(out double lng, out double lat, out double alt);
+            XmlElement transparent = xmlDoc.CreateElement("transparent");
+            keyIndex.AppendChild(transparent);
 
-            XmlElement defaultX = xmlDoc.CreateElement("defaultLng");
-            defaultX.InnerText = lng.ToString();
-            keyIndex.AppendChild(defaultX);
+            XmlElement A = xmlDoc.CreateElement("A");
+            A.InnerText = this.Transparent.A.ToString();
+            transparent.AppendChild(A);
 
-            XmlElement defaultY = xmlDoc.CreateElement("defaultLat");
-            defaultY.InnerText = lat.ToString();
-            keyIndex.AppendChild(defaultY);
+            XmlElement R = xmlDoc.CreateElement("R");
+            R.InnerText = this.Transparent.R.ToString();
+            transparent.AppendChild(R);
 
-            XmlElement defaultZ = xmlDoc.CreateElement("defaultAlt");
-            defaultZ.InnerText = alt.ToString();
-            keyIndex.AppendChild(defaultZ);
+            XmlElement G = xmlDoc.CreateElement("G");
+            G.InnerText = this.Transparent.G.ToString();
+            transparent.AppendChild(G);
 
-            XmlElement scale = xmlDoc.CreateElement("scale");
-            scale.InnerText = Scale.ToString();
-            keyIndex.AppendChild(scale);
+            XmlElement B = xmlDoc.CreateElement("B");
+            B.InnerText = this.Transparent.B.ToString();
+            transparent.AppendChild(B);
 
             return keyIndex;
+        }
+
+        static public LayerInfo? FromXML(XmlNode LayerInfoKeys)
+        {
+            if (LayerInfoKeys.Name == "key")
+            {
+                string path = "";
+                double? originLng = null, originLat = null, originAlt = null;
+                double? scale = null;
+                Color transparent;
+                foreach (XmlNode Info in LayerInfoKeys.ChildNodes)
+                {
+                    switch (Info.Name)
+                    {
+                        case "path":
+                            path = Info.InnerText;
+                            break;
+                        case "originLng":
+                            originLng = System.Convert.ToDouble(Info.InnerText);
+                            break;
+                        case "originLat":
+                            originLat = System.Convert.ToDouble(Info.InnerText);
+                            break;
+                        case "originAlt":
+                            originAlt = System.Convert.ToDouble(Info.InnerText);
+                            break;
+                        case "scale":
+                            scale = System.Convert.ToDouble(Info.InnerText);
+                            break;
+                        case "transparent":
+                            {
+                                int A = 0, R = 0, G = 0, B = 0;
+                                foreach (XmlNode channel in Info.ChildNodes)
+                                {
+                                    switch (channel.Name)
+                                    {
+                                        case "A":
+                                            A = System.Convert.ToUInt16(channel.InnerText);
+                                            break;
+                                        case "R":
+                                            R = System.Convert.ToUInt16(channel.InnerText);
+                                            break;
+                                        case "G":
+                                            G = System.Convert.ToUInt16(channel.InnerText);
+                                            break;
+                                        case "B":
+                                            B = System.Convert.ToUInt16(channel.InnerText);
+                                            break;
+
+                                    }
+                                }
+                                transparent = Color.FromArgb(A, R, G, B);
+                            }
+                            break;
+                    }
+                }
+                if (path == null)
+                    return null;
+                if (originLng == null || originLat == null || originAlt == null || scale == null)
+                    return null;
+                return new LayerInfo(
+                    path,
+                    originLng.GetValueOrDefault(),
+                    originLat.GetValueOrDefault(),
+                    originAlt.GetValueOrDefault(),
+                    scale.GetValueOrDefault(),
+                    transparent);
+            }
+            else
+                return null;
         }
     }
 

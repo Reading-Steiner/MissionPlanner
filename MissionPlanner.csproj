@@ -381,6 +381,12 @@
     <Compile Include="Controls\DigitalSkyUI.Designer.cs">
       <DependentUpon>DigitalSkyUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GMAPCache.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -401,6 +407,12 @@
     </Compile>
     <Compile Include="Controls\LayerManager.Designer.cs">
       <DependentUpon>LayerManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LayerReader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LayerReader.Designer.cs">
+      <DependentUpon>LayerReader.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Status.cs">
       <SubType>UserControl</SubType>
@@ -703,8 +715,20 @@
     <EmbeddedResource Include="Controls\LayerManager.zh-Hans.resx">
       <DependentUpon>LayerManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerReader.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerReader.zh-CHS.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerReader.zh-Hans.resx">
+      <DependentUpon>LayerReader.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Status.resx">
       <DependentUpon>Status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\test.resx">
+      <DependentUpon>test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ThemeEditor.resx">
       <DependentUpon>ThemeEditor.cs</DependentUpon>
