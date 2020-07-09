@@ -2496,7 +2496,8 @@ namespace GMap.NET.WindowsForms
          GeocodingProvider gp = MapProvider as GeocodingProvider;
          if(gp == null)
          {
-            gp = GMapProviders.OpenStreetMap as GeocodingProvider;
+            //gp = GMapProviders.OpenStreetMap as GeocodingProvider;
+            gp = GMapProviders.GoogleChinaMap as GeocodingProvider;
          }
 
          if(gp != null)
