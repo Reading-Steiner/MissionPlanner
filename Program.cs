@@ -117,7 +117,7 @@ namespace MissionPlanner
                 return;
             }
 
-            name = "Mission Planner";
+            name = "Visiontek Photogrammetry Simulation System";
 
             try
             {
@@ -166,7 +166,6 @@ namespace MissionPlanner
             if (SplashBG != null)
             {
                 Splash.BackgroundImage = SplashBG;
-                Splash.pictureBox1.Visible = false;
             }
 
             if (IconFile != null)
@@ -175,7 +174,7 @@ namespace MissionPlanner
             string strVersion = File.Exists("version.txt")
                 ? File.ReadAllText("version.txt")
                 : System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Splash.Text = name + " " + Application.ProductVersion + " build " + strVersion;
+            Splash.Text = name + " V" + Application.ProductVersion;/* + " build " + strVersion;*/
             Splash.Show();
 
             if (Debugger.IsAttached)

@@ -56,6 +56,7 @@ namespace MissionPlanner.GCSViews
         public FlightPlanner()
         {
             InitializeComponent();
+            System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             Init();
         }
 
@@ -74,8 +75,8 @@ namespace MissionPlanner.GCSViews
             }
         }
         #region 图层信息
-        GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
-        PointLatLngAlt defaultOrigin = new PointLatLngAlt();
+        public GMap.NET.RectLatLng rect = new GMap.NET.RectLatLng();
+        public PointLatLngAlt defaultOrigin = new PointLatLngAlt();
         #endregion
 
         public static GMapOverlay airportsoverlay;
@@ -132,7 +133,6 @@ namespace MissionPlanner.GCSViews
         private string mobileGpsLog = string.Empty;
         private PointLatLng MouseDownStart;
         private PointLatLngAlt mouseposdisplay = new PointLatLngAlt(0, 0);
-        private bool polygongridmode;
         private MissionPlanner.Controls.Icon.Polygon polyicon = new MissionPlanner.Controls.Icon.Polygon();
         private MissionPlanner.Controls.Icon.WP WPicon = new MissionPlanner.Controls.Icon.WP();
         private MissionPlanner.Controls.Icon.Zoom zoomicon = new MissionPlanner.Controls.Icon.Zoom();
@@ -146,7 +146,41 @@ namespace MissionPlanner.GCSViews
         public GMapPolygon wppolygon;
         private GMapMarker CurrentMidLine;
 
+        public delegate void delegateHandler();
+        private bool polygongridmode;
+        public delegateHandler ToDrawPolygonHandle;
+        public delegateHandler OutDrawPolygonHandle;
+        public bool IsDrawPolygongridMode
+        {
+            get { return polygongridmode; }
+            set
+            {
+                polygongridmode = value;
+                if (polygongridmode)
+                    ToDrawPolygonHandle();
+                else
+                    OutDrawPolygonHandle();
+            }
+        }
 
+        private bool isLoadLayer;
+        public delegateHandler LoadLayerHandle;
+        public delegateHandler NoLoadLayerHandle;
+        public bool IsLoadLayer
+        {
+            set
+            {
+                isLoadLayer = value;
+                if (isLoadLayer)
+                {
+                    LoadLayerHandle();
+                }
+                else
+                {
+                    NoLoadLayerHandle();
+                }
+            }
+        }
         public void Init()
         {
             instance = this;
@@ -289,11 +323,19 @@ namespace MissionPlanner.GCSViews
             drawnpolygon.Stroke = new Pen(Color.Red, 2);
             drawnpolygon.Fill = Brushes.Transparent;
 
+            SetNoDrawPolygonState();
+            this.OutDrawPolygonHandle += SetNoDrawPolygonState;
+            this.ToDrawPolygonHandle += SetDrawPolygonState;
+
+            SetNoLaodLayerState();
+            LoadLayerHandle += SetLaodLayerState;
+            NoLoadLayerHandle += SetNoLaodLayerState;
             var layer = layerCache.GetSelectedLayerFromMemoryCache();
             if (layer != null)
             {
                 GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)layer;
                 SetLayerOverlay(layerInfo.Layer, layerInfo.Lng, layerInfo.Lat, layerInfo.Alt, layerInfo.Scale, layerInfo.Transparent);
+                
             }
             /*
             var timer = new System.Timers.Timer();
@@ -546,7 +588,7 @@ namespace MissionPlanner.GCSViews
         /// <param name="alt"></param>
         public void AddWPToMap(double lat, double lng, int alt)
         {
-            if (polygongridmode)
+            if (IsDrawPolygongridMode)
             {
                 AddPolygonPointToolStripMenuItem_Click(null, null);
                 return;
@@ -808,7 +850,7 @@ namespace MissionPlanner.GCSViews
 
         public void GeoFencedownloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            polygongridmode = false;
+            IsDrawPolygongridMode = false;
             int count = 1;
 
             if ((MainV2.comPort.MAV.cs.capabilities & (uint)MAVLink.MAV_PROTOCOL_CAPABILITY.MISSION_FENCE) > 0)
@@ -1653,11 +1695,21 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void AddPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
+        public void NoAddPolygon()
         {
-            if (polygongridmode == false)
+            IsDrawPolygongridMode = false;
+        }
+
+        public void AddPolygon()
+        {
+            AddPolygonPointToolStripMenuItem_Click(this, null);
+        }
+
+        private void AddPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!IsDrawPolygongridMode)
             {
-                polygongridmode = true;
+                IsDrawPolygongridMode = true;
                 return;
             }
 
@@ -1917,7 +1969,12 @@ namespace MissionPlanner.GCSViews
             splinemode = CHK_splinedefault.Checked;
         }
 
-        public void ClearMissionToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ClearMission()
+        {
+            ClearMissionToolStripMenuItem_Click(this, null);
+        }
+
+        private void ClearMissionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             quickadd = true;
 
@@ -1935,9 +1992,14 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
-        public void ClearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ClearPloygon()
         {
-            polygongridmode = false;
+            ClearPolygonToolStripMenuItem_Click(this, null);
+        }
+
+        private void ClearPolygonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsDrawPolygongridMode = false;
             if (drawnpolygon == null)
                 return;
             drawnpolygon.Points.Clear();
@@ -2480,8 +2542,8 @@ namespace MissionPlanner.GCSViews
 
         public void ContextMenuStripMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
-            if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
-                isMouseClickOffMenu = true;
+            //if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
+            //    isMouseClickOffMenu = true;
         }
 
         public void ContextMenuStripMain_Opening(object sender, CancelEventArgs e)
@@ -2504,7 +2566,7 @@ namespace MissionPlanner.GCSViews
                 deletePolygonPointToolStripMenuItem.Enabled = false;
             }
 
-            if (CurentRectMarker != null && CurentRectMarker.InnerMarker.Tag.ToString().IsNumber())
+            if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
             {
                 deleteWPToolStripMenuItem.Enabled = true;
             }
@@ -3435,7 +3497,7 @@ namespace MissionPlanner.GCSViews
 
         public void GeoFenceuploadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            polygongridmode = false;
+            IsDrawPolygongridMode = false;
             //FENCE_ENABLE ON COPTER
             //FENCE_ACTION ON PLANE
             if (!MainV2.comPort.MAV.param.ContainsKey("FENCE_ENABLE") && !MainV2.comPort.MAV.param.ContainsKey("FENCE_ACTION"))
@@ -3811,7 +3873,12 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
-        public void TiffOverlayToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadTiffLayer()
+        {
+            TiffOverlayToolStripMenuItem_Click(this, null);
+        }
+
+        private void TiffOverlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayerReader reader = new LayerReader();
             DialogResult result = reader.ShowDialog();
@@ -3829,13 +3896,13 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public bool AddLayerOverlay(string path, PointLatLngAlt origin, double scale, Color transparent)
+        private bool AddLayerOverlay(string path, PointLatLngAlt origin, double scale, Color transparent)
         {
             layerCache.AddLayerToMemoryCache(new GMap.NET.Internals.LayerInfo(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent));
             return SetLayerOverlay(path, origin.Lng, origin.Lat, origin.Alt, scale, transparent);
         }
 
-        public bool SetLayerOverlay(string path, double lng, double lat, double alt, double scale, Color Transparent)
+        private bool SetLayerOverlay(string path, double lng, double lat, double alt, double scale, Color Transparent)
         {
             if (File.Exists(path))
             {
@@ -3866,18 +3933,21 @@ namespace MissionPlanner.GCSViews
                 return false;
         }
 
-        public void CallbackWhenDone(IAsyncResult iar)
+        private void CallbackWhenDone(IAsyncResult iar)
         {
             AsyncResult ar = (AsyncResult)iar;
             Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap> geoFunc = (Func<GDAL.GDAL.GeoBitmap, Color, GDAL.GDAL.GeoBitmap>)ar.AsyncDelegate;
 
             var geoBitmap = geoFunc.EndInvoke(iar);
-
-            ShowLayerOverlay(geoBitmap);
+            if (geoBitmap.Bitmap != null)
+            {
+                IsLoadLayer = true;
+                ShowLayerOverlay(geoBitmap);
+            }
         }
 
 
-        public void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
+        private void ShowLayerOverlay(GDAL.GDAL.GeoBitmap geoBitmap)
         {
             layerpolygonsoverlay.Polygons.Clear();
 
@@ -3889,8 +3959,12 @@ namespace MissionPlanner.GCSViews
             layerpolygonsoverlay.Polygons.Add(mark);
         }
 
+        public void TiffLayerManager()
+        {
+            TiffManagerToolStripMenuItem_Click(this, null);
+        }
 
-        public void TiffManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TiffManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayerManager layerManager = new LayerManager();
             layerManager.ShowDialog();
@@ -5209,6 +5283,11 @@ namespace MissionPlanner.GCSViews
             writeKML();
         }
 
+        public void LoadWPFile()
+        {
+            LoadWPFile_Click(this, null);
+        }
+
         private void LoadWPFile_Click(object sender, EventArgs e)
         {
             if (this.layerCache.GetSelectedLayerFromMemoryCache() != null)
@@ -5220,6 +5299,11 @@ namespace MissionPlanner.GCSViews
             {
                 CustomMessageBox.Show("请完善沙盘坐标系信息", Strings.ERROR);
             }
+        }
+
+        public void SaveWPFile()
+        {
+            SaveWPFile_Click(this, null);
         }
 
         private void SaveWPFile_Click(object sender, EventArgs e)
@@ -6237,7 +6321,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
-        public void surveyGridToolStripMenuItem_Click(object sender, EventArgs e)
+        public void surveyGrid()
+        {
+            surveyGridToolStripMenuItem_Click(this, null);
+        }
+        private void surveyGridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GridPlugin grid = new GridPlugin();
             grid.Host = new PluginHost();
@@ -6792,7 +6880,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 return;
 
             MouseDownStart = MainMap.FromLocalToLatLng(e.X, e.Y);
-
             //   Console.WriteLine("MainMap MD");
 
             if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || Control.ModifierKeys == Keys.Control))
@@ -6804,7 +6891,14 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 return;
             }
 
-            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
+            if(e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
+            {
+                isMouseDown = true;
+                isMouseDraging = false;
+
+            }
+
+            if (e.Button == MouseButtons.Left && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
                 isMouseDown = true;
                 isMouseDraging = false;
@@ -6823,35 +6917,38 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void MainMap_MouseMove(object sender, MouseEventArgs e)
         {
+            //记录鼠标位置
             PointLatLng point = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-            if (MouseDownStart == point)
-                return;
-
-            //  Console.WriteLine("MainMap MM " + point);
-
-            currentMarker.Position = point;
-
+            //鼠标没按下
             if (!isMouseDown)
             {
                 // update mouse pos display
                 SetMouseDisplay(point.Lat, point.Lng, 0);
             }
 
-            //draging
+            //鼠标没移动
+            if (MouseDownStart == point)
+                return;
+            //鼠标移动
+
+            //设置移动点
+            currentMarker.Position = point;
+
+            //鼠标左键按下，拖动
             if (e.Button == MouseButtons.Left && isMouseDown)
             {
                 isMouseDraging = true;
                 if (CurrentRallyPt != null)
                 {
+                    //无效
                     PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
 
                     CurrentRallyPt.Position = pnew;
                 }
                 else if (groupmarkers.Count > 0)
                 {
+                    //无效
                     // group drag
-
                     double latdif = MouseDownStart.Lat - point.Lat;
                     double lngdif = MouseDownStart.Lng - point.Lng;
 
@@ -6882,14 +6979,17 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 else if (CurentRectMarker != null) // left click pan
                 {
+                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
                     try
                     {
-                        // check if this is a grid point
+                        // 检查polygon点
                         if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
                         {
                             drawnpolygon.Points[
-                                    int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
-                                new PointLatLng(point.Lat, point.Lng);
+                                    int.Parse(
+                                        CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
+                                new PointLatLng(pnew.Lat, pnew.Lng);
+
                             redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
                         }
                     }
@@ -6898,12 +6998,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
 
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
                     // adjust polyline point while we drag
                     try
                     {
-                        if (CurrentGMapMarker != null && CurrentGMapMarker.Tag is int)
+                        // 检查WP点
+                        if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
                         {
                             int? pIndex = (int?)CurentRectMarker.Tag;
                             if (pIndex.HasValue)
@@ -6924,16 +7023,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
 
-                    // update rect and marker pos.
-                    if (currentMarker.IsVisible)
-                    {
-                        currentMarker.Position = pnew;
-                    }
-                    CurentRectMarker.Position = pnew;
 
-                    if (CurentRectMarker.InnerMarker != null)
+                    //随鼠标位置更新标记位置
+                    if ((CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid")) ||
+                        (CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
                     {
-                        CurentRectMarker.InnerMarker.Position = pnew;
+                        if (currentMarker.IsVisible)
+                        {
+                            currentMarker.Position = pnew;
+                        }
+                        CurentRectMarker.Position = pnew;
+                        if (CurentRectMarker.InnerMarker != null)
+                        {
+                            CurentRectMarker.InnerMarker.Position = pnew;
+                        }
                     }
                 }
                 else if (CurrentPOIMarker != null)
@@ -7002,7 +7105,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     polyicon.IsSelected = !polyicon.IsSelected;
 
                 }
-                polygongridmode = polyicon.IsSelected ? true : false;
+                IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
 
                 //contextMenuStripPoly.Show(MainMap, e.Location);
                 return;
@@ -7084,7 +7187,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     var midline = CurrentMidLine.Tag as midline;
                     // var pnt1 = int.Parse(midline.now.Tag);
 
-                    if (polygongridmode && midline.now != null && e.Button == MouseButtons.Middle)
+                    if (IsDrawPolygongridMode && midline.now != null && e.Button == MouseButtons.Middle)
                     {
                         //点击到多边形中线
                         var idx = drawnpolygon.Points.IndexOf(midline.now);
@@ -7230,7 +7333,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                                 log.Error(ex);
                             }
                         }
-                        else
+                        else if((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
                         {
                             CallMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
                                 currentMarker.Position.Lng, -2);
@@ -7734,6 +7837,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             }
         }
 
+        public void zoomToTiffLayer()
+        {
+            zoomToTiffToolStripMenuItem_Click(this, null);
+        }
+
         private void zoomToTiffToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //double Lat = (rect.Left + rect.Right) / 2;
@@ -7776,6 +7884,29 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             MainMap.Position = MainV2.comPort.MAV.cs.HomeLocation;
             if (MainMap.Zoom < 17)
                 MainMap.Zoom = 17;
+        }
+
+        private void SetDrawPolygonState()
+        {
+            this.polyicon.IsSelected = true;
+            this.addPolygonPointToolStripMenuItem.Checked = true;
+        }
+
+        private void SetNoDrawPolygonState()
+        {
+            this.polyicon.IsSelected = false;
+            this.addPolygonPointToolStripMenuItem.Checked = false;
+        }
+
+
+        private void SetLaodLayerState()
+        {
+            this.zoomicon.IsSelected = true;
+        }
+
+        private void SetNoLaodLayerState()
+        {
+            this.zoomicon.IsSelected = false;
         }
     }
 }

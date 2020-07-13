@@ -130,7 +130,7 @@
     <value>硬件配置</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Mission Planner - By Michael Oborne</value>
+    <value>远景多功能摄影测量仿真系统</value>
   </data>
   <data name="MenuTerminal.Text" xml:space="preserve">
     <value>终端</value>
@@ -166,7 +166,7 @@
     <value>终端</value>
   </data>
   <data name="MainMenu.Text" xml:space="preserve">
-    <value>menuStrip1</value>
+    <value>主菜单</value>
   </data>
   <data name="MenuTerminal.ToolTipText" xml:space="preserve">
     <value>终端</value>
@@ -176,5 +176,71 @@
   </data>
   <data name="autoHideToolStripMenuItem.Text" xml:space="preserve">
     <value>自动隐藏</value>
+  </data>
+  <data name="MenuFlightPlannerClose.Text" xml:space="preserve">
+    <value>关闭飞行规划器</value>
+  </data>
+  <data name="MenuFlightPlannerClose.ToolTipText" xml:space="preserve">
+    <value>关闭飞行规划器</value>
+  </data>
+  <data name="MenuFlightPlannerOpen.Text" xml:space="preserve">
+    <value>打开飞行规划器</value>
+  </data>
+  <data name="MenuFlightPlannerOpen.ToolTipText" xml:space="preserve">
+    <value>打开飞行规划器</value>
+  </data>
+  <data name="MenuDrawPolygon.Text" xml:space="preserve">
+    <value>划定航摄区域</value>
+  </data>
+  <data name="MenuDrawPolygon.ToolTipText" xml:space="preserve">
+    <value>划定航摄区域</value>
+  </data>
+  <data name="MenuSurveyGrid.Text" xml:space="preserve">
+    <value>自动航点</value>
+  </data>
+  <data name="MenuSurveyGrid.ToolTipText" xml:space="preserve">
+    <value>自动航点</value>
+  </data>
+  <data name="MenuLoadLayer.Text" xml:space="preserve">
+    <value>加载图层</value>
+  </data>
+  <data name="MenuLoadLayer.ToolTipText" xml:space="preserve">
+    <value>加载图层</value>
+  </data>
+  <data name="MenuClearPolygon.Text" xml:space="preserve">
+    <value>清空航摄区域</value>
+  </data>
+  <data name="MenuClearPolygon.ToolTipText" xml:space="preserve">
+    <value>清空航摄区域</value>
+  </data>
+  <data name="MenuClearWP.Text" xml:space="preserve">
+    <value>清空航点</value>
+  </data>
+  <data name="MenuClearWP.ToolTipText" xml:space="preserve">
+    <value>清空航点</value>
+  </data>
+  <data name="MenuLayerManager.Text" xml:space="preserve">
+    <value>图层管理器</value>
+  </data>
+  <data name="MenuLayerManager.ToolTipText" xml:space="preserve">
+    <value>图层管理器</value>
+  </data>
+  <data name="MenuReadWP.Text" xml:space="preserve">
+    <value>加载航点</value>
+  </data>
+  <data name="MenuReadWP.ToolTipText" xml:space="preserve">
+    <value>加载航点</value>
+  </data>
+  <data name="MenuSaveWP.Text" xml:space="preserve">
+    <value>保存航点</value>
+  </data>
+  <data name="MenuSaveWP.ToolTipText" xml:space="preserve">
+    <value>保存航点</value>
+  </data>
+  <data name="MenuZoomToLayer.Text" xml:space="preserve">
+    <value>定位到工作空间</value>
+  </data>
+  <data name="MenuZoomToLayer.ToolTipText" xml:space="preserve">
+    <value>定位到工作空间</value>
   </data>
 </root>

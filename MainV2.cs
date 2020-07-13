@@ -1067,6 +1067,16 @@ namespace MissionPlanner
 
             MainV2.comPort.MavChanged += comPort_MavChanged;
 
+            SetFlightDataMenu();
+            FlightData.OpenFlightPlannerHandler += SetFlightPlannerMenu;
+            FlightData.CloseFlightPlannerHandler += SetFlightDataMenu;
+
+            OutDrawPolygonState();
+            FlightPlanner.ToDrawPolygonHandle += ToDrawPolygonState;
+            FlightPlanner.OutDrawPolygonHandle += OutDrawPolygonState;
+
+            FlightPlanner.NoLoadLayerHandle += SetNoLaodLayerState;
+            FlightPlanner.LoadLayerHandle += SetLaodLayerState;
             // save config to test we have write access
             SaveConfig();
         }
@@ -1167,8 +1177,8 @@ namespace MissionPlanner
 
             MainMenu.BackgroundImage = displayicons.bg;
 
-            MenuFlightData.Image = displayicons.fd;
-            MenuFlightPlanner.Image = displayicons.fp;
+            MenuFlightPlannerClose.Image = displayicons.fd;
+            MenuFlightPlannerOpen.Image = displayicons.fp;
             MenuInitConfig.Image = displayicons.initsetup;
             MenuSimulation.Image = displayicons.sim;
             MenuConfigTune.Image = displayicons.config_tuning;
@@ -1176,8 +1186,8 @@ namespace MissionPlanner
             MenuHelp.Image = displayicons.help;
 
 
-            MenuFlightData.ForeColor = ThemeManager.TextColor;
-            MenuFlightPlanner.ForeColor = ThemeManager.TextColor;
+            MenuFlightPlannerClose.ForeColor = ThemeManager.TextColor;
+            MenuFlightPlannerOpen.ForeColor = ThemeManager.TextColor;
             MenuInitConfig.ForeColor = ThemeManager.TextColor;
             MenuSimulation.ForeColor = ThemeManager.TextColor;
             MenuConfigTune.ForeColor = ThemeManager.TextColor;
@@ -1305,14 +1315,145 @@ namespace MissionPlanner
             _connectionControl.CMB_serialport.Items.Add("WS");
         }
 
-        private void MenuFlightData_Click(object sender, EventArgs e)
+        private void MenuFlightPlannerClose_Click(object sender, EventArgs e)
+        {
+            //MyView.ShowScreen("FlightData");
+            GCSViews.FlightData.instance.CloseFlightPlanner();
+        }
+
+        private void FlightDataShow()
         {
             MyView.ShowScreen("FlightData");
         }
 
-        private void MenuFlightPlanner_Click(object sender, EventArgs e)
+        private void SetFlightPlannerMenu()
         {
-            MyView.ShowScreen("FlightPlanner");
+            this.MenuFlightPlannerOpen.Visible = false;
+            this.MenuFlightPlannerClose.Visible = true;
+            this.Separator1.Visible = true;
+
+            this.MenuLoadLayer.Visible = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
+            this.MenuLayerManager.Visible = true;
+            this.Separator2.Visible = true;
+
+            this.MenuDrawPolygon.Visible = true;
+            this.MenuClearPolygon.Visible = true;
+            this.Separator3.Visible = true;
+
+            this.MenuSurveyGrid.Visible = true;
+            this.MenuClearWP.Visible = true;
+            this.MenuReadWP.Visible = true;
+            this.MenuSaveWP.Visible = true;
+            this.Separator4.Visible = true;
+        }
+
+        private void SetFlightDataMenu()
+        {
+            this.MenuFlightPlannerOpen.Visible = true;
+            this.MenuFlightPlannerClose.Visible = false;
+            this.Separator1.Visible = true;
+
+            this.MenuLoadLayer.Visible = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible && this.MenuLoadLayer.Checked;
+            this.MenuLayerManager.Visible = true;
+            this.Separator2.Visible = true;
+
+            this.MenuDrawPolygon.Visible = false;
+            this.MenuClearPolygon.Visible = false;
+            this.Separator3.Visible = false;
+
+            this.MenuSurveyGrid.Visible = false;
+            this.MenuClearWP.Visible = false;
+            this.MenuReadWP.Visible = false;
+            this.MenuSaveWP.Visible = false;
+            this.Separator4.Visible = false;
+        }
+
+        private void MenuFlightPlannerOpen_Click(object sender, EventArgs e)
+        {
+            //MyView.ShowScreen("FlightPlanner");
+            GCSViews.FlightData.instance.OpenFlightPlanner();
+        }
+
+        private void FlightPlannerShow()
+        {
+            //MyView.ShowScreen("FlightPlanner");
+            GCSViews.FlightData.instance.OpenFlightPlanner();
+        }
+
+
+        private void SetLaodLayerState()
+        {
+            this.MenuLoadLayer.Checked = true;
+            this.MenuZoomToLayer.Visible = this.MenuLoadLayer.Visible;
+        }
+
+        private void SetNoLaodLayerState()
+        {
+            this.MenuLoadLayer.Checked = false;
+            this.MenuZoomToLayer.Visible = false;
+        }
+
+        private void MenuLoadLayer_Click(object sender,EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.LoadTiffLayer();
+        }
+
+        private void MenuZoomToLayer_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
+            GCSViews.FlightData.instance.zoomToTiffLayer();
+        }
+
+        private void MenuLayerManager_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.TiffLayerManager();
+        }
+
+        private void ToDrawPolygonState()
+        {
+            this.MenuDrawPolygon.Checked = true;
+            //this.MenuClearPolygon.Visible = true;
+        }
+
+        private void OutDrawPolygonState()
+        {
+            this.MenuDrawPolygon.Checked = false;
+            //this.MenuClearPolygon.Visible = false;
+        }
+
+        private void MenuDrawPolygon_Click(object sender, EventArgs e)
+        {
+            if (!this.MenuDrawPolygon.Checked)
+                GCSViews.FlightPlanner.instance.AddPolygon();
+            else
+                GCSViews.FlightPlanner.instance.NoAddPolygon();
+        }
+
+        private void MenuClearPolygon_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ClearPloygon();
+        }
+
+        private void MenuSurveyGrid_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.surveyGrid();
+        }
+
+        private void MenuClearWP_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.ClearMission();
+        }
+
+        private void MenuReadWP_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.LoadWPFile();
+        }
+
+        private void MenuSaveWP_Click(object sender, EventArgs e)
+        {
+            GCSViews.FlightPlanner.instance.SaveWPFile();
         }
 
         public void MenuSetup_Click(object sender, EventArgs e)
@@ -1720,7 +1861,7 @@ namespace MissionPlanner
                     // only do it if we are connected.
                     if (comPort.BaseStream.IsOpen)
                     {
-                        MenuFlightPlanner_Click(null, null);
+                        MenuFlightPlannerOpen_Click(null, null);
                         FlightPlanner.BUT_read_Click(null, null);
                     }
                 }
@@ -2998,16 +3139,16 @@ namespace MissionPlanner
             if (Program.Logo != null && Program.name == "VVVVZ")
             {
                 this.PerformLayout();
-                MenuFlightPlanner_Click(this, e);
-                MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightPlanner));
+                FlightPlannerShow();
+                //MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightPlannerOpen));
             }
             else
             {
                 this.PerformLayout();
                 log.Info("show FlightData");
-                MenuFlightData_Click(this, e);
+                FlightDataShow();
                 log.Info("show FlightData... Done");
-                MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightData));
+                //MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightPlannerClose));
             }
 
             // for long running tasks using own threads.
@@ -3738,12 +3879,12 @@ namespace MissionPlanner
 
             if (keyData == Keys.F2)
             {
-                MenuFlightData_Click(null, null);
+                MenuFlightPlannerClose_Click(null, null);
                 return true;
             }
             if (keyData == Keys.F3)
             {
-                MenuFlightPlanner_Click(null, null);
+                MenuFlightPlannerOpen_Click(null, null);
                 return true;
             }
             if (keyData == Keys.F4)
