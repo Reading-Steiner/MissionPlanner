@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="planebackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\planebackground.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="main 副本" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\main 副本.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="marker_07" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\marker_07.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -241,8 +241,8 @@
   <data name="hilquad" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\new frames-12.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="frames-h" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\frames-h.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BT-hc06" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BT-hc06.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="sonar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AC-0004-11-2.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -255,6 +255,9 @@
   </data>
   <data name="maggps" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maggps.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="编辑航线" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\编辑航线.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="heli" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\heli.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -283,11 +286,11 @@
   <data name="calibration01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\calibration01.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="apm2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\apm2.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="calibration07" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\calibration07.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="插入航线" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\插入航线.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="apmp2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apmp2.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -304,6 +307,9 @@
   <data name="quadhover_12" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\quadhover_12.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="planeicon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\planetracker1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="apmp4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apmp4.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -319,14 +325,11 @@
   <data name="quadframesnormal_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\quadframesnormal_01.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="planeicon6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\planetracker6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="航线导出" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\航线导出.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlusFrames_04" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlusFrames_04.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="planeicon4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\planetracker4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="dark_terminal_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dark_terminal_icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -339,9 +342,6 @@
   </data>
   <data name="camera_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\camera-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BT-hc06" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BT-hc06.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="planeicon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\planetracker2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -357,6 +357,9 @@
   </data>
   <data name="PlusFrames_06" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlusFrames_06.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="planeicon6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\planetracker6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlusFramesGreen_06" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlusFramesGreen_06.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -379,8 +382,8 @@
   <data name="octo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\new frames-05.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="attocurrent" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\09028-01.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="frames-h" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\frames-h.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FW icons 2013+logos-03" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FW icons 2013+logos-03.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -524,6 +527,9 @@ Control-S - save grid file\par
   <data name="pixhawk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pixhawk.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="删除航线" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\删除航线.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="compass" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BR-HMC5883-01-2.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -569,8 +575,8 @@ Control-S - save grid file\par
   <data name="quadframesnormal_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\quadframesnormal_03.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="planeicon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\planetracker1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="planeicon4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\planetracker4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cameraGimalYaw" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cameraGimalYaw.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -587,6 +593,9 @@ Control-S - save grid file\par
   <data name="light_connect_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\light_connect_icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="planebackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\planebackground.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="frames_06" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\frames-06.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -599,8 +608,8 @@ Control-S - save grid file\par
   <data name="uavcanesc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\uavcanesc.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="dark_tuningconfig_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dark_tuningconfig_icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="apm2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\apm2.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlusFrames_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlusFrames_02.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -608,17 +617,26 @@ Control-S - save grid file\par
   <data name="marker_06" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\marker_06.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dark_tuningconfig_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dark_tuningconfig_icon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="quadframesnormal_11" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\quadframesnormal_11.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FW icons 2013+logos-07" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FW icons 2013+logos-07.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="航线规划" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\航线规划.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="marker_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\marker_01.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="iconWarning32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconWarning32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="attocurrent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\09028-01.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bgdark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bgdark.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -650,6 +668,9 @@ Control-S - save grid file\par
   <data name="opticalflow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BR-0016-01-3T.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="启动界面" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\启动界面.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="wizardicon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wizardicon1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -658,6 +679,12 @@ Control-S - save grid file\par
   </data>
   <data name="wizardicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wizardicon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="启动界面1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\启动界面1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="划定航摄区域" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\划定航摄区域.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="apm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apm1.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -674,28 +701,10 @@ Control-S - save grid file\par
   <data name="pixhawk2cube" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pixhawk2cube.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="main 副本" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\main 副本.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="main_32_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\main_32_32.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="编辑航线" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\编辑航线.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="插入航线" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\插入航线.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="航线导出" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\航线导出.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="航线规划" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\航线规划.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="划定航摄区域" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\划定航摄区域.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="启动界面" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\启动界面.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="删除航线" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\删除航线.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="mian_16_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mian_16_16.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

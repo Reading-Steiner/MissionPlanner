@@ -60,6 +60,9 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>VPS</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="APMPlannerXplanes\**" />
     <Compile Remove="plugins\**" />
@@ -4525,6 +4528,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Splash.ico" />
+    <None Include="Resources\启动界面1.jpg" />
+    <None Include="Resources\main_32_32.ico" />
+    <None Include="Resources\mian_16_16.ico" />
     <Content Include="Splash.ico" />
     <Content Include="mpdesktop150.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -2566,7 +2566,7 @@ namespace MissionPlanner.GCSViews
                 deletePolygonPointToolStripMenuItem.Enabled = false;
             }
 
-            if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
+            if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.InnerMarker.Tag.ToString(), @"^\d+$")))
             {
                 deleteWPToolStripMenuItem.Enabled = true;
             }
@@ -6879,9 +6879,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             if (isMouseClickOffMenu)
                 return;
 
+            //记录鼠标开始位置
             MouseDownStart = MainMap.FromLocalToLatLng(e.X, e.Y);
-            //   Console.WriteLine("MainMap MD");
-
+            
             if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || Control.ModifierKeys == Keys.Control))
             {
                 // group move

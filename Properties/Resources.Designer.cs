@@ -1057,6 +1057,16 @@ namespace MissionPlanner.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap main_32_32 {
+            get {
+                object obj = ResourceManager.GetObject("main_32_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap main_副本 {
             get {
                 object obj = ResourceManager.GetObject("main 副本", resourceCulture);
@@ -1146,6 +1156,16 @@ namespace MissionPlanner.Properties {
         public static string MAVParam {
             get {
                 return ResourceManager.GetString("MAVParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap mian_16_16 {
+            get {
+                object obj = ResourceManager.GetObject("mian_16_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1795,6 +1815,16 @@ namespace MissionPlanner.Properties {
         public static System.Drawing.Bitmap 启动界面 {
             get {
                 object obj = ResourceManager.GetObject("启动界面", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 启动界面1 {
+            get {
+                object obj = ResourceManager.GetObject("启动界面1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
