@@ -212,14 +212,12 @@ namespace MissionPlanner
             // MenuDrawPolygon
             // 
             this.MenuDrawPolygon.BottomTransparent = 4;
-            this.MenuDrawPolygon.Checked = true;
-            this.MenuDrawPolygon.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MenuDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuDrawPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.MenuDrawPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.MenuDrawPolygon.Image = global::MissionPlanner.Properties.Resources.划定航摄区域;
             this.MenuDrawPolygon.Margin = new System.Windows.Forms.Padding(0);
-            this.MenuDrawPolygon.MyChecked = true;
+            this.MenuDrawPolygon.MyChecked = false;
             this.MenuDrawPolygon.Name = "MenuDrawPolygon";
             resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
             this.MenuDrawPolygon.TopTransparent = 8;
@@ -356,9 +354,9 @@ namespace MissionPlanner
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(this.status1);
             this.panel1.Controls.Add(this.MainMenu);
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             this.panel1.MouseLeave += new System.EventHandler(this.MainMenu_MouseLeave);
             // 
@@ -385,6 +383,7 @@ namespace MissionPlanner
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
