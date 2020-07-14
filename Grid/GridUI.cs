@@ -38,6 +38,7 @@ namespace MissionPlanner.Grid
 
         GMapOverlay routesOverlay;
         GMapOverlay kmlpolygonsoverlay;
+        GMapOverlay tiffoverlay;
         List<PointLatLngAlt> list = new List<PointLatLngAlt>();
         List<PointLatLngAlt> grid;
         bool loadedfromfile = false;
@@ -73,6 +74,9 @@ namespace MissionPlanner.Grid
             map.MapProvider = plugin.Host.FDMapType;
             map.MaxZoom = plugin.Host.FDGMapControl.MaxZoom;
             TRK_zoom.Maximum = map.MaxZoom;
+
+            tiffoverlay = FlightPlanner.instance.layerpolygonsoverlay;
+            map.Overlays.Add(tiffoverlay);
 
             kmlpolygonsoverlay = new GMapOverlay("kmlpolygons");
             map.Overlays.Add(kmlpolygonsoverlay);
