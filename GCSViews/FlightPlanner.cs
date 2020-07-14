@@ -3921,7 +3921,8 @@ namespace MissionPlanner.GCSViews
                     this.rect = bitmap.Rect;
                     this.defaultOrigin = new PointLatLngAlt(lat, lng, alt);
 
-                    zoomToTiffToolStripMenuItem_Click(this, null);
+                    FlightPlanner.instance.zoomToTiffLayer();
+                    FlightData.instance.zoomToTiffLayer();
                     return true;
                 }
                 else
@@ -3957,6 +3958,9 @@ namespace MissionPlanner.GCSViews
 
             FlightData.layerpolygons.Polygons.Add(mark);
             layerpolygonsoverlay.Polygons.Add(mark);
+
+            FlightPlanner.instance.zoomToTiffLayer();
+            FlightData.instance.zoomToTiffLayer();
         }
 
         public void TiffLayerManager()

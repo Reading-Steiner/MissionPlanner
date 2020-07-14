@@ -78,14 +78,13 @@ namespace GMap.NET.Internals
         {
             if (Queue.Contains(key))
             {
-                if (Queue.IndexOf(key) > vaildIndex)
+                if (Queue.IndexOf(key) >= vaildIndex)
                 {
                     Queue.Remove(key);
                     Queue.Add(key);
                     return true;
                 }
             }
-            vaildIndex++;
             return false;
         }
 
