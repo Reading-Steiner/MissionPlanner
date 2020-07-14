@@ -1413,19 +1413,19 @@ namespace MissionPlanner
 
         private void ToDrawPolygonState()
         {
-            this.MenuDrawPolygon.Checked = true;
+            this.MenuDrawPolygon.MyChecked = true;
             //this.MenuClearPolygon.Visible = true;
         }
 
         private void OutDrawPolygonState()
         {
-            this.MenuDrawPolygon.Checked = false;
+            this.MenuDrawPolygon.MyChecked = false;
             //this.MenuClearPolygon.Visible = false;
         }
 
         private void MenuDrawPolygon_Click(object sender, EventArgs e)
         {
-            if (!this.MenuDrawPolygon.Checked)
+            if (!this.MenuDrawPolygon.MyChecked)
                 GCSViews.FlightPlanner.instance.AddPolygon();
             else
                 GCSViews.FlightPlanner.instance.NoAddPolygon();

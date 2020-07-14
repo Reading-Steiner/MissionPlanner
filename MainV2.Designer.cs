@@ -46,11 +46,11 @@ namespace MissionPlanner
             this.MenuFlightPlannerOpen = new System.Windows.Forms.ToolStripButton();
             this.MenuFlightPlannerClose = new System.Windows.Forms.ToolStripButton();
             this.Separator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuLoadLayer = new System.Windows.Forms.ToolStripButton();
+            this.MenuLoadLayer = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuZoomToLayer = new System.Windows.Forms.ToolStripButton();
             this.MenuLayerManager = new System.Windows.Forms.ToolStripButton();
             this.Separator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MenuDrawPolygon = new System.Windows.Forms.ToolStripButton();
+            this.MenuDrawPolygon = new MissionPlanner.Controls.HLToolStripButton();
             this.MenuClearPolygon = new System.Windows.Forms.ToolStripButton();
             this.Separator3 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuSurveyGrid = new System.Windows.Forms.ToolStripButton();
@@ -172,19 +172,23 @@ namespace MissionPlanner
             // 
             // MenuLoadLayer
             // 
+            this.MenuLoadLayer.BottomTransparent = 4;
             this.MenuLoadLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuLoadLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuLoadLayer.Image = global::MissionPlanner.Properties.Resources.启动界面;
+            this.MenuLoadLayer.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.MenuLoadLayer.Image = global::MissionPlanner.Properties.Resources.main_32_32;
             this.MenuLoadLayer.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuLoadLayer.MyChecked = false;
             this.MenuLoadLayer.Name = "MenuLoadLayer";
             resources.ApplyResources(this.MenuLoadLayer, "MenuLoadLayer");
+            this.MenuLoadLayer.TopTransparent = 8;
             this.MenuLoadLayer.Click += new System.EventHandler(this.MenuLoadLayer_Click);
             // 
             // MenuZoomToLayer
             // 
             this.MenuZoomToLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuZoomToLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuZoomToLayer.Image = global::MissionPlanner.Properties.Resources.启动界面;
+            this.MenuZoomToLayer.Image = global::MissionPlanner.Properties.Resources.main_32_32;
             this.MenuZoomToLayer.Margin = new System.Windows.Forms.Padding(0);
             this.MenuZoomToLayer.Name = "MenuZoomToLayer";
             resources.ApplyResources(this.MenuZoomToLayer, "MenuZoomToLayer");
@@ -194,7 +198,7 @@ namespace MissionPlanner
             // 
             this.MenuLayerManager.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuLayerManager.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuLayerManager.Image = global::MissionPlanner.Properties.Resources.启动界面;
+            this.MenuLayerManager.Image = global::MissionPlanner.Properties.Resources.main_32_32;
             this.MenuLayerManager.Margin = new System.Windows.Forms.Padding(0);
             this.MenuLayerManager.Name = "MenuLayerManager";
             resources.ApplyResources(this.MenuLayerManager, "MenuLayerManager");
@@ -207,12 +211,18 @@ namespace MissionPlanner
             // 
             // MenuDrawPolygon
             // 
+            this.MenuDrawPolygon.BottomTransparent = 4;
+            this.MenuDrawPolygon.Checked = true;
+            this.MenuDrawPolygon.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MenuDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuDrawPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuDrawPolygon.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.MenuDrawPolygon.Image = global::MissionPlanner.Properties.Resources.划定航摄区域;
             this.MenuDrawPolygon.Margin = new System.Windows.Forms.Padding(0);
+            this.MenuDrawPolygon.MyChecked = true;
             this.MenuDrawPolygon.Name = "MenuDrawPolygon";
             resources.ApplyResources(this.MenuDrawPolygon, "MenuDrawPolygon");
+            this.MenuDrawPolygon.TopTransparent = 8;
             this.MenuDrawPolygon.Click += new System.EventHandler(this.MenuDrawPolygon_Click);
             // 
             // MenuClearPolygon
@@ -386,11 +396,11 @@ namespace MissionPlanner
 
         public System.Windows.Forms.ToolStripButton MenuFlightPlannerClose;
         public System.Windows.Forms.ToolStripButton MenuFlightPlannerOpen;
-        public System.Windows.Forms.ToolStripButton MenuLoadLayer;
+        public Controls.HLToolStripButton MenuLoadLayer;
         public System.Windows.Forms.ToolStripButton MenuZoomToLayer;
         public System.Windows.Forms.ToolStripButton MenuLayerManager;
         public System.Windows.Forms.ToolStripButton MenuClearPolygon;
-        public System.Windows.Forms.ToolStripButton MenuDrawPolygon;
+        public Controls.HLToolStripButton MenuDrawPolygon;
         public System.Windows.Forms.ToolStripButton MenuReadWP;
         public System.Windows.Forms.ToolStripButton MenuSaveWP;
         public System.Windows.Forms.ToolStripButton MenuSurveyGrid;
