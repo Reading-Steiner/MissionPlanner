@@ -445,6 +445,12 @@ namespace MissionPlanner.GCSViews
                 return true;
             }
 
+            if (keyData == (Keys.Delete))
+            {
+                DeleteMarkerToolStripMenuItem_Click(null, null);
+                return true;
+            }
+
             if (keyData == (Keys.Control | Keys.M))
             {
                 // get the command list from the datagrid
@@ -5161,18 +5167,18 @@ namespace MissionPlanner.GCSViews
                     {
                         if (cellhome.Value.ToString() != TXT_homelat.Text && cellhome.Value.ToString() != "0")
                         {
-                            var dr = CustomMessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
-                                MessageBoxButtons.YesNo);
+                            //var dr = CustomMessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
+                            //    MessageBoxButtons.YesNo);
 
-                            if (dr == (int)DialogResult.Yes)
-                            {
-                                TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-                                cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
-                                TXT_homelng.Text = (double.Parse(cellhome.Value.ToString())).ToString();
-                                cellhome = Commands.Rows[0].Cells[Alt.Index] as DataGridViewTextBoxCell;
-                                TXT_homealt.Text =
-                                    (double.Parse(cellhome.Value.ToString()) * CurrentState.multiplieralt).ToString();
-                            }
+                            //if (dr == (int)DialogResult.Yes)
+                            //{
+                            //    TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+                            //    cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
+                            //    TXT_homelng.Text = (double.Parse(cellhome.Value.ToString())).ToString();
+                            //    cellhome = Commands.Rows[0].Cells[Alt.Index] as DataGridViewTextBoxCell;
+                            //    TXT_homealt.Text =
+                            //        (double.Parse(cellhome.Value.ToString()) * CurrentState.multiplieralt).ToString();
+                            //}
                         }
                     }
                 }
