@@ -85,12 +85,29 @@ namespace MissionPlanner.GCSViews
         public static GMapOverlay polygonsoverlay;
         public static GMapOverlay routesoverlay;
         private static GMapOverlay rallypointoverlay;
-        public GMapOverlay drawnpolygonsoverlay;
-        public GMapOverlay kmlpolygonsoverlay;
+        private static GMapOverlay drawnpolygonsoverlay;
+        private static GMapOverlay kmlpolygonsoverlay;
 
-        public GMapOverlay layerpolygonsoverlay;
+        private static GMapOverlay layerpolygonsoverlay;
 
-        public MemoryLayerCache layerCache;
+        private MemoryLayerCache layerCache;
+        private GDAL.GDAL.GeoBitmap layer;
+        public GDAL.GDAL.GeoBitmap CurrentLayer
+        {
+            get
+            {
+                if (layer != null)
+                    return layer;
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                layer = value;
+            }
+        }
 
         static public Object thisLock = new Object();
         public bool quickadd;
@@ -3943,6 +3960,7 @@ namespace MissionPlanner.GCSViews
             if (geoBitmap.Bitmap != null)
             {
                 IsLoadLayer = true;
+                CurrentLayer = geoBitmap;
                 ShowLayerOverlay(geoBitmap);
             }
         }

@@ -43,13 +43,16 @@ namespace GMap.NET.WindowsForms.Markers
                     if (this.bitmap != null)
                     {
                         //g.DrawImageUnscaled(this.bitmap, (int)pos1.X, (int)pos1.Y);
-                        if(smallBitmap!=null && (pos2.X - pos1.X) < smallBitmap.Width)
-                            g.DrawImage(this.smallBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
+                        if (smallBitmap != null && (pos2.X - pos1.X) < smallBitmap.Width)
+                             g.DrawImage(this.smallBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
                         else if (midBitmap != null && (pos2.X - pos1.X) < midBitmap.Width)
                             g.DrawImage(this.midBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
-                        else
+                        else if (bitmap != null)
                             g.DrawImage(this.bitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
-
+                        else if (midBitmap != null)
+                            g.DrawImage(this.midBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
+                        else if (smallBitmap != null)
+                            g.DrawImage(this.smallBitmap, pos1.X, pos1.Y, pos2.X - pos1.X, pos2.Y - pos1.Y);
                     }
                 }
             }
