@@ -34,7 +34,7 @@ namespace MissionPlanner.Controls
                 int width = this.ContentRectangle.Width;
                 int height = this.ContentRectangle.Height;
                 float deltaHeight = 1;
-                g.Clear(Color.FromArgb(0, 255, 255, 255));
+                //g.Clear(Color.FromArgb(0, 255, 255, 255));
                 for (int i = 0; i < height; i++)
                 {
 
@@ -47,7 +47,7 @@ namespace MissionPlanner.Controls
 
                     g.FillRectangle(opcBrush, left, top + i * deltaHeight, width, 1);
                 }
-                g.DrawImage(this.Image, this.ContentRectangle);
+                //g.DrawImage(this.Image, this.ContentRectangle);
 
             }
             
