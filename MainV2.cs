@@ -1402,8 +1402,14 @@ namespace MissionPlanner
 
         private void MenuZoomToLayer_Click(object sender, EventArgs e)
         {
-            GCSViews.FlightPlanner.instance.zoomToTiffLayer();
-            GCSViews.FlightData.instance.zoomToTiffLayer();
+            if (GCSViews.FlightData.instance.IsFlightPlannerShow)
+            {
+                GCSViews.FlightPlanner.instance.zoomToTiffLayer();
+            }
+            else
+            {
+                GCSViews.FlightData.instance.zoomToTiffLayer();
+            }
         }
 
         private void MenuLayerManager_Click(object sender, EventArgs e)

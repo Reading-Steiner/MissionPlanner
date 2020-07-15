@@ -5144,6 +5144,7 @@ namespace MissionPlanner.GCSViews
         {
             //double Lat = (rect.Left + rect.Right) / 2;
             //double Lng = (rect.Top + rect.Bottom) / 2;
+            
             gMapControl1.SetZoomToFitRect(FlightPlanner.instance.rect);
         }
     }
