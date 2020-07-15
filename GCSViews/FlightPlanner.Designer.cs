@@ -1004,6 +1004,8 @@ namespace MissionPlanner.GCSViews
             this.contextMenuStripPoly.ShowImageMargin = false;
             this.toolTip1.SetToolTip(this.contextMenuStripPoly, resources.GetString("contextMenuStripPoly.ToolTip"));
             this.contextMenuStripPoly.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripPoly_Opening);
+            this.contextMenuStripPoly.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenuStripPoly_Close);
+            
             // 
             // contextMenuStripTiff
             // 

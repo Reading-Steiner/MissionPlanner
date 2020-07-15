@@ -138,6 +138,8 @@ namespace MissionPlanner.GCSViews
         private List<List<Locationwp>> history = new List<List<Locationwp>>();
         private bool isMouseClickOffMenu;
         private bool isMouseDown;
+        private bool isMouseDraggable;
+        private bool isMouseDroppable;
         private bool isMouseDraging;
         
 
@@ -2627,6 +2629,13 @@ namespace MissionPlanner.GCSViews
             //    fenceInclusionToolStripMenuItem.Visible = false;
             //    fenceExclusionToolStripMenuItem.Visible = false;
             //}
+            isMouseClickOffMenu = false; // Just incase
+        }
+
+        public void ContextMenuStripPoly_Close(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            //if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
+            //    isMouseClickOffMenu = true;
         }
 
         private void ConvertFromGeographic(double lat, double lng)
@@ -6903,32 +6912,39 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             //记录鼠标开始位置
             MouseDownStart = MainMap.FromLocalToLatLng(e.X, e.Y);
-            
-            if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || Control.ModifierKeys == Keys.Control))
+
+            if(e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
-                // group move
                 isMouseDown = true;
+                isMouseDraggable = false;
+                isMouseDroppable = true;
                 isMouseDraging = false;
 
                 return;
             }
 
-            if(e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
+            if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || Control.ModifierKeys == Keys.Control))
             {
+                // group move
                 isMouseDown = true;
+                isMouseDraggable = false;
+                isMouseDroppable = false;
                 isMouseDraging = false;
-
+                return;
             }
 
             if (e.Button == MouseButtons.Left && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
                 isMouseDown = true;
+                isMouseDraggable = true;
+                isMouseDroppable = false;
                 isMouseDraging = false;
 
                 if (currentMarker.IsVisible)
                 {
                     currentMarker.Position = MainMap.FromLocalToLatLng(e.X, e.Y);
                 }
+                return;
             }
         }
 
@@ -6940,66 +6956,28 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void MainMap_MouseMove(object sender, MouseEventArgs e)
         {
             //记录鼠标位置
-            PointLatLng point = MainMap.FromLocalToLatLng(e.X, e.Y);
+            PointLatLng mousePoint = MainMap.FromLocalToLatLng(e.X, e.Y);
             //鼠标没按下
             if (!isMouseDown)
             {
                 // update mouse pos display
-                SetMouseDisplay(point.Lat, point.Lng, 0);
+                SetMouseDisplay(mousePoint.Lat, mousePoint.Lng, 0);
             }
 
             //鼠标没移动
-            if (MouseDownStart == point)
+            if (MouseDownStart == mousePoint)
                 return;
             //鼠标移动
 
             //设置移动点
-            currentMarker.Position = point;
+            currentMarker.Position = mousePoint;
 
-            //鼠标左键按下，拖动
-            if (e.Button == MouseButtons.Left && isMouseDown)
+            //可拖动状态下鼠标按下
+            if (isMouseDraggable && isMouseDown)
             {
                 isMouseDraging = true;
-                if (CurrentRallyPt != null)
-                {
-                    //无效
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
 
-                    CurrentRallyPt.Position = pnew;
-                }
-                else if (groupmarkers.Count > 0)
-                {
-                    //无效
-                    // group drag
-                    double latdif = MouseDownStart.Lat - point.Lat;
-                    double lngdif = MouseDownStart.Lng - point.Lng;
-
-                    MouseDownStart = point;
-
-                    var markers = MainMap.Overlays.First(a => a.Id == "WPOverlay");
-
-                    Hashtable seen = new Hashtable();
-
-                    foreach (var markerid in groupmarkers)
-                    {
-                        if (seen.ContainsKey(markerid))
-                            continue;
-
-                        seen[markerid] = 1;
-                        for (int a = 0; a < markers.Markers.Count; a++)
-                        {
-                            var marker = markers.Markers[a];
-
-                            if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
-                            {
-                                var temp = new PointLatLng(marker.Position.Lat, marker.Position.Lng);
-                                temp.Offset(latdif, -lngdif);
-                                marker.Position = temp;
-                            }
-                        }
-                    }
-                }
-                else if (CurentRectMarker != null) // left click pan
+                if (CurentRectMarker != null) // left click pan
                 {
                     PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
                     try
@@ -7073,34 +7051,34 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                     CurrentGMapMarker.Position = pnew;
                 }
-                else if (Control.ModifierKeys == Keys.Control)
-                {
-                    // draw selection box
-                    double latdif = MouseDownStart.Lat - point.Lat;
-                    double lngdif = MouseDownStart.Lng - point.Lng;
+            }
+            else if (isMouseDroppable && isMouseDown)
+            {
+                double latdif = MouseDownStart.Lat - mousePoint.Lat;
+                double lngdif = MouseDownStart.Lng - mousePoint.Lng;
 
-                    MainMap.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, point.Lat),
-                        Math.Min(MouseDownStart.Lng, point.Lng), Math.Abs(lngdif), Math.Abs(latdif));
-                }
-                else // left click pan
+                try
                 {
-                    double latdif = MouseDownStart.Lat - point.Lat;
-                    double lngdif = MouseDownStart.Lng - point.Lng;
-
-                    try
+                    lock (thisLock)
                     {
-                        lock (thisLock)
-                        {
-                            if (!isMouseClickOffMenu)
-                                MainMap.Position = new PointLatLng(center.Position.Lat + latdif,
-                                    center.Position.Lng + lngdif);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Error(ex);
+                        if (!isMouseClickOffMenu)
+                            MainMap.Position = new PointLatLng(center.Position.Lat + latdif,
+                                center.Position.Lng + lngdif);
                     }
                 }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+            else if (Control.ModifierKeys == Keys.Control && isMouseDown)
+            {
+                // draw selection box
+                double latdif = MouseDownStart.Lat - mousePoint.Lat;
+                double lngdif = MouseDownStart.Lng - mousePoint.Lng;
+
+                MainMap.SelectedArea = new RectLatLng(Math.Max(MouseDownStart.Lat, mousePoint.Lat),
+                    Math.Min(MouseDownStart.Lng, mousePoint.Lng), Math.Abs(lngdif), Math.Abs(latdif));
             }
             else if (e.Button == MouseButtons.None)
             {
@@ -7185,14 +7163,17 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 return;
             }
 
-            MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-            // Console.WriteLine("MainMap MU");
-
             if (e.Button == MouseButtons.Right) // ignore right clicks
             {
                 return;
             }
+
+            if (e.Button == MouseButtons.Middle)
+            {
+                isMouseDown = false;
+            }
+
+            MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
 
             if (isMouseDown) // mouse down on some other object and dragged to here.
             {
@@ -7203,13 +7184,13 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     CurrentPOIMarker = null;
                 }
 
-                if (CurrentMidLine is GMapMarkerPlus)
+                if (CurrentMidLine is GMapMarkerPlus &&  e.Button == MouseButtons.Left)
                 {
                     int pnt2 = 0;
                     var midline = CurrentMidLine.Tag as midline;
                     // var pnt1 = int.Parse(midline.now.Tag);
 
-                    if (IsDrawPolygongridMode && midline.now != null && e.Button == MouseButtons.Middle)
+                    if (IsDrawPolygongridMode && midline.now != null)
                     {
                         //点击到多边形中线
                         var idx = drawnpolygon.Points.IndexOf(midline.now);
@@ -7218,7 +7199,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                         redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
                     }
-                    else if(e.Button == MouseButtons.Middle)
+                    else
                     {
                         if (int.TryParse(midline.next.Tag, out pnt2))
                         {
@@ -7248,16 +7229,15 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                     isMouseDown = false;
                     isMouseDraging = false;
+                    isMouseDraggable = false;
+                    isMouseDroppable = false;
                     CurrentMidLine = null;
 
                     writeKML();
                     return;
                 }
 
-                if (e.Button == MouseButtons.Left)
-                {
-                    isMouseDown = false;
-                }
+
                 if (Control.ModifierKeys == Keys.Control)
                 {
                     // group select wps
@@ -7286,10 +7266,13 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         }
                     }
 
+                    isMouseDown = false;
+                    isMouseDroppable = false;
+                    isMouseDraggable = false;
                     isMouseDraging = false;
                     return;
                 }
-                if (!isMouseDraging && e.Button == MouseButtons.Middle)
+                if (!isMouseDraging)
                 {
                     if (CurentRectMarker != null)
                     {
@@ -7300,7 +7283,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
                     }
                 }
-                else if(isMouseDraging)
+                else
                 {
                     if (groupmarkers.Count > 0)
                     {
@@ -7364,7 +7347,9 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     }
                 }
             }
-
+            isMouseDown = false;
+            isMouseDroppable = false;
+            isMouseDraggable = false;
             isMouseDraging = false;
         }
 
