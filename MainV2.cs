@@ -1177,8 +1177,8 @@ namespace MissionPlanner
 
             MainMenu.BackgroundImage = displayicons.bg;
 
-            MenuFlightPlannerClose.Image = displayicons.fd;
-            MenuFlightPlannerOpen.Image = displayicons.fp;
+            //MenuFlightPlannerClose.Image = displayicons.fd;
+            //MenuFlightPlannerOpen.Image = displayicons.fp;
             MenuInitConfig.Image = displayicons.initsetup;
             MenuSimulation.Image = displayicons.sim;
             MenuConfigTune.Image = displayicons.config_tuning;
