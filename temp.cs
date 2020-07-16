@@ -79,7 +79,7 @@ namespace MissionPlanner
         {
             var MainMap = new GMapControl();
 
-            MainMap.MapProvider = GoogleSatelliteMapProvider.Instance;
+            MainMap.MapProvider = GoogleChinaSatelliteMapProvider.Instance;
 
             MainMap.CacheLocation = Settings.GetDataDirectory() +
                                     "gmapcache" + Path.DirectorySeparatorChar;
@@ -148,7 +148,7 @@ namespace MissionPlanner
         private void BUT_clearcustommaps_Click(object sender, EventArgs e)
         {
             var MainMap = new GMapControl();
-            MainMap.MapProvider = GoogleSatelliteMapProvider.Instance;
+            MainMap.MapProvider = GoogleChinaSatelliteMapProvider.Instance;
 
             var removed = MainMap.Manager.PrimaryCache.DeleteOlderThan(DateTime.Now, Custom.Instance.DbId);
 

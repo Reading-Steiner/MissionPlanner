@@ -209,7 +209,6 @@ namespace MissionPlanner.GCSViews
             // config map             
             MainMap.CacheLocation = Settings.GetDataDirectory() +
                                                    "gmapcache" + Path.DirectorySeparatorChar;
-
             MainMap.OnPositionChanged += MainMap_OnCurrentPositionChanged;
             MainMap.OnTileLoadStart += MainMap_OnTileLoadStart;
             MainMap.OnTileLoadComplete += MainMap_OnTileLoadComplete;
@@ -6785,6 +6784,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 try
                 {
+                    //强制使用谷歌中国卫星地图
+                    mapType = GoogleChinaSatelliteMapProvider.Instance.Name;
                     var index = GMapProviders.List.FindIndex(x => (x.Name == mapType));
 
                     if (index != -1) comboBoxMapType.SelectedIndex = index;
@@ -6815,7 +6816,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 else
                 {
-                    mapType = "GoogleSatelliteMap";
+                    //强制使用谷歌中国卫星地图
+                    mapType = GoogleChinaSatelliteMapProvider.Instance.Name;
                     // set default
                     try
                     {
