@@ -1398,7 +1398,7 @@ namespace MissionPlanner.GCSViews
 
                     MainV2.comPort.giveComport = false;
 
-                    BUT_read.Enabled = true;
+                    //BUT_read.Enabled = true;
 
                     writeKML();
                 });
@@ -5580,7 +5580,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         }
                     }
 
-                    lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
+                    //lbl_wpfile.Text = "Loaded " + Path.GetFileName(file);
                 }
             }
         }
@@ -5681,7 +5681,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 sw.Close();
 
-                lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+                //lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
             }
             catch (Exception)
             {
@@ -5865,7 +5865,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 }
                 sw.Close();
 
-                lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
+                //lbl_wpfile.Text = "Saved " + Path.GetFileName(file);
             }
             catch (Exception)
             {
@@ -6370,20 +6370,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         public void switchDockingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (panelAction.Dock == DockStyle.Bottom)
-            {
-                panelAction.Dock = DockStyle.Right;
+            //if (panelAction.Dock == DockStyle.Bottom)
+            //{
+            //    panelAction.Dock = DockStyle.Right;
                 panelWaypoints.Dock = DockStyle.Bottom;
-            }
-            else
-            {
-                panelAction.Dock = DockStyle.Bottom;
-                panelAction.Height = 120;
+            //}
+            //else
+            //{
+                //panelAction.Dock = DockStyle.Bottom;
+                //panelAction.Height = 120;
                 panelWaypoints.Dock = DockStyle.Right;
                 panelWaypoints.Width = Width / 2;
-            }
+            //}
 
-            Settings.Instance["FP_docking"] = panelAction.Dock.ToString();
+            //Settings.Instance["FP_docking"] = panelAction.Dock.ToString();
         }
 
         public void takeoffToolStripMenuItem_Click(object sender, EventArgs e)
