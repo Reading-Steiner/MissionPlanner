@@ -1802,6 +1802,16 @@ namespace MissionPlanner.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap 划定航摄区域1 {
+            get {
+                object obj = ResourceManager.GetObject("划定航摄区域1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap 删除航线 {
             get {
                 object obj = ResourceManager.GetObject("删除航线", resourceCulture);
@@ -1832,9 +1842,39 @@ namespace MissionPlanner.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap 图层管理器 {
+            get {
+                object obj = ResourceManager.GetObject("图层管理器", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap 插入航线 {
             get {
                 object obj = ResourceManager.GetObject("插入航线", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 添加图层 {
+            get {
+                object obj = ResourceManager.GetObject("添加图层", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 清空航摄区域 {
+            get {
+                object obj = ResourceManager.GetObject("清空航摄区域", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1865,6 +1905,36 @@ namespace MissionPlanner.Properties {
         public static System.Drawing.Bitmap 航线规划 {
             get {
                 object obj = ResourceManager.GetObject("航线规划", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 航线规划器_关闭 {
+            get {
+                object obj = ResourceManager.GetObject("航线规划器 关闭", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 航线规划器_打开 {
+            get {
+                object obj = ResourceManager.GetObject("航线规划器 打开", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 连接到设备 {
+            get {
+                object obj = ResourceManager.GetObject("连接到设备", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

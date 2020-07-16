@@ -4537,6 +4537,13 @@
     <None Include="Resources\启动界面1.jpg" />
     <None Include="Resources\main_32_32.ico" />
     <None Include="Resources\mian_16_16.ico" />
+    <None Include="Resources\航线规划器 打开.PNG" />
+    <None Include="Resources\航线规划器 关闭.PNG" />
+    <None Include="Resources\划定航摄区域1.png" />
+    <None Include="Resources\连接到设备.PNG" />
+    <None Include="Resources\清空航摄区域.PNG" />
+    <None Include="Resources\添加图层.png" />
+    <None Include="Resources\图层管理器.PNG" />
     <Content Include="Splash.ico" />
     <Content Include="mpdesktop150.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

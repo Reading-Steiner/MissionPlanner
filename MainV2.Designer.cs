@@ -149,7 +149,7 @@ namespace MissionPlanner
             // 
             this.MenuFlightPlannerOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuFlightPlannerOpen.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuFlightPlannerOpen.Image = global::MissionPlanner.Properties.Resources.light_flightplan_icon;
+            this.MenuFlightPlannerOpen.Image = global::MissionPlanner.Properties.Resources.航线规划器_打开;
             this.MenuFlightPlannerOpen.Margin = new System.Windows.Forms.Padding(0);
             this.MenuFlightPlannerOpen.Name = "MenuFlightPlannerOpen";
             resources.ApplyResources(this.MenuFlightPlannerOpen, "MenuFlightPlannerOpen");
@@ -159,7 +159,7 @@ namespace MissionPlanner
             // 
             this.MenuFlightPlannerClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuFlightPlannerClose.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuFlightPlannerClose.Image = global::MissionPlanner.Properties.Resources.light_flightdata_icon;
+            this.MenuFlightPlannerClose.Image = global::MissionPlanner.Properties.Resources.航线规划器_关闭;
             this.MenuFlightPlannerClose.Margin = new System.Windows.Forms.Padding(0);
             this.MenuFlightPlannerClose.Name = "MenuFlightPlannerClose";
             resources.ApplyResources(this.MenuFlightPlannerClose, "MenuFlightPlannerClose");
@@ -176,7 +176,7 @@ namespace MissionPlanner
             this.MenuLoadLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuLoadLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.MenuLoadLayer.HightLightBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.MenuLoadLayer.Image = global::MissionPlanner.Properties.Resources.main_32_32;
+            this.MenuLoadLayer.Image = global::MissionPlanner.Properties.Resources.添加图层;
             this.MenuLoadLayer.Margin = new System.Windows.Forms.Padding(0);
             this.MenuLoadLayer.MyChecked = false;
             this.MenuLoadLayer.Name = "MenuLoadLayer";
@@ -198,7 +198,7 @@ namespace MissionPlanner
             // 
             this.MenuLayerManager.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuLayerManager.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuLayerManager.Image = global::MissionPlanner.Properties.Resources.main_32_32;
+            this.MenuLayerManager.Image = global::MissionPlanner.Properties.Resources.图层管理器;
             this.MenuLayerManager.Margin = new System.Windows.Forms.Padding(0);
             this.MenuLayerManager.Name = "MenuLayerManager";
             resources.ApplyResources(this.MenuLayerManager, "MenuLayerManager");
@@ -227,7 +227,7 @@ namespace MissionPlanner
             // 
             this.MenuClearPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuClearPolygon.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuClearPolygon.Image = global::MissionPlanner.Properties.Resources.启动界面;
+            this.MenuClearPolygon.Image = global::MissionPlanner.Properties.Resources.清空航摄区域;
             this.MenuClearPolygon.Margin = new System.Windows.Forms.Padding(0);
             this.MenuClearPolygon.Name = "MenuClearPolygon";
             resources.ApplyResources(this.MenuClearPolygon, "MenuClearPolygon");
