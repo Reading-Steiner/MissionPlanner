@@ -87,8 +87,12 @@ namespace MissionPlanner.GCSViews
         private static GMapOverlay rallypointoverlay;
         private static GMapOverlay drawnpolygonsoverlay;
         private static GMapOverlay kmlpolygonsoverlay;
-
         private static GMapOverlay layerpolygonsoverlay;
+        internal GMapPolygon drawnpolygon;
+        public GMapOverlay geofenceoverlay;
+        public GMapPolygon geofencepolygon;
+        private WPOverlay overlay;
+        public GMapOverlay top;
 
         private MemoryLayerCache layerCache;
         private GDAL.GDAL.GeoBitmap layer;
@@ -111,12 +115,15 @@ namespace MissionPlanner.GCSViews
 
         static public Object thisLock = new Object();
         public bool quickadd;
-        internal GMapPolygon drawnpolygon;
+        
+        private PointLatLng MouseDownStart;
         internal PointLatLng MouseDownEnd;
+        private GPoint MouseDownStartPoint;
+        private GPoint MouseDownEndPoint;
         internal string wpfilename;
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static Propagation prop;
-        public GMapOverlay geofenceoverlay;
+        
 
         private static string zone = "50s";
         private readonly Random rnd = new Random();
@@ -130,11 +137,12 @@ namespace MissionPlanner.GCSViews
         private GMapMarkerRallyPt CurrentRallyPt;
         
         private bool fetchpathrip;
+
         
-        public GMapPolygon geofencepolygon;
 
         private bool grid;
         private List<int> groupmarkers = new List<int>();
+        private List<int> grouppolygonmarkers = new List<int>();
         private List<List<Locationwp>> history = new List<List<Locationwp>>();
         private bool isMouseClickOffMenu;
         private bool isMouseDown;
@@ -150,7 +158,7 @@ namespace MissionPlanner.GCSViews
 
         private DateTime mapupdate = DateTime.MinValue;
         private string mobileGpsLog = string.Empty;
-        private PointLatLng MouseDownStart;
+        
         private PointLatLngAlt mouseposdisplay = new PointLatLngAlt(0, 0);
         private MissionPlanner.Controls.Icon.Polygon polyicon = new MissionPlanner.Controls.Icon.Polygon();
         private MissionPlanner.Controls.Icon.WP WPicon = new MissionPlanner.Controls.Icon.WP();
@@ -160,8 +168,6 @@ namespace MissionPlanner.GCSViews
         private bool sethome;
         private bool splinemode;
         private PointLatLng startmeasure;
-        private WPOverlay overlay;
-        public GMapOverlay top;
         public GMapPolygon wppolygon;
         private GMapMarker CurrentMidLine;
 
@@ -1110,6 +1116,7 @@ namespace MissionPlanner.GCSViews
             drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
             MainMap.UpdatePolygonLocalPosition(drawnpolygon);
 
+            if (drawnpolygon.Points.Count > 0)
             {
                 foreach (var pointLatLngAlt in drawnpolygon.Points.CloseLoop().PrevNowNext())
                 {
@@ -1699,7 +1706,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 PointLatLng point = new PointLatLng(lat, lng);
-                GMarkerGoogle m = new GMarkerGoogle(point, GMarkerGoogleType.red);
+                GMapMarkerPolygon m = new GMapMarkerPolygon(point);
                 m.ToolTipMode = MarkerTooltipMode.Never;
                 m.ToolTipText = "grid" + tag;
                 m.Tag = "grid" + tag;
@@ -2572,7 +2579,7 @@ namespace MissionPlanner.GCSViews
 
         public void ContextMenuStripMain_Opening(object sender, CancelEventArgs e)
         {
-            if (CurentRectMarker == null && CurrentRallyPt == null && groupmarkers.Count == 0)
+            if (CurentRectMarker == null && CurrentRallyPt == null && groupmarkers.Count == 0 && grouppolygonmarkers.Count == 0)
             {
                 deleteMarkerToolStripMenuItem.Enabled = false;
             }
@@ -2581,7 +2588,7 @@ namespace MissionPlanner.GCSViews
                 deleteMarkerToolStripMenuItem.Enabled = true;
             }
 
-            if(CurentRectMarker != null && CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+            if(grouppolygonmarkers.Count > 0 || CurentRectMarker != null && CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
             {
                 deletePolygonPointToolStripMenuItem.Enabled = true;
             }
@@ -2590,7 +2597,7 @@ namespace MissionPlanner.GCSViews
                 deletePolygonPointToolStripMenuItem.Enabled = false;
             }
 
-            if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.InnerMarker.Tag.ToString(), @"^\d+$")))
+            if (groupmarkers.Count > 0 || (CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.InnerMarker.Tag.ToString(), @"^\d+$")))
             {
                 deleteWPToolStripMenuItem.Enabled = true;
             }
@@ -3111,8 +3118,26 @@ namespace MissionPlanner.GCSViews
                         CustomMessageBox.Show("error selecting wp, please try again.");
                     }
                 }
-
                 groupmarkers.Clear();
+            }else if (grouppolygonmarkers.Count > 0)
+            {
+                for (int a = drawnpolygon.LocalPoints.Count; a > 0; a--)
+                {
+                    try
+                    {
+                        if (grouppolygonmarkers.Contains(a))
+                        {
+                            drawnpolygon.Points.RemoveAt(a - 1);
+                            redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                        CustomMessageBox.Show("error selecting polygon, please try again.");
+                    }
+                }
+                grouppolygonmarkers.Clear();
             }
 
 
@@ -6901,15 +6926,45 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void groupmarkeradd(GMapMarker marker)
         {
-            System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
-            groupmarkers.Add(int.Parse(marker.Tag.ToString()));
+            
             if (marker is GMapMarkerWP)
             {
-                ((GMapMarkerWP)marker).selected = true;
+                System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
+                if (int.TryParse(((GMapMarkerWP)marker).Tag.ToString(), out int no))
+                {
+                    groupmarkers.Add(int.Parse(marker.Tag.ToString()));
+                    ((GMapMarkerWP)marker).selected = true;
+                }
             }
             if (marker is GMapMarkerRect)
             {
-                ((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).selected = true;
+                System.Diagnostics.Debug.WriteLine("add marker " + ((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).Tag.ToString());
+                if (int.TryParse(((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).Tag.ToString(), out int no))
+                {
+                    groupmarkers.Add(no);
+                    ((GMapMarkerWP)((GMapMarkerRect)marker).InnerMarker).selected = true;
+                }
+            }
+        }
+
+        private void grouppolygonmarkeradd(GMapMarker marker)
+        {
+            if (marker is GMapMarkerPolygon)
+            {
+                System.Diagnostics.Debug.WriteLine("add marker " + marker.Tag.ToString());
+                if (int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                {
+                    grouppolygonmarkers.Add(no);
+                    ((GMapMarkerPolygon)marker).selected = true;
+                }
+            }
+            if (marker is GMapMarkerRect)
+            {
+                if (int.TryParse(((GMapMarkerRect)marker).InnerMarker.Tag.ToString().Replace("grid", ""), out int no))
+                {
+                    grouppolygonmarkers.Add(no);
+                    ((GMapMarkerPolygon)((GMapMarkerRect)marker).InnerMarker).selected = true;
+                }
             }
         }
 
@@ -6920,24 +6975,19 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
             //记录鼠标开始位置
             MouseDownStart = MainMap.FromLocalToLatLng(e.X, e.Y);
+            MouseDownStartPoint = new GPoint(e.X, e.Y);
 
-            if(e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
+            if (e.Button == MouseButtons.Middle && Control.ModifierKeys != Keys.Alt && Control.ModifierKeys != Keys.Control)
             {
                 isMouseDown = true;
-                isMouseDraggable = false;
                 isMouseDroppable = true;
-                isMouseDraging = false;
-
                 return;
             }
 
-            if (e.Button == MouseButtons.Left && (groupmarkers.Count > 0 || Control.ModifierKeys == Keys.Control))
+            if (e.Button == MouseButtons.Left && ( Control.ModifierKeys == Keys.Control) || Control.ModifierKeys == Keys.Alt)
             {
                 // group move
                 isMouseDown = true;
-                isMouseDraggable = false;
-                isMouseDroppable = false;
-                isMouseDraging = false;
                 return;
             }
 
@@ -6945,8 +6995,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 isMouseDown = true;
                 isMouseDraggable = true;
-                isMouseDroppable = false;
-                isMouseDraging = false;
 
                 if (currentMarker.IsVisible)
                 {
@@ -6981,22 +7029,22 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             currentMarker.Position = mousePoint;
 
             //可拖动状态下鼠标按下
-            if (isMouseDraggable && isMouseDown)
+            if (isMouseDraggable && e.Button == MouseButtons.Left)
             {
                 isMouseDraging = true;
 
                 if (CurentRectMarker != null) // left click pan
                 {
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
+                    //更新Polygon点位置
                     try
                     {
                         // 检查polygon点
                         if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
                         {
                             drawnpolygon.Points[
-                                    int.Parse(
-                                        CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
-                                new PointLatLng(pnew.Lat, pnew.Lng);
+                                int.Parse(
+                                    CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1
+                                    ] = new PointLatLng(mousePoint.Lat, mousePoint.Lng);
 
                             redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
                         }
@@ -7006,7 +7054,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         log.Error(ex);
                     }
 
-                    // adjust polyline point while we drag
+                    //更新WP位置
                     try
                     {
                         // 检查WP点
@@ -7017,10 +7065,11 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                             {
                                 if (pIndex < wppolygon.Points.Count)
                                 {
-                                    wppolygon.Points[pIndex.Value] = pnew;
+                                    wppolygon.Points[pIndex.Value] = mousePoint;
                                     lock (thisLock)
                                     {
                                         MainMap.UpdatePolygonLocalPosition(wppolygon);
+                                        MainMap.Invalidate();
                                     }
                                 }
                             }
@@ -7032,35 +7081,42 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     }
 
 
-                    //随鼠标位置更新标记位置
-                    if ((CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid")) ||
-                        (CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
+                    //随鼠标位置更新当前标记
+                    if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
                     {
                         if (currentMarker.IsVisible)
                         {
-                            currentMarker.Position = pnew;
+                            currentMarker.Position = mousePoint;
                         }
-                        CurentRectMarker.Position = pnew;
+                        CurentRectMarker.Position = mousePoint;
                         if (CurentRectMarker.InnerMarker != null)
                         {
-                            CurentRectMarker.InnerMarker.Position = pnew;
+                            CurentRectMarker.InnerMarker.Position = mousePoint;
+                        }
+                    }
+                    else if (Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$"))
+                    {
+                        if (currentMarker.IsVisible)
+                        {
+                            currentMarker.Position = mousePoint;
+                        }
+                        CurentRectMarker.Position = mousePoint;
+                        if (CurentRectMarker.InnerMarker != null)
+                        {
+                            CurentRectMarker.InnerMarker.Position = mousePoint;
                         }
                     }
                 }
                 else if (CurrentPOIMarker != null)
                 {
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-                    CurrentPOIMarker.Position = pnew;
+                    CurrentPOIMarker.Position = mousePoint;
                 }
                 else if (CurrentGMapMarker != null)
                 {
-                    PointLatLng pnew = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-                    CurrentGMapMarker.Position = pnew;
+                    CurrentGMapMarker.Position = mousePoint;
                 }
             }
-            else if (isMouseDroppable && isMouseDown)
+            else if (isMouseDroppable && e.Button == MouseButtons.Middle)
             {
                 double latdif = MouseDownStart.Lat - mousePoint.Lat;
                 double lngdif = MouseDownStart.Lng - mousePoint.Lng;
@@ -7079,7 +7135,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     log.Error(ex);
                 }
             }
-            else if (Control.ModifierKeys == Keys.Control && isMouseDown)
+            else if (e.Button == MouseButtons.Left && 
+                (Control.ModifierKeys == Keys.Control || Control.ModifierKeys == Keys.Alt))
             {
                 // draw selection box
                 double latdif = MouseDownStart.Lat - mousePoint.Lat;
@@ -7096,203 +7153,257 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
         private void MainMap_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isMouseClickOffMenu)
+            try
             {
-                isMouseClickOffMenu = false;
-                return;
-            }
-
-            // check if the mouse up happend over our button
-            if (polyicon.Rectangle.Contains(e.Location))
-            {
-                if (e.Button == MouseButtons.Right){
-                    contextMenuStripMain.Visible = false;
-                    ClearPolygonToolStripMenuItem_Click(this, null);
-
-                }else if(e.Button == MouseButtons.Left){
-                    polyicon.IsSelected = !polyicon.IsSelected;
-
-                }
-                IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
-
-                //contextMenuStripPoly.Show(MainMap, e.Location);
-                return;
-            }
-            if (WPicon.Rectangle.Contains(e.Location))
-            {
-                if (e.Button == MouseButtons.Right)
+                if (isMouseClickOffMenu)
                 {
-                    contextMenuStripMain.Visible = false;
-                    ClearMissionToolStripMenuItem_Click(this, null);
+                    isMouseClickOffMenu = false;
+                    return;
+                }
 
-                }
-                else if (e.Button == MouseButtons.Left)
+                // check if the mouse up happend over our button
+                if (polyicon.Rectangle.Contains(e.Location))
                 {
-                    surveyGridToolStripMenuItem_Click(this, null);
-                }
-                return;
-            }
-            if (zoomicon.Rectangle.Contains(e.Location))
-            {
-                //contextMenuStripZoom.Show(MainMap, e.Location);
-                if (layerpolygonsoverlay.Polygons.Count > 0)
-                    zoomicon.IsSelected = true;
-                else
-                    zoomicon.IsSelected = false;
-                if (e.Button == MouseButtons.Left)
-                {
-                    if (zoomicon.IsSelected)
-                    {
-                        zoomToTiffToolStripMenuItem_Click(this, null);
-                    }
-                    else
+                    if (e.Button == MouseButtons.Right)
                     {
                         contextMenuStripMain.Visible = false;
-                        TiffOverlayToolStripMenuItem_Click(this, null);
+                        ClearPolygonToolStripMenuItem_Click(this, null);
+
                     }
+                    else if (e.Button == MouseButtons.Left)
+                    {
+                        polyicon.IsSelected = !polyicon.IsSelected;
+
+                    }
+                    IsDrawPolygongridMode = polyicon.IsSelected ? true : false;
+
+                    //contextMenuStripPoly.Show(MainMap, e.Location);
+                    return;
+                }
+                if (WPicon.Rectangle.Contains(e.Location))
+                {
+                    if (e.Button == MouseButtons.Right)
+                    {
+                        contextMenuStripMain.Visible = false;
+                        ClearMissionToolStripMenuItem_Click(this, null);
+
+                    }
+                    else if (e.Button == MouseButtons.Left)
+                    {
+                        surveyGridToolStripMenuItem_Click(this, null);
+                    }
+                    return;
+                }
+                if (zoomicon.Rectangle.Contains(e.Location))
+                {
+                    //contextMenuStripZoom.Show(MainMap, e.Location);
                     if (layerpolygonsoverlay.Polygons.Count > 0)
                         zoomicon.IsSelected = true;
                     else
                         zoomicon.IsSelected = false;
-                    return;
-
-                }
-                else if (e.Button == MouseButtons.Right)
-                {
-                    contextMenuStripMain.Visible = false;
-                    contextMenuStripTiff.Show(MainMap, e.Location);
-                    return;
-                }
-                //else if(e.Button == MouseButtons.Middle)
-                //{
-                //    MissionPlanner.Controls.test dlg = new MissionPlanner.Controls.test();
-                //    dlg.ShowDialog();
-                //}
-                return;
-            }
-
-            if (e.Button == MouseButtons.Right) // ignore right clicks
-            {
-                return;
-            }
-
-            if (e.Button == MouseButtons.Middle)
-            {
-                isMouseDown = false;
-            }
-
-            MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
-
-            if (isMouseDown) // mouse down on some other object and dragged to here.
-            {
-                // drag finished, update poi db
-                if (CurrentPOIMarker != null)
-                {
-                    POI.POIMove(CurrentPOIMarker);
-                    CurrentPOIMarker = null;
-                }
-
-                if (CurrentMidLine is GMapMarkerPlus &&  e.Button == MouseButtons.Left)
-                {
-                    int pnt2 = 0;
-                    var midline = CurrentMidLine.Tag as midline;
-                    // var pnt1 = int.Parse(midline.now.Tag);
-
-                    if (IsDrawPolygongridMode && midline.now != null)
+                    if (e.Button == MouseButtons.Left)
                     {
-                        //点击到多边形中线
-                        var idx = drawnpolygon.Points.IndexOf(midline.now);
-                        drawnpolygon.Points.Insert(idx + 1,
-                            new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
-
-                        redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
-                    }
-                    else
-                    {
-                        if (int.TryParse(midline.next.Tag, out pnt2))
+                        if (zoomicon.IsSelected)
                         {
-                            //点击到航点中线
-                            if ((MAVLink.MAV_MISSION_TYPE) cmb_missiontype.SelectedValue ==
-                                MAVLink.MAV_MISSION_TYPE.FENCE)
-                            {
-                                var prevtype = Commands.Rows[(int)Math.Max(pnt2 - 2, 0)].Cells[Command.Index].Value.ToString();
-                                // match type of prev row
-                                InsertCommand(pnt2 - 1, (MAVLink.MAV_CMD) Enum.Parse(typeof(MAVLink.MAV_CMD), prevtype),
-                                    0, 0, 0, 0,
-                                    CurrentMidLine.Position.Lng,
-                                    CurrentMidLine.Position.Lat, 0);
-
-                                ReCalcFence(pnt2 - 1, true, false);
-                            }
-                            else if ((MAVLink.MAV_MISSION_TYPE) cmb_missiontype.SelectedValue ==
-                                     MAVLink.MAV_MISSION_TYPE.MISSION)
-                            {
-
-                                InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
-                                    CurrentMidLine.Position.Lng,
-                                    CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
-                            }
+                            zoomToTiffToolStripMenuItem_Click(this, null);
                         }
+                        else
+                        {
+                            contextMenuStripMain.Visible = false;
+                            TiffOverlayToolStripMenuItem_Click(this, null);
+                        }
+                        if (layerpolygonsoverlay.Polygons.Count > 0)
+                            zoomicon.IsSelected = true;
+                        else
+                            zoomicon.IsSelected = false;
+                        return;
+
                     }
-
-                    isMouseDown = false;
-                    isMouseDraging = false;
-                    isMouseDraggable = false;
-                    isMouseDroppable = false;
-                    CurrentMidLine = null;
-
-                    writeKML();
+                    else if (e.Button == MouseButtons.Right)
+                    {
+                        contextMenuStripMain.Visible = false;
+                        contextMenuStripTiff.Show(MainMap, e.Location);
+                        return;
+                    }
+                    //else if(e.Button == MouseButtons.Middle)
+                    //{
+                    //    MissionPlanner.Controls.test dlg = new MissionPlanner.Controls.test();
+                    //    dlg.ShowDialog();
+                    //}
                     return;
                 }
 
-
-                if (Control.ModifierKeys == Keys.Control)
+                if (e.Button == MouseButtons.Right) // ignore right clicks
                 {
-                    // group select wps
-                    GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
+                    return;
+                }
+                else if (e.Button == MouseButtons.Middle)
+                {
+                    return;
+                }
+                else if (e.Button == MouseButtons.None)
+                {
+                    return;
+                }
 
-                    poly.Points.Add(MouseDownStart);
-                    poly.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownEnd.Lng));
-                    poly.Points.Add(MouseDownEnd);
-                    poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
+                MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
+                MouseDownEndPoint = new GPoint(e.X, e.Y);
 
-                    foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+                if (isMouseDown) // mouse down on some other object and dragged to here.
+                {
+                    // drag finished, update poi db
+                    if (CurrentPOIMarker != null)
                     {
-                        if (poly.IsInside(marker.Position))
+                        POI.POIMove(CurrentPOIMarker);
+                        CurrentPOIMarker = null;
+                    }
+
+                    if (Control.ModifierKeys == Keys.Control)
+                    {
+                        // group select wps
+                        GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
+
+                        poly.Points.Add(MouseDownStart);
+                        poly.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownEnd.Lng));
+                        poly.Points.Add(MouseDownEnd);
+                        poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
+
+                        foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
                         {
-                            try
+                            if (poly.IsInside(marker.Position))
                             {
-                                if (marker.Tag != null)
+                                try
                                 {
-                                    groupmarkeradd(marker);
+                                    if (marker.Tag != null)
+                                    {
+                                        groupmarkeradd(marker);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error(ex);
                                 }
                             }
-                            catch (Exception ex)
+                        }
+
+                        return;
+                    }
+                    else if (Control.ModifierKeys == Keys.Alt)
+                    {
+                        // group select wps
+                        GMapPolygon poly = new GMapPolygon(new List<PointLatLng>(), "temp");
+
+                        poly.Points.Add(MouseDownStart);
+                        poly.Points.Add(new PointLatLng(MouseDownStart.Lat, MouseDownEnd.Lng));
+                        poly.Points.Add(MouseDownEnd);
+                        poly.Points.Add(new PointLatLng(MouseDownEnd.Lat, MouseDownStart.Lng));
+
+                        foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+                        {
+                            if (poly.IsInside(marker.Position))
                             {
-                                log.Error(ex);
+                                try
+                                {
+                                    if (marker.Tag != null)
+                                    {
+                                        grouppolygonmarkeradd(marker);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error(ex);
+                                }
                             }
                         }
+
+                        return;
+                    }
+                    else if (CurrentMidLine is GMapMarkerPlus)
+                    {
+                        int pnt2 = 0;
+                        var midline = CurrentMidLine.Tag as midline;
+                        // var pnt1 = int.Parse(midline.now.Tag);
+
+                        if (IsDrawPolygongridMode && midline.now != null)
+                        {
+                            //点击到多边形中线
+                            var idx = drawnpolygon.Points.IndexOf(midline.now);
+                            drawnpolygon.Points.Insert(idx + 1,
+                                new PointLatLng(CurrentMidLine.Position.Lat, CurrentMidLine.Position.Lng));
+
+                            redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                        }
+                        else
+                        {
+                            if (int.TryParse(midline.next.Tag, out pnt2))
+                            {
+                                //点击到航点中线
+                                if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                                    MAVLink.MAV_MISSION_TYPE.FENCE)
+                                {
+                                    var prevtype = Commands.Rows[(int)Math.Max(pnt2 - 2, 0)].Cells[Command.Index].Value.ToString();
+                                    // match type of prev row
+                                    InsertCommand(pnt2 - 1, (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), prevtype),
+                                        0, 0, 0, 0,
+                                        CurrentMidLine.Position.Lng,
+                                        CurrentMidLine.Position.Lat, 0);
+
+                                    ReCalcFence(pnt2 - 1, true, false);
+                                }
+                                else if ((MAVLink.MAV_MISSION_TYPE)cmb_missiontype.SelectedValue ==
+                                         MAVLink.MAV_MISSION_TYPE.MISSION)
+                                {
+
+                                    InsertCommand(pnt2 - 1, MAVLink.MAV_CMD.WAYPOINT, 0, 0, 0, 0,
+                                        CurrentMidLine.Position.Lng,
+                                        CurrentMidLine.Position.Lat, float.Parse(TXT_DefaultAlt.Text));
+                                }
+                            }
+                        }
+
+                        CurrentMidLine = null;
+                        writeKML();
+                        return;
                     }
 
-                    isMouseDown = false;
-                    isMouseDroppable = false;
-                    isMouseDraggable = false;
-                    isMouseDraging = false;
-                    return;
-                }
-                if (!isMouseDraging)
-                {
-                    if (CurentRectMarker != null)
+                    if (!isMouseDraging)
                     {
-                        // cant add WP in existing rect
+                        if (CurentRectMarker != null)
+                        {
+                            // cant add WP in existing rect
+                        }
+                        else
+                        {
+                            AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
+                        }
                     }
                     else
                     {
-                        AddWPToMap(currentMarker.Position.Lat, currentMarker.Position.Lng, 0);
+                        if (CurentRectMarker != null && CurentRectMarker.InnerMarker != null)
+                        {
+                            if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+                            {
+                                try
+                                {
+                                    drawnpolygon.Points[
+                                            int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1
+                                            ] = new PointLatLng(MouseDownEnd.Lat, MouseDownEnd.Lng);
+
+                                    redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error(ex);
+                                }
+                            }
+                            else if ((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
+                            {
+                                CallMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
+                                currentMarker.Position.Lng, -2);
+                            }
+                            CurentRectMarker = null;
+                        }
                     }
-                }
-                else
-                {
                     if (groupmarkers.Count > 0)
                     {
                         Dictionary<string, PointLatLng> dest = new Dictionary<string, PointLatLng>();
@@ -7325,40 +7436,51 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         groupmarkers.Clear();
                         // redraw to remove selection
                         writeKML();
-
-                        CurentRectMarker = null;
                     }
-
-                    if (CurentRectMarker != null && CurentRectMarker.InnerMarker != null)
+                    if(grouppolygonmarkers.Count > 0)
                     {
-                        if (CurentRectMarker.InnerMarker.Tag.ToString().Contains("grid"))
+                        Dictionary<string, PointLatLng> dest = new Dictionary<string, PointLatLng>();
+
+                        var markers = MainMap.Overlays.First(a => a.Id == "WPOverlay");
+
+                        foreach (var markerid in grouppolygonmarkers.Distinct())
                         {
-                            try
+                            for (int a = 0; a < markers.Markers.Count; a++)
                             {
-                                drawnpolygon.Points[
-                                        int.Parse(CurentRectMarker.InnerMarker.Tag.ToString().Replace("grid", "")) - 1] =
-                                    new PointLatLng(MouseDownEnd.Lat, MouseDownEnd.Lng);
-                                MainMap.UpdatePolygonLocalPosition(drawnpolygon);
-                                MainMap.Invalidate();
-                            }
-                            catch (Exception ex)
-                            {
-                                log.Error(ex);
+                                var marker = markers.Markers[a];
+
+                                if (marker.Tag != null && marker.Tag.ToString() == markerid.ToString())
+                                {
+                                    dest[marker.Tag.ToString()] = marker.Position;
+                                    break;
+                                }
                             }
                         }
-                        else if((CurentRectMarker != null && Regex.IsMatch(CurentRectMarker.Tag.ToString(), @"^\d+$")))
+
+                        foreach (KeyValuePair<string, PointLatLng> item in dest)
                         {
-                            CallMeDrag(CurentRectMarker.InnerMarker.Tag.ToString(), currentMarker.Position.Lat,
-                                currentMarker.Position.Lng, -2);
+                            var value = item.Value;
+                            quickadd = true;
+                            CallMeDrag(item.Key, value.Lat, value.Lng, -1);
+                            quickadd = false;
                         }
-                        CurentRectMarker = null;
+
+                        MainMap.SelectedArea = RectLatLng.Empty;
+                        grouppolygonmarkers.Clear();
+                        // redraw to remove selection
+                        writeKML();
                     }
+
                 }
             }
-            isMouseDown = false;
-            isMouseDroppable = false;
-            isMouseDraggable = false;
-            isMouseDraging = false;
+            finally
+            {
+                isMouseDown = false;
+                isMouseDroppable = false;
+                isMouseDraggable = false;
+                isMouseDraging = false;
+                CurentRectMarker = null;
+            }
         }
 
         private void ReCalcFence(int rowno, bool insert, bool delete)
@@ -7549,6 +7671,18 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     try
                     {
                         groupmarkeradd(item);
+
+                        log.Info("add marker to group");
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                }else if (Control.ModifierKeys == Keys.Alt)
+                {
+                    try
+                    {
+                        grouppolygonmarkeradd(item);
 
                         log.Info("add marker to group");
                     }
