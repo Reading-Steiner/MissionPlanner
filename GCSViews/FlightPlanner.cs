@@ -5987,7 +5987,23 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             w.WriteStartElement("open");
             w.WriteString("1");
             w.WriteEndElement();//open
-            //style
+            w.WriteStartElement("ExtendedData");
+            var info = this.layerCache.GetSelectedLayerFromMemoryCache();
+            if (info != null)
+            {
+                w.WriteStartElement("local");
+                GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)info;
+                w.WriteStartElement("originCoordinates");
+                w.WriteString(string.Format("{0},{1},{2}", layerInfo.Lng, layerInfo.Lat, layerInfo.Alt));
+                w.WriteEndElement();//originCoordinates
+                w.WriteStartElement("scale");
+                w.WriteString(layerInfo.Scale.ToString());
+                w.WriteEndElement();//scale
+                w.WriteEndElement();//local
+            }
+            w.WriteEndElement();//ExtendedData
+ 
+            //style
             w.WriteStartElement("Style");
             w.WriteAttributeString("id", "waylineGreenPoly");
             w.WriteStartElement("LineStyle");
@@ -6044,7 +6060,35 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteStartElement("styleUrl");
                 w.WriteString("#waypointStyle");
                 w.WriteEndElement();//styleUrl
+                w.WriteStartElement("ExtendedData");
 
+                var info1 = this.layerCache.GetSelectedLayerFromMemoryCache();
+                if (info1 != null)
+                {
+                    w.WriteStartElement("local");
+                    w.WriteStartElement("coordinates");
+                    CovertToWorkCoordinate(
+                        System.Convert.ToDouble(Commands.Rows[i].Cells[Lon.Index].Value.ToString()),
+                        System.Convert.ToDouble(Commands.Rows[i].Cells[Lat.Index].Value.ToString()),
+                        System.Convert.ToDouble(Commands.Rows[i].Cells[Alt.Index].Value.ToString()), 
+                        out double x, out double y, out double z);
+                    w.WriteString(string.Format("{0},{1},{2}", x, y, z));
+                    w.WriteEndElement();//coordinates
+                    w.WriteEndElement();//local
+                    w.WriteStartElement("param1");
+                    w.WriteString(Commands.Rows[i].Cells[Param1.Index].Value.ToString());
+                    w.WriteEndElement();//param1
+                    w.WriteStartElement("param2");
+                    w.WriteString(Commands.Rows[i].Cells[Param2.Index].Value.ToString());
+                    w.WriteEndElement();//param2
+                    w.WriteStartElement("param3");
+                    w.WriteString(Commands.Rows[i].Cells[Param3.Index].Value.ToString());
+                    w.WriteEndElement();//param3
+                    w.WriteStartElement("param4");
+                    w.WriteString(Commands.Rows[i].Cells[Param4.Index].Value.ToString());
+                    w.WriteEndElement();//param4
+                }
+                w.WriteEndElement();//ExtendedData
 
                 w.WriteStartElement("Point");
                 w.WriteStartElement("altitudeMode");
