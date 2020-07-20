@@ -23,6 +23,9 @@ using Microsoft.Diagnostics.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Architecture = System.Runtime.InteropServices.Architecture;
+using log4net.Repository.Hierarchy;
+using log4net.Appender;
+using log4net.Layout;
 
 namespace MissionPlanner
 {
@@ -80,15 +83,15 @@ namespace MissionPlanner
         public static void Start(string[] args)
         {
             Program.args = args;
-            Console.WriteLine(
-                "If your error is about Microsoft.DirectX.DirectInput, please install the latest directx redist from here http://www.microsoft.com/en-us/download/details.aspx?id=35 \n\n");
-            Console.WriteLine("Debug under mono    MONO_LOG_LEVEL=debug mono MissionPlanner.exe");
-            Console.WriteLine("To fix any filename case issues under mono use    export MONO_IOMAP=drive:case");
+            //Console.WriteLine(
+            //    "If your error is about Microsoft.DirectX.DirectInput, please install the latest directx redist from here http://www.microsoft.com/en-us/download/details.aspx?id=35 \n\n");
+            //Console.WriteLine("Debug under mono    MONO_LOG_LEVEL=debug mono MissionPlanner.exe");
+            //Console.WriteLine("To fix any filename case issues under mono use    export MONO_IOMAP=drive:case");
 
-            Console.WriteLine("Data Dir " + Settings.GetDataDirectory());
-            Console.WriteLine("Log Dir " + Settings.GetDefaultLogDir());
-            Console.WriteLine("Running Dir " + Settings.GetRunningDirectory());
-            Console.WriteLine("User Data Dir " + Settings.GetUserDataDirectory());
+            //Console.WriteLine("Data Dir " + Settings.GetDataDirectory());
+            //Console.WriteLine("Log Dir " + Settings.GetDefaultLogDir());
+            //Console.WriteLine("Running Dir " + Settings.GetRunningDirectory());
+            //Console.WriteLine("User Data Dir " + Settings.GetUserDataDirectory());
 
             var t = Type.GetType("Mono.Runtime");
             MONO = (t != null);
@@ -105,8 +108,11 @@ namespace MissionPlanner
 
             System.Windows.Forms.Application.EnableVisualStyles();
             XmlConfigurator.Configure(LogManager.GetRepository(Assembly.GetCallingAssembly()));
+#if DEBUG
             log.Info("******************* Logging Configured *******************");
+#else
 
+#endif
             ServicePointManager.DefaultConnectionLimit = 10;
 
             System.Windows.Forms.Application.ThreadException += Application_ThreadException;
@@ -154,7 +160,10 @@ namespace MissionPlanner
                 var ptr = NativeLibrary.LoadLibrary(file);
                 if (ptr != IntPtr.Zero)
                 {
+#if DEBUG
                     log.Info("SkiaLoaded");
+#else
+#endif
                 }
             }
             catch (Exception ex)
@@ -266,20 +275,23 @@ namespace MissionPlanner
             }
 
             CleanupFiles();
-
+#if DEBUG
             log.InfoFormat("64bit os {0}, 64bit process {1}, OS Arch {2}", System.Environment.Is64BitOperatingSystem,
                 System.Environment.Is64BitProcess, RuntimeInformation.OSArchitecture);
 
             log.InfoFormat("Runtime Version {0}",
                 System.Reflection.Assembly.GetExecutingAssembly().ImageRuntimeVersion);
-
+#endif
             try
             {
+#if DEBUG
                 log.Info(Process.GetCurrentProcess().Modules.ToJSON());
+#endif
             }
             catch
             {
             }
+
 
             Type type = Type.GetType("Mono.Runtime");
             if (type != null)
@@ -359,7 +371,11 @@ namespace MissionPlanner
             {
                 try
                 {
+#if DEBUG
                     log.Debug("Load: " + dll);
+#else
+
+#endif
                     Assembly.LoadFile(dll);
                 }
                 catch (Exception ex)
@@ -595,8 +611,9 @@ namespace MissionPlanner
                 log.Error(ex);
                 return; // ignore
             }
-
+#if DEBUG
             log.Info("Th Name " + Thread?.Name);
+#endif
 
             var dr =
                 CustomMessageBox.Show("An error has occurred\n" + ex.ToString() + "\n\nReport this Error???",

@@ -4544,6 +4544,7 @@
     <None Include="Resources\清空航摄区域.PNG" />
     <None Include="Resources\添加图层.png" />
     <None Include="Resources\图层管理器.PNG" />
+    <None Include="Resources\定位到图层.PNG" />
     <Content Include="Splash.ico" />
     <Content Include="mpdesktop150.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

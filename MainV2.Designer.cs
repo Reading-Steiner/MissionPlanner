@@ -188,7 +188,7 @@ namespace MissionPlanner
             // 
             this.MenuZoomToLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuZoomToLayer.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.MenuZoomToLayer.Image = global::MissionPlanner.Properties.Resources.main_32_32;
+            this.MenuZoomToLayer.Image = global::MissionPlanner.Properties.Resources.定位到图层;
             this.MenuZoomToLayer.Margin = new System.Windows.Forms.Padding(0);
             this.MenuZoomToLayer.Name = "MenuZoomToLayer";
             resources.ApplyResources(this.MenuZoomToLayer, "MenuZoomToLayer");

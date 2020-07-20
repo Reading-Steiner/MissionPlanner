@@ -1852,6 +1852,16 @@ namespace MissionPlanner.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap 定位到图层 {
+            get {
+                object obj = ResourceManager.GetObject("定位到图层", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap 插入航线 {
             get {
                 object obj = ResourceManager.GetObject("插入航线", resourceCulture);
