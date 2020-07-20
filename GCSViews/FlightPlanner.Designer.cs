@@ -559,7 +559,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.polygonToolStripMenuItem, "polygonToolStripMenuItem");
             this.polygonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPolygonPointToolStripMenuItem,
-            this.deletePolygonPointToolStripMenuItem,
+            //this.deletePolygonPointToolStripMenuItem,
             this.clearPolygonToolStripMenuItem,
             this.toolStripSeparator2,
             this.savePolygonToolStripMenuItem,
@@ -620,7 +620,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.planningWPToolStripMenuItem, "planningWPToolStripMenuItem");
             this.planningWPToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.surveyGridToolStripMenuItem,
-            this.deleteWPToolStripMenuItem,
+            //this.deleteWPToolStripMenuItem,
             this.clearMissionToolStripMenuItem,
             this.toolStripSeparator3,
             this.saveWPToolStripMenuItem,

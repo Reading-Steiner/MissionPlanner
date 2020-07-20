@@ -16,7 +16,6 @@ namespace MissionPlanner.Maps
         public GMapMarkerPolygon(PointLatLng p)
             : base(p, GMarkerGoogleType.red)
         {
-
         }
 
         public override void OnRender(IGraphics g)
