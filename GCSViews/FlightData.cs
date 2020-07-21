@@ -165,11 +165,19 @@ namespace MissionPlanner.GCSViews
 
         public FlightData()
         {
+#if DEBUG
             log.Info("Ctor Start");
+#else
+            Program.Splash.SetInfo("Ctor Start");
+#endif
 
             InitializeComponent();
 
+#if DEBUG
             log.Info("Components Done");
+#else
+            Program.Splash.SetInfo("Components Done");
+#endif
 
             System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             instance = this;
@@ -191,7 +199,11 @@ namespace MissionPlanner.GCSViews
 
             //  mymap.Manager.UseMemoryCache = false;
 
+#if DEBUG
             log.Info("Tunning Graph Settings");
+#else
+            Program.Splash.SetInfo("Tunning Graph Settings");
+#endif
             // setup default tuning graph
             if (Settings.Instance["Tuning_Graph_Selected"] != null)
             {
@@ -236,7 +248,11 @@ namespace MissionPlanner.GCSViews
             }
             */
 
+#if DEBUG
             log.Info("HUD Settings");
+#else
+            Program.Splash.SetInfo("HUD Settings");
+#endif
             foreach (string item in Settings.Instance.Keys)
             {
                 if (item.StartsWith("hud1_useritem_"))
@@ -279,11 +295,19 @@ namespace MissionPlanner.GCSViews
 
             CMB_setwp.SelectedIndex = 0;
 
+#if DEBUG
             log.Info("Graph Setup");
+#else
+            Program.Splash.SetInfo("Graph Setup");
+#endif
             CreateChart(zg1);
 
-            // config map      
+            // config map    
+#if DEBUG
             log.Info("Map Setup");
+#else
+            Program.Splash.SetInfo("Map Setup");
+#endif
             gMapControl1.CacheLocation = Settings.GetDataDirectory() +
                                          "gmapcache" + Path.DirectorySeparatorChar;
             gMapControl1.MinZoom = 0;
@@ -351,8 +375,9 @@ namespace MissionPlanner.GCSViews
 
         public void Activate()
         {
+#if DEBUG
             log.Info("Activate Called");
-
+#endif
             OnResize(EventArgs.Empty);
 
             if (CB_tuning.Checked)

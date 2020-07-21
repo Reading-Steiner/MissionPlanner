@@ -653,7 +653,11 @@ namespace MissionPlanner
 
         public MainV2()
         {
+#if DEBUG
             log.Info("Mainv2 ctor");
+#else
+            Program.Splash.SetInfo("Mainv2 ctor");
+#endif
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
@@ -840,7 +844,9 @@ namespace MissionPlanner
 
             try
             {
+#if DEBUG
                 log.Info(Process.GetCurrentProcess().Modules.ToJSON());
+#endif
             }
             catch
             {
@@ -848,12 +854,22 @@ namespace MissionPlanner
 
             try
             {
+#if DEBUG
                 log.Info("Create FD");
+#else
+                Program.Splash.SetInfo("Create FD");
+#endif
                 FlightData = new GCSViews.FlightData();
+#if DEBUG
                 log.Info("Create FP");
+#else
+                Program.Splash.SetInfo("Create FP");
+#endif
                 FlightPlanner = new GCSViews.FlightPlanner();
                 //Configuration = new GCSViews.ConfigurationView.Setup();
+#if DEBUG
                 log.Info("Create SIM");
+#endif
                 Simulation = new GCSViews.SITL();
                 //Firmware = new GCSViews.Firmware();
                 //Terminal = new GCSViews.Terminal();
@@ -1088,8 +1104,9 @@ namespace MissionPlanner
 
         void comPort_MavChanged(object sender, EventArgs e)
         {
+#if DEBUG
             log.Info("Mav Changed " + MainV2.comPort.MAV.sysid);
-
+#endif
             HUD.Custom.src = MainV2.comPort.MAV.cs;
 
             CustomWarning.defaultsrc = MainV2.comPort.MAV.cs;
@@ -1154,7 +1171,9 @@ namespace MissionPlanner
 
                 //Utilities.Airports.ReadOpenflights(Application.StartupPath + Path.DirectorySeparatorChar + "airports.dat");
 
+#if DEBUG
                 log.Info("Loaded " + Utilities.Airports.GetAirportCount + " airports");
+#endif
             }
             catch
             {
@@ -1257,7 +1276,9 @@ namespace MissionPlanner
 
         private void ResetConnectionStats()
         {
+#if DEBUG
             log.Info("Reset connection stats");
+#endif
             // If the form has been closed, or never shown before, we need do nothing, as 
             // connection stats will be reset when shown
             if (this.connectionStatsForm != null && connectionStatsForm.Visible)
@@ -1543,7 +1564,9 @@ namespace MissionPlanner
 
         public void doDisconnect(MAVLinkInterface comPort)
         {
+#if DEBUG
             log.Info("We are disconnecting");
+#endif
             try
             {
                 if (speechEngine != null) // cancel all pending speech
@@ -1603,7 +1626,9 @@ namespace MissionPlanner
         public void doConnect(MAVLinkInterface comPort, string portname, string baud, bool getparams = true)
         {
             bool skipconnectcheck = false;
+#if DEBUG
             log.Info("We are connecting to " + portname + " " + baud);
+#endif
             switch (portname)
             {
                 case "preset":
@@ -1673,12 +1698,16 @@ namespace MissionPlanner
 
             try
             {
+#if DEBUG
                 log.Info("Set Portname");
+#endif
                 // set port, then options
                 if (portname.ToLower() != "preset")
                     comPort.BaseStream.PortName = portname;
 
+#if DEBUG
                 log.Info("Set Baudrate");
+#endif
                 try
                 {
                     if (baud != "" && baud != "0")
@@ -1692,11 +1721,15 @@ namespace MissionPlanner
                 // prevent serialreader from doing anything
                 comPort.giveComport = true;
 
+#if DEBUG
                 log.Info("About to do dtr if needed");
+#endif
                 // reset on connect logic.
                 if (Settings.Instance.GetBoolean("CHK_resetapmonconnect") == true)
                 {
+#if DEBUG
                     log.Info("set dtr rts to false");
+#endif
                     comPort.BaseStream.DtrEnable = false;
                     comPort.BaseStream.RtsEnable = false;
 
@@ -1736,7 +1769,9 @@ namespace MissionPlanner
                             new BufferedStream(File.Open(tlog, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None));
                         comPort.rawlogfile =
                             new BufferedStream(File.Open(rlog, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None));
+#if DEBUG
                         log.Info("creating logfile " + dt + ".tlog");
+#endif
                     }
                 }
                 catch (Exception exp2)
@@ -1753,7 +1788,9 @@ namespace MissionPlanner
 
                 if (!comPort.BaseStream.IsOpen)
                 {
+#if DEBUG
                     log.Info("comport is closed. existing connect");
+#endif
                     try
                     {
                         _connectionControl.IsConnected(false);
@@ -1966,7 +2003,9 @@ namespace MissionPlanner
         {
             comPort.giveComport = false;
 
+#if DEBUG
             log.Info("MenuConnect Start");
+#endif
 
             // sanity check
             if (comPort.BaseStream.IsOpen && comPort.MAV.cs.groundspeed > 4)
@@ -1980,7 +2019,9 @@ namespace MissionPlanner
 
             try
             {
+#if DEBUG
                 log.Info("Cleanup last logfiles");
+#endif
                 // cleanup from any previous sessions
                 if (comPort.logfile != null)
                     comPort.logfile.Close();
@@ -2111,9 +2152,13 @@ namespace MissionPlanner
         {
             base.OnClosing(e);
 
+#if DEBUG
             log.Info("MainV2_FormClosing");
+#endif
 
+#if DEBUG
             log.Info("GMaps write cache");
+#endif
             // speed up tile saving on exit
             GMap.NET.GMaps.Instance.CacheOnIdleRead = false;
             GMap.NET.GMaps.Instance.BoostCacheEngine = true;
@@ -2125,7 +2170,9 @@ namespace MissionPlanner
             Settings.Instance["MainLocX"] = this.Location.X.ToString();
             Settings.Instance["MainLocY"] = this.Location.Y.ToString();
 
+#if DEBUG
             log.Info("close logs");
+#endif
             AltitudeAngel.Dispose();
 
             // close bases connection
@@ -2145,7 +2192,9 @@ namespace MissionPlanner
             {
             }
 
+#if DEBUG
             log.Info("close ports");
+#endif
             // close all connections
             foreach (var port in Comports)
             {
@@ -2166,16 +2215,24 @@ namespace MissionPlanner
                 }
             }
 
+#if DEBUG
             log.Info("stop adsb");
+#endif
             Utilities.adsb.Stop();
 
+#if DEBUG
             log.Info("stop WarningEngine");
+#endif
             Warnings.WarningEngine.Stop();
 
+#if DEBUG
             log.Info("stop GStreamer");
+#endif
             GStreamer.StopAll();
 
+#if DEBUG
             log.Info("closing vlcrender");
+#endif
             try
             {
                 while (vlcrender.store.Count > 0)
@@ -2185,33 +2242,42 @@ namespace MissionPlanner
             {
             }
 
+#if DEBUG
             log.Info("closing pluginthread");
+#endif
 
             pluginthreadrun = false;
 
             if (pluginthread != null)
                 pluginthread.Join();
 
+#if DEBUG
             log.Info("closing serialthread");
+#endif
 
             serialThread = false;
 
             if (serialreaderthread != null)
                 serialreaderthread.Join();
 
+#if DEBUG
             log.Info("closing joystickthread");
+#endif
 
             joystickthreadrun = false;
 
             if (joystickthread != null)
                 joystickthread.Join();
 
+#if DEBUG
             log.Info("closing httpthread");
+#endif
 
             // if we are waiting on a socket we need to force an abort
             httpserver.Stop();
-
+#if DEBUG
             log.Info("sorting tlogs");
+#endif
             try
             {
                 System.Threading.ThreadPool.QueueUserWorkItem((WaitCallback)delegate
@@ -2229,13 +2295,16 @@ namespace MissionPlanner
             catch
             {
             }
-
+#if DEBUG
             log.Info("closing MyView");
+#endif
 
             // close all tabs
             MyView.Dispose();
 
+#if DEBUG
             log.Info("closing fd");
+#endif
             try
             {
                 FlightData.Dispose();
@@ -2243,7 +2312,9 @@ namespace MissionPlanner
             catch
             {
             }
+#if DEBUG
             log.Info("closing fp");
+#endif
             try
             {
                 FlightPlanner.Dispose();
@@ -2251,7 +2322,9 @@ namespace MissionPlanner
             catch
             {
             }
+#if DEBUG
             log.Info("closing sim");
+#endif
             try
             {
                 Simulation.Dispose();
@@ -2277,8 +2350,9 @@ namespace MissionPlanner
             Console.WriteLine(serialreaderthread?.IsAlive);
             Console.WriteLine(pluginthread?.IsAlive);
 
+#if DEBUG
             log.Info("MainV2_FormClosing done");
-
+#endif
             if (MONO)
                 this.Dispose();
         }
@@ -2308,7 +2382,11 @@ namespace MissionPlanner
         {
             try
             {
+#if DEBUG
                 log.Info("Loading config");
+#else
+                Program.Splash.SetInfo("Loading config");
+#endif
 
                 Settings.Instance.Load();
 
@@ -2324,7 +2402,11 @@ namespace MissionPlanner
         {
             try
             {
+#if DEBUG
                 log.Info("Saving config");
+#else
+                Program.Splash.SetInfo("Saving config");
+#endif
                 Settings.Instance.ComPort = comPortName;
 
                 if (_connectionControl != null)
@@ -3145,11 +3227,15 @@ namespace MissionPlanner
                 }
                 else
                 {
+#if DEBUG
                     log.Info("Load Pluggins");
+#endif
                     Plugin.PluginLoader.DisabledPluginNames.Clear();
                     foreach (var s in Settings.Instance.GetList("DisabledPlugins")) Plugin.PluginLoader.DisabledPluginNames.Add(s);
                     Plugin.PluginLoader.LoadAll();
+#if DEBUG
                     log.Info("Load Pluggins... Done");
+#endif
                 }
             }
             catch (Exception ex)
@@ -3166,9 +3252,13 @@ namespace MissionPlanner
             else
             {
                 this.PerformLayout();
+#if DEBUG
                 log.Info("show FlightData");
+#endif
                 FlightDataShow();
+#if DEBUG
                 log.Info("show FlightData... Done");
+#endif
                 //MainMenu_ItemClicked(this, new ToolStripItemClickedEventArgs(MenuFlightPlannerClose));
             }
 
@@ -3180,7 +3270,9 @@ namespace MissionPlanner
             // setup http server
             try
             {
+#if DEBUG
                 log.Info("start http");
+#endif
                 httpthread = new Thread(new httpserver().listernforclients)
                 {
                     Name = "motion jpg stream-network kml",
@@ -3194,7 +3286,9 @@ namespace MissionPlanner
                 CustomMessageBox.Show(ex.ToString());
             }
 
+#if DEBUG
             log.Info("start joystick");
+#endif
             // setup joystick packet sender
             joystickthread = new Thread(new ThreadStart(joysticksend))
             {
@@ -3204,7 +3298,9 @@ namespace MissionPlanner
             };
             joystickthread.Start();
 
+#if DEBUG
             log.Info("start serialreader");
+#endif
             // setup main serial reader
             serialreaderthread = new Thread(SerialReader)
             {
@@ -3214,7 +3310,9 @@ namespace MissionPlanner
             };
             serialreaderthread.Start();
 
+#if DEBUG
             log.Info("start plugin thread");
+#endif
             // setup main plugin thread
             pluginthread = new Thread(PluginThread)
             {
@@ -3242,12 +3340,16 @@ namespace MissionPlanner
             // update firmware version list - only once per day
             ThreadPool.QueueUserWorkItem(BGFirmwareCheck);
 
+#if DEBUG
             log.Info("start AutoConnect");
+#endif
             AutoConnect.NewMavlinkConnection += (sender, serial) =>
             {
                 try
                 {
+#if DEBUG
                     log.Info("AutoConnect.NewMavlinkConnection " + serial.PortName);
+#endif
                     MainV2.instance.BeginInvoke((Action)delegate
                    {
                        if (MainV2.comPort.BaseStream.IsOpen)
@@ -3410,7 +3512,9 @@ namespace MissionPlanner
             {
                 if (MainV2.instance.InvokeRequired)
                 {
+#if DEBUG
                     log.Info("CommsSerialScan.doConnect invoke");
+#endif
                     MainV2.instance.BeginInvoke(
                         (Action)delegate ()
                        {
@@ -3422,8 +3526,9 @@ namespace MissionPlanner
                 }
                 else
                 {
-
+#if DEBUG
                     log.Info("CommsSerialScan.doConnect NO invoke");
+#endif
                     MAVLinkInterface mav = new MAVLinkInterface();
                     mav.BaseStream = port;
                     MainV2.instance.doConnect(mav, "preset", "0");
@@ -3435,10 +3540,14 @@ namespace MissionPlanner
             {
                 if (!MONO)
                 {
+#if DEBUG
                     log.Info("Load AltitudeAngel");
+#endif
                     AltitudeAngel.Configure();
                     AltitudeAngel.Initialize();
+#if DEBUG
                     log.Info("Load AltitudeAngel... Done");
+#endif
                 }
             }
             catch (TypeInitializationException) // windows xp lacking patch level
@@ -3454,7 +3563,9 @@ namespace MissionPlanner
 
             Program.Splash?.Close();
 
+#if DEBUG
             log.Info("appload time");
+#endif
             MissionPlanner.Utilities.Tracking.AddTiming("AppLoad", "Load Time",
                 (DateTime.Now - Program.starttime).TotalMilliseconds, "");
 
@@ -3711,7 +3822,9 @@ namespace MissionPlanner
                 if (cmd != "")
                 {
                     cmdargs[cmd] = s;
+#if DEBUG
                     log.Info("ProcessCommandLine: " + cmd + " = " + s);
+#endif
                     cmd = "";
                     continue;
                 }
@@ -3719,11 +3832,14 @@ namespace MissionPlanner
                 {
                     // we are not a command, and the file exists.
                     cmdargs["file"] = s;
+#if DEBUG
                     log.Info("ProcessCommandLine: " + "file" + " = " + s);
+#endif
                     continue;
                 }
-
+#if DEBUG
                 log.Info("ProcessCommandLine: UnKnown = " + s);
+#endif
             }
 
             return cmdargs;
@@ -3871,10 +3987,12 @@ namespace MissionPlanner
         private void MainV2_Resize(object sender, EventArgs e)
         {
             // mono - resize is called before the control is created
+#if DEBUG
             if (MyView != null)
                 log.Info("myview width " + MyView.Width + " height " + MyView.Height);
 
             log.Info("this   width " + this.Width + " height " + this.Height);
+#endif
         }
 
         private void MenuHelp_Click(object sender, EventArgs e)
@@ -4075,8 +4193,9 @@ namespace MissionPlanner
 
         public void changelanguage(CultureInfo ci)
         {
+#if DEBUG
             log.Info("change lang to " + ci.ToString() + " current " + Thread.CurrentThread.CurrentUICulture.ToString());
-
+#endif
             if (ci != null && !Thread.CurrentThread.CurrentUICulture.Equals(ci))
             {
                 Thread.CurrentThread.CurrentUICulture = ci;

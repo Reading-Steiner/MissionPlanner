@@ -859,7 +859,9 @@ namespace MissionPlanner.Controls
 
         protected override void OnLoad(EventArgs e)
         {
+#if DEBUG
             log.Info("OnLoad Start");
+#endif
 
             if (opengl && !DesignMode)
             {
@@ -868,33 +870,53 @@ namespace MissionPlanner.Controls
 
                     OpenTK.Graphics.GraphicsMode test = this.GraphicsMode;
                     // log.Info(test.ToString());
+#if DEBUG
                     log.Info("Vendor: " + GL.GetString(StringName.Vendor));
                     log.Info("Version: " + GL.GetString(StringName.Version));
                     log.Info("Device: " + GL.GetString(StringName.Renderer));
+#endif
                     //Console.WriteLine("Extensions: " + GL.GetString(StringName.Extensions));
 
                     int[] viewPort = new int[4];
 
+#if DEBUG
                     log.Debug("GetInteger");
+#endif
                     GL.GetInteger(GetPName.Viewport, viewPort);
+#if DEBUG
                     log.Debug("MatrixMode");
+#endif
                     GL.MatrixMode(MatrixMode.Projection);
                     log.Debug("LoadIdentity");
                     GL.LoadIdentity();
+#if DEBUG
                     log.Debug("Ortho");
+#endif
                     GL.Ortho(0, Width, Height, 0, -1, 1);
+#if DEBUG
                     log.Debug("MatrixMode");
+#endif
                     GL.MatrixMode(MatrixMode.Modelview);
+#if DEBUG
                     log.Debug("LoadIdentity");
+#endif
                     GL.LoadIdentity();
 
+#if DEBUG
                     log.Debug("PushAttrib");
+#endif
                     GL.PushAttrib(AttribMask.DepthBufferBit);
+#if DEBUG
                     log.Debug("Disable");
+#endif
                     GL.Disable(EnableCap.DepthTest);
+#if DEBUG
                     log.Debug("BlendFunc");
+#endif
                     GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+#if DEBUG
                     log.Debug("Enable");
+#endif
                     GL.Enable(EnableCap.Blend);
 
                     string versionString = GL.GetString(StringName.Version);
@@ -909,7 +931,9 @@ namespace MissionPlanner.Controls
 
                 try
                 {
+#if DEBUG
                     log.Debug("Hint");
+#endif
                     GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
 
                     GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
@@ -925,7 +949,9 @@ namespace MissionPlanner.Controls
 
                 try
                 {
+#if DEBUG
                     log.Debug("Enable");
+#endif
                     GL.Enable(EnableCap.LineSmooth);
                     GL.Enable(EnableCap.PointSmooth);
                     GL.Disable(EnableCap.PolygonSmooth);
@@ -937,8 +963,9 @@ namespace MissionPlanner.Controls
                 }
             }
 
+#if DEBUG
             log.Info("OnLoad Done");
-
+#endif
             started = true;
         }
 
@@ -1028,8 +1055,10 @@ namespace MissionPlanner.Controls
 
                 if (inOnPaint)
                 {
+#if DEBUG
                     log.Info("Was in onpaint Hud th:" + System.Threading.Thread.CurrentThread.Name + " in " +
                              otherthread);
+#endif
                     return;
                 }
 
@@ -1073,7 +1102,7 @@ namespace MissionPlanner.Controls
             }
             catch (Exception ex)
             {
-                log.Info(ex.ToString());
+                log.Error(ex.ToString());
             }
 
             count++;
@@ -2748,7 +2777,7 @@ namespace MissionPlanner.Controls
             }
             catch (Exception ex)
             {
-                log.Info("hud error " + ex.ToString());
+                log.Error("hud error " + ex.ToString());
             }
         }
 
@@ -3098,7 +3127,7 @@ namespace MissionPlanner.Controls
             }
             catch (Exception ex)
             {
-                log.Info(ex.ToString());
+                log.Error(ex.ToString());
                 opengl = false;
             }
         }

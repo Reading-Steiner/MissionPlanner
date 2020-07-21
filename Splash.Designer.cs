@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Splash));
-            this.Log = new System.Windows.Forms.Label();
+            this.Info = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // Log
+            // Info
             // 
-            this.Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Info.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Log.AutoSize = true;
-            this.Log.BackColor = System.Drawing.Color.Transparent;
-            this.Log.Location = new System.Drawing.Point(97, 315);
-            this.Log.MinimumSize = new System.Drawing.Size(400, 0);
-            this.Log.Name = "Log";
-            this.Log.Size = new System.Drawing.Size(400, 12);
-            this.Log.TabIndex = 0;
-            this.Log.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Info.AutoSize = true;
+            this.Info.BackColor = System.Drawing.Color.Transparent;
+            this.Info.Location = new System.Drawing.Point(97, 315);
+            this.Info.MinimumSize = new System.Drawing.Size(400, 0);
+            this.Info.Name = "Info";
+            this.Info.Size = new System.Drawing.Size(400, 12);
+            this.Info.TabIndex = 0;
+            this.Info.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Splash
             // 
@@ -52,7 +52,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(584, 336);
             this.ControlBox = false;
-            this.Controls.Add(this.Log);
+            this.Controls.Add(this.Info);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -71,11 +71,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label Log;
+        private System.Windows.Forms.Label Info;
 
-        public void SetLog(string log)
+        public void SetInfo(string log)
         {
-            Log.Text = log;
+            Info.Text = log;
         }
     }
 }

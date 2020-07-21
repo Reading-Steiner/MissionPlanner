@@ -299,8 +299,11 @@ namespace MissionPlanner
                 MethodInfo displayName = type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static);
                 if (displayName != null)
                 {
+#if DEBUG
                     log.Info(displayName.Invoke(null, null));
                     //6.6.0.161 (tarball Tue Dec 10 10:36:32 UTC 2019)
+#else
+#endif
 
                     var match = Regex.Match(displayName.Invoke(null, null).ToString(), @"([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)");
                     if(match.Success)
