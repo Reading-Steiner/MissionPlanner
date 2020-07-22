@@ -160,8 +160,6 @@ namespace MissionPlanner.Grid
         // Load/Save
         public void LoadGrid()
         {
-            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(GridData));
-
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = "*.grid|*.grid";
@@ -169,15 +167,21 @@ namespace MissionPlanner.Grid
 
                 if (File.Exists(ofd.FileName))
                 {
-                    using (StreamReader sr = new StreamReader(ofd.FileName))
-                    {
-                        var test = (GridData)reader.Deserialize(sr);
-
-                        loading = true;
-                        loadgriddata(test);
-                        loading = false;
-                    }
+                    LoadFileInfo(ofd.FileName);
                 }
+            }
+        }
+
+        public void LoadFileInfo(string path)
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(GridData));
+                var test = (GridData)reader.Deserialize(sr);
+
+                loading = true;
+                loadgriddata(test);
+                loading = false;
             }
         }
 

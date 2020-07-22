@@ -6019,7 +6019,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             // Start the document.
             w.WriteStartDocument();
             w.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
-            w.WriteStartElement("Document", "www.dji.com");
+            w.WriteStartElement("Document", "");
             w.WriteStartElement("name");
             w.WriteString(file);
             w.WriteEndElement();//name
@@ -6075,7 +6075,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteStartElement("styleUrl");
                 w.WriteString("#waypointStyle");
                 w.WriteEndElement();//styleUrl
-                w.WriteStartElement("ExtendedData");
+                w.WriteStartElement("ExtendedData", "www.dji.com");
 
                 var layerInfo = layerCache.GetSelectedLayerFromMemoryCache();
                 if (layerInfo != null)
@@ -6146,7 +6146,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
 
                 // Write Point element
                 w.WriteStartElement("name");
-                w.WriteString(string.Format("Waypoint{0}", i));
+                w.WriteString(string.Format("Waypoint{0}", i + 1));
                 w.WriteEndElement();//name
                 w.WriteStartElement("visibility");
                 if (Commands.Rows[i].Cells[Command.Index].Value.ToString() == "WAYPOINT")
@@ -6160,7 +6160,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteStartElement("styleUrl");
                 w.WriteString("#waypointStyle");
                 w.WriteEndElement();//styleUrl
-                w.WriteStartElement("ExtendedData");
+                w.WriteStartElement("ExtendedData", "www.dji.com");
 
                 var info1 = this.layerCache.GetSelectedLayerFromMemoryCache();
                 if (info1 != null)
@@ -6293,113 +6293,126 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(file);
                 XmlNamespaceManager nsMgr = new XmlNamespaceManager(xmlDoc.NameTable);
-                nsMgr.AddNamespace("ns", @"http://www.opengis.net/kml/2.2");
-                XmlNode kml = xmlDoc.SelectSingleNode(@"//ns:kml", nsMgr);
-                XmlNamespaceManager nsMgr2 = new XmlNamespaceManager(xmlDoc.NameTable);
-                nsMgr2.AddNamespace("ns2", @"www.dji.com");
-                XmlNode doc = kml.SelectSingleNode(@"./ns2:Document", nsMgr2);
-                XmlNode folder = doc.SelectSingleNode(@"./ns2:Folder", nsMgr2);
-                List<Locationwp> cmds = new List<Locationwp>();
-                foreach (XmlNode point in folder.ChildNodes)
+                foreach (XmlNode kml in xmlDoc.ChildNodes)
                 {
-                    if (point.Name == "Placemark")
-                    {
-                        string cmd = "WAYPOINT";
-                        int altitudeMode = 3;
-                        double x = 0, y = 0, z = 0;
-                        double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
-                        //selectedrow = Commands.Rows.Add();
-                        foreach (XmlNode info in point.ChildNodes)
-                        {
-                            switch (info.Name)
-                            {
-                                case "description":
-                                    //cmd = System.Convert.ToInt32(info.SelectSingleNode(@".//@id").Value);
-                                    cmd = info.InnerText;
-                                    break;
-                                case "Point":
-                                    var smode = point.SelectSingleNode(@".//ns2:altitudeMode", nsMgr2);
-                                    if (smode != null)
-                                    {
-                                        if (smode.InnerText == "relativeToGround")
-                                            altitudeMode = 3;
-                                        else if (smode.InnerText == "absoluteToGround")
-                                            altitudeMode = 0;
-                                        else if (smode.InnerText == "terrainToGround")
-                                            altitudeMode = 10;
-                                        else
-                                            altitudeMode = 3;
-                                    }
-                                    else
-                                    {
-                                        altitudeMode = 3;
-                                    }
-                                    var sWGS84 = point.SelectSingleNode(@".//ns2:Point/ns2:coordinates", nsMgr2);
-                                    if (sWGS84 != null)
-                                    {
-                                        string WGS84 = sWGS84.InnerText;
-                                        var splitWGS84 = WGS84.Split(',');
-                                        x = System.Convert.ToDouble(splitWGS84[0]);
-                                        y = System.Convert.ToDouble(splitWGS84[1]);
-                                        z = System.Convert.ToDouble(splitWGS84[2]);
-                                    }
-                                    break;
+                    if (kml.Name.Equals("kml")){
+                        nsMgr.AddNamespace("ns", kml.NamespaceURI);
 
-                                case "ExtendedData":
-                                    var sp1 = point.SelectSingleNode(@".//ns2:param1", nsMgr2);
-                                    if (sp1 != null)
-                                        p1 = System.Convert.ToDouble(sp1.InnerText);
-                                    else
-                                        p1 = 0;
-                                    var sp2 = point.SelectSingleNode(@".//ns2:param2", nsMgr2);
-                                    if (sp2 != null)
-                                        p2 = System.Convert.ToDouble(sp2.InnerText);
-                                    else
-                                        p2 = 0;
-                                    var sp3 = point.SelectSingleNode(@".//ns2:param3", nsMgr2);
-                                    if (sp3 != null)
-                                        p3 = System.Convert.ToDouble(sp3.InnerText);
-                                    else
-                                        p3 = 0;
-                                    var sp4 = point.SelectSingleNode(@".//ns2:param4", nsMgr2);
-                                    if (sp4 != null)
-                                        p4 = System.Convert.ToDouble(sp4.InnerText);
-                                    else
-                                        p4 = 0;
-                                    break;
+                        foreach (XmlNode doc in kml.ChildNodes)
+                        {
+                            if (doc.Name.Equals("Document"))
+                            {
+                                nsMgr.AddNamespace("ns1", doc.NamespaceURI);
+
+                                XmlNode folder = doc.SelectSingleNode(@"./ns1:Folder", nsMgr);
+
+                                List<Locationwp> cmds = new List<Locationwp>();
+                                foreach (XmlNode point in folder.ChildNodes)
+                                {
+                                    if (point.Name == "Placemark")
+                                    {
+                                        string cmd = "WAYPOINT";
+                                        int altitudeMode = 3;
+                                        double x = 0, y = 0, z = 0;
+                                        double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+                                        //selectedrow = Commands.Rows.Add();
+                                        foreach (XmlNode info in point.ChildNodes)
+                                        {
+                                            switch (info.Name)
+                                            {
+                                                case "description":
+                                                    //cmd = System.Convert.ToInt32(info.SelectSingleNode(@".//@id").Value);
+                                                    cmd = info.InnerText;
+                                                    break;
+                                                case "Point":
+                                                    nsMgr.AddNamespace("ns2", info.NamespaceURI);
+                                                    var smode = info.SelectSingleNode(@"./ns2:altitudeMode", nsMgr);
+                                                    if (smode != null)
+                                                    {
+                                                        if (smode.InnerText == "relativeToGround")
+                                                            altitudeMode = 3;
+                                                        else if (smode.InnerText == "absoluteToGround")
+                                                            altitudeMode = 0;
+                                                        else if (smode.InnerText == "terrainToGround")
+                                                            altitudeMode = 10;
+                                                        else
+                                                            altitudeMode = 3;
+                                                    }
+                                                    else
+                                                    {
+                                                        altitudeMode = 3;
+                                                    }
+                                                    var sWGS84 = info.SelectSingleNode(@"./ns2:coordinates", nsMgr);
+                                                    if (sWGS84 != null)
+                                                    {
+                                                        string WGS84 = sWGS84.InnerText;
+                                                        var splitWGS84 = WGS84.Split(',');
+                                                        x = System.Convert.ToDouble(splitWGS84[0]);
+                                                        y = System.Convert.ToDouble(splitWGS84[1]);
+                                                        z = System.Convert.ToDouble(splitWGS84[2]);
+                                                    }
+                                                    break;
+
+                                                case "ExtendedData":
+                                                    nsMgr.AddNamespace("ns3", info.NamespaceURI);
+                                                    var sp1 = info.SelectSingleNode(@".//ns3:param1", nsMgr);
+                                                    if (sp1 != null)
+                                                        p1 = System.Convert.ToDouble(sp1.InnerText);
+                                                    else
+                                                        p1 = 0;
+                                                    var sp2 = info.SelectSingleNode(@".//ns3:param2", nsMgr);
+                                                    if (sp2 != null)
+                                                        p2 = System.Convert.ToDouble(sp2.InnerText);
+                                                    else
+                                                        p2 = 0;
+                                                    var sp3 = info.SelectSingleNode(@".//ns3:param3", nsMgr);
+                                                    if (sp3 != null)
+                                                        p3 = System.Convert.ToDouble(sp3.InnerText);
+                                                    else
+                                                        p3 = 0;
+                                                    var sp4 = info.SelectSingleNode(@".//ns3:param4", nsMgr);
+                                                    if (sp4 != null)
+                                                        p4 = System.Convert.ToDouble(sp4.InnerText);
+                                                    else
+                                                        p4 = 0;
+                                                    break;
+                                            }
+                                        }
+
+
+                                        Locationwp temp = new Locationwp();
+                                        temp.frame = (byte)int.Parse(altitudeMode.ToString(), CultureInfo.InvariantCulture);
+
+                                        if (Enum.TryParse(cmd, false, out MAVLink.MAV_CMD data))
+                                        {
+                                            temp.id = (ushort)data;
+                                        }
+                                        else
+                                        {
+                                            temp.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+                                        }
+
+                                        if (temp.id == 99)
+                                            temp.id = 0;
+
+                                        temp.alt = (float)(double.Parse(z.ToString(), CultureInfo.InvariantCulture));
+                                        temp.lat = (double.Parse(y.ToString(), CultureInfo.InvariantCulture));
+                                        temp.lng = (double.Parse(x.ToString(), CultureInfo.InvariantCulture));
+
+                                        temp.p1 = float.Parse(p1.ToString(), CultureInfo.InvariantCulture);
+                                        temp.p2 = float.Parse(p2.ToString(), CultureInfo.InvariantCulture);
+                                        temp.p3 = float.Parse(p3.ToString(), CultureInfo.InvariantCulture);
+                                        temp.p4 = float.Parse(p4.ToString(), CultureInfo.InvariantCulture);
+
+                                        cmds.Add(temp);
+                                    }
+                                }
+                                processToScreen(cmds, false);
+                                writeKML();
                             }
                         }
-
-
-                        Locationwp temp = new Locationwp();
-                        temp.frame = (byte)int.Parse(altitudeMode.ToString(), CultureInfo.InvariantCulture);
-
-                        if (Enum.TryParse(cmd, false, out MAVLink.MAV_CMD data))
-                        {
-                            temp.id = (ushort)data;
-                        }
-                        else
-                        {
-                            temp.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
-                        }
-
-                        if (temp.id == 99)
-                            temp.id = 0;
-
-                        temp.alt = (float)(double.Parse(z.ToString(), CultureInfo.InvariantCulture));
-                        temp.lat = (double.Parse(y.ToString(), CultureInfo.InvariantCulture));
-                        temp.lng = (double.Parse(x.ToString(), CultureInfo.InvariantCulture));
-
-                        temp.p1 = float.Parse(p1.ToString(), CultureInfo.InvariantCulture);
-                        temp.p2 = float.Parse(p2.ToString(), CultureInfo.InvariantCulture);
-                        temp.p3 = float.Parse(p3.ToString(), CultureInfo.InvariantCulture);
-                        temp.p4 = float.Parse(p4.ToString(), CultureInfo.InvariantCulture);
-
-                        cmds.Add(temp);
                     }
                 }
-                processToScreen(cmds, false);
-                writeKML();
             }
             catch (Exception ex)
             {
@@ -9064,6 +9077,78 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void SetNoLaodLayerState()
         {
             this.zoomicon.IsSelected = false;
+        }
+
+        protected override void OnDragEnter(DragEventArgs drgevent)
+        {
+            if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                if (((System.Array)drgevent.Data.GetData(DataFormats.FileDrop)).Length == 1)
+                {
+                    string path = ((System.Array)drgevent.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                    if (path.ToLower().EndsWith(".tif"))
+                        drgevent.Effect = DragDropEffects.All;
+                    else if (path.ToLower().EndsWith(".kml"))
+                        drgevent.Effect = DragDropEffects.All;
+                    else if (path.ToLower().EndsWith(".waypoints"))
+                        drgevent.Effect = DragDropEffects.All;
+                    else if (path.ToLower().EndsWith(".grid"))
+                        drgevent.Effect = DragDropEffects.All;
+                    else
+                        drgevent.Effect = DragDropEffects.None;
+                }
+                else
+                    drgevent.Effect = DragDropEffects.None;
+            }
+            else
+                drgevent.Effect = DragDropEffects.None;
+            base.OnDragEnter(drgevent);
+        }
+
+        protected override void OnDragDrop(DragEventArgs drgevent)
+        {
+            string path = ((System.Array)drgevent.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+            if (path.ToLower().EndsWith(".tif"))
+            {
+                LayerReader reader = new LayerReader(path);
+                DialogResult result = reader.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    AddLayerOverlay(reader.GetLayer(), reader.GetOrigin(), reader.GetScale(), reader.GetTransparentColor());
+                    reader.Dispose();
+                    reader.Close();
+                }
+                else if (result == DialogResult.Cancel)
+                {
+
+                    reader.Dispose();
+                    reader.Close();
+                }
+            }
+            else if (path.ToLower().EndsWith(".kml"))
+                loadWaypointsKML(path);
+            else if (path.ToLower().EndsWith(".waypoints"))
+            {
+                string line = "";
+                using (var fstream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var fs = new StreamReader(fstream))
+                {
+                    line = fs.ReadLine();
+                }
+                if (line.StartsWith("QGC WPL 111"))
+                    readQGC111wpfile(path);
+                else if (line.StartsWith("QGC WPL 110"))
+                    readQGC110wpfile(path);
+            }
+            else if (path.ToLower().EndsWith(".grid"))
+            {
+                GridPlugin grid = new GridPlugin();
+                grid.Host = new PluginHost();
+                grid.LoadFromGrid(path);
+            }
+            else
+                drgevent.Effect = DragDropEffects.None;
+            base.OnDragDrop(drgevent);
         }
     }
 }

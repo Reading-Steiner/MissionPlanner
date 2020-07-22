@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 
@@ -82,6 +83,18 @@ namespace MissionPlanner.Grid
                     {
                         CustomMessageBox.Show("Please define a polygon.", "Error");
                     }
+                }
+            }
+        }
+
+        public void LoadFromGrid(string path)
+        {
+            using (var gridui = new GridUI(this))
+            {
+                if (path.EndsWith(".grid") && File.Exists(path))
+                {
+                    gridui.LoadFileInfo(path);
+                    gridui.ShowDialog();
                 }
             }
         }

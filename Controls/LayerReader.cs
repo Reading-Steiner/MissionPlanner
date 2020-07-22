@@ -19,6 +19,13 @@ namespace MissionPlanner.Controls
             InitializeComponent();
         }
 
+        public LayerReader(string path)
+        {
+            InitializeComponent();
+            if (path.ToLower().EndsWith(".tif") && File.Exists(path))
+                OpenFile(path);
+        }
+
         private void FileOpen_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
@@ -26,23 +33,28 @@ namespace MissionPlanner.Controls
                 ofd.Filter = "TIFF地理影像(*.tif)|*.tif";
                 ofd.ShowDialog();
                 if (File.Exists(ofd.FileName))
-                {
-                    this.Longitude.Text = 0.ToString();
-                    this.Latitude.Text = 0.ToString();
-                    this.Altitude.Text = 0.ToString();
-                    this.Scale.Text = 100.ToString();
-
-                    this.FilePath.Text = ofd.FileName;
-                    Func<string, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (path) =>
-                    {
-                        var bitmap = GDAL.GDAL.LoadImageInfo(path);
-                        Image img = Image.FromHbitmap(bitmap.smallBitmap.GetHbitmap());
-                        return bitmap;
-                    };
-                    IAsyncResult iar = GetGeoBitmap.BeginInvoke(ofd.FileName, CallbackWhenDone, this);
-                }
+                    OpenFile(ofd.FileName);
             }
         }
+
+        private void OpenFile(string path)
+        {
+            this.Longitude.Text = 0.ToString();
+            this.Latitude.Text = 0.ToString();
+            this.Altitude.Text = 0.ToString();
+            this.Scale.Text = 100.ToString();
+
+            this.FilePath.Text = path;
+
+            Func<string, GDAL.GDAL.GeoBitmap> GetGeoBitmap = (filePath) =>
+                {
+                    var bitmap = GDAL.GDAL.LoadImageInfo(filePath);
+                    Image img = Image.FromHbitmap(bitmap.smallBitmap.GetHbitmap());
+                    return bitmap;
+                };
+            IAsyncResult iar = GetGeoBitmap.BeginInvoke(path, CallbackWhenDone, this);
+        }
+
 
         private void CallbackWhenDone(IAsyncResult iar)
         {
