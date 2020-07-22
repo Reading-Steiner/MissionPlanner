@@ -466,6 +466,18 @@ namespace MissionPlanner.GCSViews
                 return true;
             }
 
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                wpMarkersGroupFirst();
+                return true;
+            }
+
+            if (keyData == (Keys.Alt | Keys.F))
+            {
+                polygonMarkersGroupFirst();
+                return true;
+            }
+
             if (keyData == (Keys.Control | Keys.PageUp))
             {
                 wpMarkersGroupPrev();
@@ -7601,6 +7613,49 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             {
                 polygonMarkersGroup.Clear();
                 redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+            }
+        }
+
+        private void wpMarkersGroupFirst()
+        {
+            foreach (var marker in MainMap.Overlays.First(a => a.Id == "WPOverlay").Markers)
+            {
+                try
+                {
+                    if (marker.Tag != null && int.TryParse(marker.Tag.ToString(), out int no))
+                    {
+                        wpMarkersGroup.Clear();
+                        wpMarkersGroup.Add(no);
+                        writeKML();
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+            }
+        }
+
+
+        private void polygonMarkersGroupFirst()
+        {
+            foreach (var marker in MainMap.Overlays.First(a => a.Id == "drawnpolygons").Markers)
+            {
+                try
+                {
+                    if (marker.Tag != null && int.TryParse(marker.Tag.ToString().Replace("grid", ""), out int no))
+                    {
+                        polygonMarkersGroup.Clear();
+                        polygonMarkersGroup.Add(no);
+                        redrawPolygonSurvey(drawnpolygon.Points.Select(p => new PointLatLngAlt(p)).ToList());
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
             }
         }
 
