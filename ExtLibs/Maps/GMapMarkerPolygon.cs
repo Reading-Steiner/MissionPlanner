@@ -22,8 +22,8 @@ namespace MissionPlanner.Maps
         {
             if (selected)
             {
-                g.FillEllipse(Brushes.Violet, new Rectangle(this.LocalPosition, this.Size));
-                g.DrawArc(Pens.Violet, new Rectangle(this.LocalPosition, this.Size), 0, 360);
+                g.FillEllipse(Brushes.DeepSkyBlue, new Rectangle(this.LocalPosition, this.Size));
+                g.DrawArc(Pens.DeepSkyBlue, new Rectangle(this.LocalPosition, this.Size), 0, 360);
             }
 
             base.OnRender(g);

@@ -2731,7 +2731,7 @@ namespace MissionPlanner.GCSViews
         public void ContextMenuStripMain_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             //if (e.CloseReason.ToString() == "AppClicked" || e.CloseReason.ToString() == "AppFocusChange")
-            //    isMouseClickOffMenu = true;
+            isMouseClickOffMenu = true;
         }
 
         public void ContextMenuStripMain_Opening(object sender, CancelEventArgs e)
@@ -2777,7 +2777,7 @@ namespace MissionPlanner.GCSViews
             //    }
             //}
 
-            isMouseClickOffMenu = false; // Just incase
+            isMouseClickOffMenu = true; // Just incase
         }
 
         public void ContextMenuStripPoly_Opening(object sender, CancelEventArgs e)
@@ -8247,15 +8247,8 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 MouseDownEnd = MainMap.FromLocalToLatLng(e.X, e.Y);
                 MouseDownEndPoint = new GPoint(e.X, e.Y);
 
-                if (isMouseDown) // mouse down on some other object and dragged to here.
+                if (isMouseDown && e.Button == MouseButtons.Left) // mouse down on some other object and dragged to here.
                 {
-                    // drag finished, update poi db
-                    if (CurrentPOIMarker != null)
-                    {
-                        POI.POIMove(CurrentPOIMarker);
-                        CurrentPOIMarker = null;
-                    }
-
                     if (Control.ModifierKeys == Keys.Control)
                     {
                         // group select wps
@@ -8364,6 +8357,27 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         return;
                     }
 
+                    if (wpMarkersGroup.Count > 0 || polygonMarkersGroup.Count > 0)
+                    {
+                        if (wpMarkersGroup.Count > 0)
+                        {
+                            wpMarkersGroupClear();
+                            // redraw to remove selection
+                        }
+                        if (polygonMarkersGroup.Count > 0)
+                        {
+                            polygonMarkersGroupClear();
+                            // redraw to remove selection
+                        }
+                        return;
+                    }
+                    // drag finished, update poi db
+                    if (CurrentPOIMarker != null)
+                    {
+                        POI.POIMove(CurrentPOIMarker);
+                        CurrentPOIMarker = null;
+                    }
+
                     if (!isMouseDraging)
                     {
                         if (CurentRectMarker != null)
@@ -8401,17 +8415,6 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                             }
                             CurentRectMarker = null;
                         }
-                    }
-                    if (wpMarkersGroup.Count > 0)
-                    {
-                        wpMarkersGroup.Clear();
-                        // redraw to remove selection
-                        writeKML();
-                    }
-                    if(polygonMarkersGroup.Count > 0)
-                    {
-                        polygonMarkersGroupClear();
-                        // redraw to remove selection
                     }
 
                 }
