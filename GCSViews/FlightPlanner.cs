@@ -516,79 +516,85 @@ namespace MissionPlanner.GCSViews
                 return true;
             }
 
-            if (keyData == (Keys.Alt | Keys.Up))
+            if (keyData == (Keys.Alt | Keys.Up) ||
+                keyData == (Keys.Alt | Keys.Down) ||
+                keyData == (Keys.Alt | Keys.Left) ||
+                keyData == (Keys.Alt | Keys.Right))
             {
-                polygonMarkersGroupMoveUp();
+                if (keyData == (Keys.Alt | Keys.Up))
+                {
+                    polygonMarkersGroupMoveUp();
+                }
+
+                if (keyData == (Keys.Alt | Keys.Down))
+                {
+                    polygonMarkersGroupMoveDown();
+                }
+
+                if (keyData == (Keys.Alt | Keys.Left))
+                {
+                    polygonMarkersGroupMoveLeft();
+                }
+
+                if (keyData == (Keys.Alt | Keys.Right))
+                {
+                    polygonMarkersGroupMoveRight();
+                }
+                return true;
+            }
+            if (keyData == (Keys.Control | Keys.Up) ||
+                keyData == (Keys.Control | Keys.Down) ||
+                keyData == (Keys.Control | Keys.Left) ||
+                keyData == (Keys.Control | Keys.Right))
+            {
+                if (keyData == (Keys.Control | Keys.Up))
+                {
+                    wpMarkersGroupMoveUp();
+                }
+
+                if (keyData == (Keys.Control | Keys.Down))
+                {
+                    wpMarkersGroupMoveDown();
+                }
+
+                if (keyData == (Keys.Control | Keys.Left))
+                {
+                    wpMarkersGroupMoveLeft();
+                }
+
+                if (keyData == (Keys.Control | Keys.Right))
+                {
+                    wpMarkersGroupMoveRight();
+                }
                 return true;
             }
 
-            if (keyData == (Keys.Alt | Keys.Down))
+            if (keyData == (Keys.Up) || 
+                keyData == (Keys.Down) || 
+                keyData == (Keys.Left) || 
+                keyData == (Keys.Right))
             {
-                polygonMarkersGroupMoveDown();
-                return true;
-            }
+                if (keyData == (Keys.Up))
+                {
+                    wpMarkersGroupMoveUp();
+                    polygonMarkersGroupMoveUp();
+                }
+                if (keyData == (Keys.Down))
+                {
+                    wpMarkersGroupMoveDown();
+                    polygonMarkersGroupMoveDown();
+                }
+                if (keyData == (Keys.Left))
+                {
+                    wpMarkersGroupMoveLeft();
+                    polygonMarkersGroupMoveLeft();
+                }
 
-            if (keyData == (Keys.Alt | Keys.Left))
-            {
-                polygonMarkersGroupMoveLeft();
-                return true;
-            }
-
-            if (keyData == (Keys.Alt | Keys.Right))
-            {
-                polygonMarkersGroupMoveRight();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Up))
-            {
-                wpMarkersGroupMoveUp();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Down))
-            {
-                wpMarkersGroupMoveDown();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Left))
-            {
-                wpMarkersGroupMoveLeft();
-                return true;
-            }
-
-            if (keyData == (Keys.Control | Keys.Right))
-            {
-                wpMarkersGroupMoveRight();
-                return true;
-            }
-
-            if (keyData == (Keys.Up))
-            {
-                wpMarkersGroupMoveUp();
-                polygonMarkersGroupMoveUp();
-                return true;
-            }
-
-            if (keyData == (Keys.Down))
-            {
-                wpMarkersGroupMoveDown();
-                polygonMarkersGroupMoveDown();
-                return true;
-            }
-
-            if (keyData == (Keys.Left))
-            {
-                wpMarkersGroupMoveLeft();
-                polygonMarkersGroupMoveLeft();
-                return true;
-            }
-
-            if (keyData == (Keys.Right))
-            {
-                wpMarkersGroupMoveRight();
-                polygonMarkersGroupMoveRight();
+                if (keyData == (Keys.Right))
+                {
+                    wpMarkersGroupMoveRight();
+                    polygonMarkersGroupMoveRight();
+                }
                 return true;
             }
 
