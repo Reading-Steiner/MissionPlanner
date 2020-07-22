@@ -5710,7 +5710,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-                fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan;*.kml";
+                fd.Filter = "KML|*.kml;|Shapefile|*.shp;|WayPoint|*.waypoints;*.txt";
                 if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
                     fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
                 DialogResult result = fd.ShowDialog();
