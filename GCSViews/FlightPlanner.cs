@@ -5710,7 +5710,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         {
             using (OpenFileDialog fd = new OpenFileDialog())
             {
-                fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan";
+                fd.Filter = "All Supported Types|*.txt;*.waypoints;*.shp;*.plan;*.kml";
                 if (Directory.Exists(Settings.Instance["WPFileDirectory"] ?? ""))
                     fd.InitialDirectory = Settings.Instance["WPFileDirectory"];
                 DialogResult result = fd.ShowDialog();
@@ -5724,6 +5724,18 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                         try
                         {
                             LoadSHPFile(file);
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Error opening File", Strings.ERROR);
+                            return;
+                        }
+                    }
+                    else if (file.ToLower().EndsWith(".kml"))
+                    {
+                        try
+                        {
+                            loadWaypointsKML(file);
                         }
                         catch
                         {
@@ -5974,34 +5986,28 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         private void saveWaypointsKML(string file)
         {
             // Create the file and writer.
+            //StreamWriter sw = new StreamWriter(file, false, System.Text.Encoding.UTF8);
+            //XmlWriterSettings settings = new XmlWriterSettings();
+            //settings.Indent = true;
+            //settings.IndentChars = "  ";
+            //settings.NewLineOnAttributes = true;
+            //XmlWriter xmlWriter = XmlWriter.Create(sw, settings);
             FileStream fs = new FileStream(file, FileMode.Create);
             XmlTextWriter w = new XmlTextWriter(fs, System.Text.Encoding.UTF8);
-            List<PointLatLng> WayPoints = new List<PointLatLng>();
+            w.IndentChar = System.Convert.ToChar(" ");
+            w.Indentation = 4;
+            w.Formatting = System.Xml.Formatting.Indented;
+
             // Start the document.
             w.WriteStartDocument();
             w.WriteStartElement("kml", "http://www.opengis.net/kml/2.2");
-            w.WriteStartElement("Document");
+            w.WriteStartElement("Document", "www.dji.com");
             w.WriteStartElement("name");
             w.WriteString(file);
             w.WriteEndElement();//name
             w.WriteStartElement("open");
             w.WriteString("1");
             w.WriteEndElement();//open
-            w.WriteStartElement("ExtendedData");
-            var info = this.layerCache.GetSelectedLayerFromMemoryCache();
-            if (info != null)
-            {
-                w.WriteStartElement("local");
-                GMap.NET.Internals.LayerInfo layerInfo = (GMap.NET.Internals.LayerInfo)info;
-                w.WriteStartElement("originCoordinates");
-                w.WriteString(string.Format("{0},{1},{2}", layerInfo.Lng, layerInfo.Lat, layerInfo.Alt));
-                w.WriteEndElement();//originCoordinates
-                w.WriteStartElement("scale");
-                w.WriteString(layerInfo.Scale.ToString());
-                w.WriteEndElement();//scale
-                w.WriteEndElement();//local
-            }
-            w.WriteEndElement();//ExtendedData
  
             //style
             w.WriteStartElement("Style");
@@ -6035,6 +6041,87 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             w.WriteStartElement("description");
             w.WriteString("Waypoints in the Mission.");
             w.WriteEndElement();//description
+            {
+                w.WriteStartElement("Placemark");
+
+                // Write Point element
+                w.WriteStartElement("name");
+                w.WriteString(string.Format("Waypoint0"));
+                w.WriteEndElement();//name
+                w.WriteStartElement("visibility");
+                w.WriteString("0");
+                w.WriteEndElement();//visibility
+                w.WriteStartElement("description");
+                w.WriteString("HOME");
+                w.WriteEndElement();//description
+                w.WriteStartElement("styleUrl");
+                w.WriteString("#waypointStyle");
+                w.WriteEndElement();//styleUrl
+                w.WriteStartElement("ExtendedData");
+
+                var layerInfo = layerCache.GetSelectedLayerFromMemoryCache();
+                if (layerInfo != null)
+                {
+                    w.WriteStartElement("local");
+                    w.WriteStartElement("coordinates");
+                    CovertToWorkCoordinate(
+                        System.Convert.ToDouble(TXT_homelng.Text),
+                        System.Convert.ToDouble(TXT_homelat.Text),
+                        System.Convert.ToDouble(TXT_homealt.Text),
+                        out double x, out double y, out double z);
+                    w.WriteString(string.Format("{0},{1},{2}", x, y, z));
+                    w.WriteEndElement();//coordinates
+                    w.WriteStartElement("scale");
+                    w.WriteString(layerInfo.GetValueOrDefault().Scale.ToString());
+                    w.WriteEndElement();//scale
+
+                    w.WriteEndElement();//local
+                }
+                w.WriteStartElement("param1");
+                w.WriteString("0");
+                w.WriteEndElement();//param1
+                w.WriteStartElement("param2");
+                w.WriteString("0");
+                w.WriteEndElement();//param2
+                w.WriteStartElement("param3");
+                w.WriteString("0");
+                w.WriteEndElement();//param3
+                w.WriteStartElement("param4");
+                w.WriteString("0");
+                w.WriteEndElement();//param4
+                w.WriteEndElement();//ExtendedData
+
+                w.WriteStartElement("Point");
+                w.WriteStartElement("altitudeMode");
+                int index = System.Convert.ToInt32(CMB_altmode.SelectedValue);
+                switch (index)
+                {
+                    case 3:
+                        w.WriteAttributeString("id", "3");
+                        w.WriteString("relativeToGround");
+                        break;
+                    case 0:
+                        w.WriteAttributeString("id", "0");
+                        w.WriteString("absoluteToGround");
+                        break;
+                    case 10:
+                        w.WriteAttributeString("id", "10");
+                        w.WriteString("terrainToGround");
+                        break;
+                    default:
+                        w.WriteAttributeString("id", "0");
+                        w.WriteString("relativeToGround");
+                        break;
+                }
+
+                w.WriteEndElement();//altitudeMode
+                w.WriteStartElement("coordinates");
+                w.WriteString(string.Format("{0},{1},{2}",
+                    TXT_homelng.Text, TXT_homelat.Text, TXT_homealt.Text));
+                w.WriteEndElement();//coordinates
+                w.WriteEndElement();//Point
+                w.WriteEndElement();//Placemark
+            }
             for (int i = 0; i < Commands.Rows.Count; i++)
             {
                 w.WriteStartElement("Placemark");
@@ -6045,12 +6132,7 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 w.WriteEndElement();//name
                 w.WriteStartElement("visibility");
                 if (Commands.Rows[i].Cells[Command.Index].Value.ToString() == "WAYPOINT")
-                {
-                    WayPoints.Add(new PointLatLng(
-                        System.Convert.ToDouble(Commands.Rows[i].Cells[Lon.Index].Value.ToString()),
-                        System.Convert.ToDouble(Commands.Rows[i].Cells[Lon.Index].Value.ToString())));
                     w.WriteString("1");
-                }
                 else
                     w.WriteString("0");
                 w.WriteEndElement();//visibility
@@ -6070,24 +6152,25 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                     CovertToWorkCoordinate(
                         System.Convert.ToDouble(Commands.Rows[i].Cells[Lon.Index].Value.ToString()),
                         System.Convert.ToDouble(Commands.Rows[i].Cells[Lat.Index].Value.ToString()),
-                        System.Convert.ToDouble(Commands.Rows[i].Cells[Alt.Index].Value.ToString()), 
+                        System.Convert.ToDouble(Commands.Rows[i].Cells[Alt.Index].Value.ToString()),
                         out double x, out double y, out double z);
                     w.WriteString(string.Format("{0},{1},{2}", x, y, z));
                     w.WriteEndElement();//coordinates
                     w.WriteEndElement();//local
-                    w.WriteStartElement("param1");
-                    w.WriteString(Commands.Rows[i].Cells[Param1.Index].Value.ToString());
-                    w.WriteEndElement();//param1
-                    w.WriteStartElement("param2");
-                    w.WriteString(Commands.Rows[i].Cells[Param2.Index].Value.ToString());
-                    w.WriteEndElement();//param2
-                    w.WriteStartElement("param3");
-                    w.WriteString(Commands.Rows[i].Cells[Param3.Index].Value.ToString());
-                    w.WriteEndElement();//param3
-                    w.WriteStartElement("param4");
-                    w.WriteString(Commands.Rows[i].Cells[Param4.Index].Value.ToString());
-                    w.WriteEndElement();//param4
                 }
+                w.WriteStartElement("param1");
+                w.WriteString(Commands.Rows[i].Cells[Param1.Index].Value.ToString());
+                w.WriteEndElement();//param1
+                w.WriteStartElement("param2");
+                w.WriteString(Commands.Rows[i].Cells[Param2.Index].Value.ToString());
+                w.WriteEndElement();//param2
+                w.WriteStartElement("param3");
+                w.WriteString(Commands.Rows[i].Cells[Param3.Index].Value.ToString());
+                w.WriteEndElement();//param3
+                w.WriteStartElement("param4");
+                w.WriteString(Commands.Rows[i].Cells[Param4.Index].Value.ToString());
+                w.WriteEndElement();//param4
+
                 w.WriteEndElement();//ExtendedData
 
                 w.WriteStartElement("Point");
@@ -6095,19 +6178,20 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
                 int index = System.Convert.ToInt32(Commands.Rows[i].Cells[Frame.Index].Value.ToString());
                 switch (index)
                 {
-                    case 0:
+                    case 3:
                         w.WriteString("relativeToGround");
                         break;
-                    case 1:
+                    case 0:
                         w.WriteString("absoluteToGround");
                         break;
-                    case 2:
+                    case 10:
                         w.WriteString("terrainToGround");
                         break;
                     default:
                         w.WriteString("relativeToGround");
                         break;
                 }
+
                 w.WriteEndElement();//altitudeMode
                 w.WriteStartElement("coordinates");
                 w.WriteString(string.Format("{0},{1},{2}",
@@ -6181,13 +6265,129 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
         }
 
 
-        private void readWaypointsKML(string file)
+        private void loadWaypointsKML(string file)
         {
             // Create the file and writer.
-            FileStream fs = new FileStream(file, FileMode.Create);
-            XmlTextReader rd = new XmlTextReader(fs);
+            if (!System.IO.File.Exists(file))
+                return;
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(file);
+                XmlNamespaceManager nsMgr = new XmlNamespaceManager(xmlDoc.NameTable);
+                nsMgr.AddNamespace("ns", @"http://www.opengis.net/kml/2.2");
+                XmlNode kml = xmlDoc.SelectSingleNode(@"//ns:kml", nsMgr);
+                XmlNamespaceManager nsMgr2 = new XmlNamespaceManager(xmlDoc.NameTable);
+                nsMgr2.AddNamespace("ns2", @"www.dji.com");
+                XmlNode doc = kml.SelectSingleNode(@"./ns2:Document", nsMgr2);
+                XmlNode folder = doc.SelectSingleNode(@"./ns2:Folder", nsMgr2);
+                List<Locationwp> cmds = new List<Locationwp>();
+                foreach (XmlNode point in folder.ChildNodes)
+                {
+                    if (point.Name == "Placemark")
+                    {
+                        string cmd = "WAYPOINT";
+                        int altitudeMode = 3;
+                        double x = 0, y = 0, z = 0;
+                        double p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+                        //selectedrow = Commands.Rows.Add();
+                        foreach (XmlNode info in point.ChildNodes)
+                        {
+                            switch (info.Name)
+                            {
+                                case "description":
+                                    //cmd = System.Convert.ToInt32(info.SelectSingleNode(@".//@id").Value);
+                                    cmd = info.InnerText;
+                                    break;
+                                case "Point":
+                                    var smode = point.SelectSingleNode(@".//ns2:altitudeMode", nsMgr2);
+                                    if (smode != null)
+                                    {
+                                        if (smode.InnerText == "relativeToGround")
+                                            altitudeMode = 3;
+                                        else if (smode.InnerText == "absoluteToGround")
+                                            altitudeMode = 0;
+                                        else if (smode.InnerText == "terrainToGround")
+                                            altitudeMode = 10;
+                                        else
+                                            altitudeMode = 3;
+                                    }
+                                    else
+                                    {
+                                        altitudeMode = 3;
+                                    }
+                                    var sWGS84 = point.SelectSingleNode(@".//ns2:Point/ns2:coordinates", nsMgr2);
+                                    if (sWGS84 != null)
+                                    {
+                                        string WGS84 = sWGS84.InnerText;
+                                        var splitWGS84 = WGS84.Split(',');
+                                        x = System.Convert.ToDouble(splitWGS84[0]);
+                                        y = System.Convert.ToDouble(splitWGS84[1]);
+                                        z = System.Convert.ToDouble(splitWGS84[2]);
+                                    }
+                                    break;
 
-            
+                                case "ExtendedData":
+                                    var sp1 = point.SelectSingleNode(@".//ns2:param1", nsMgr2);
+                                    if (sp1 != null)
+                                        p1 = System.Convert.ToDouble(sp1.InnerText);
+                                    else
+                                        p1 = 0;
+                                    var sp2 = point.SelectSingleNode(@".//ns2:param2", nsMgr2);
+                                    if (sp2 != null)
+                                        p2 = System.Convert.ToDouble(sp2.InnerText);
+                                    else
+                                        p2 = 0;
+                                    var sp3 = point.SelectSingleNode(@".//ns2:param3", nsMgr2);
+                                    if (sp3 != null)
+                                        p3 = System.Convert.ToDouble(sp3.InnerText);
+                                    else
+                                        p3 = 0;
+                                    var sp4 = point.SelectSingleNode(@".//ns2:param4", nsMgr2);
+                                    if (sp4 != null)
+                                        p4 = System.Convert.ToDouble(sp4.InnerText);
+                                    else
+                                        p4 = 0;
+                                    break;
+                            }
+                        }
+
+
+                        Locationwp temp = new Locationwp();
+                        temp.frame = (byte)int.Parse(altitudeMode.ToString(), CultureInfo.InvariantCulture);
+
+                        if (Enum.TryParse(cmd, false, out MAVLink.MAV_CMD data))
+                        {
+                            temp.id = (ushort)data;
+                        }
+                        else
+                        {
+                            temp.id = (ushort)MAVLink.MAV_CMD.WAYPOINT;
+                        }
+
+                        if (temp.id == 99)
+                            temp.id = 0;
+
+                        temp.alt = (float)(double.Parse(z.ToString(), CultureInfo.InvariantCulture));
+                        temp.lat = (double.Parse(y.ToString(), CultureInfo.InvariantCulture));
+                        temp.lng = (double.Parse(x.ToString(), CultureInfo.InvariantCulture));
+
+                        temp.p1 = float.Parse(p1.ToString(), CultureInfo.InvariantCulture);
+                        temp.p2 = float.Parse(p2.ToString(), CultureInfo.InvariantCulture);
+                        temp.p3 = float.Parse(p3.ToString(), CultureInfo.InvariantCulture);
+                        temp.p4 = float.Parse(p4.ToString(), CultureInfo.InvariantCulture);
+
+                        cmds.Add(temp);
+                    }
+                }
+                processToScreen(cmds, false);
+                writeKML();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+
         }
 
         /// <summary>
